@@ -41,9 +41,10 @@ merge 완료 시 feature 브랜치 삭제
 
 ### 🔹 브랜치 네이밍 규칙
 형식: feat/{PART-페이지번호}-{기능명}
-예시:
+```bash
 feat/1.1-Onboarding
 feat/1.1-Onboarding-moreInformation (세분화 시 -추가 키워드)
+```
 
 ⚠️ Router.jsx 외 파일 변경 시 → 반드시 팀원에게 작업 내용 공유 (충돌 방지)
 
