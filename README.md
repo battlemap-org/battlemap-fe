@@ -48,9 +48,7 @@ feat/1.1-Onboarding-moreInformation (세분화 시 -추가 키워드)
 ⚠️ Router.jsx 외 파일 변경 시 → 반드시 팀원에게 작업 내용 공유 (충돌 방지)
 
 ### 📂 디렉토리 구조 규칙
-기본 구조
-arduino
-코드 복사
+```bash
 src/
  ├── pages/
  │    ├── map/
@@ -61,6 +59,8 @@ src/
  │         ├── Onboarding.css
  │
  └── components/
+```
+
 pages : 페이지 단위 컴포넌트 (.jsx, .css 함께 관리)
 components : 공용 컴포넌트
 하위 디렉토리 생성 : PART 기준 페이지 그룹 혹은 자체 판단
