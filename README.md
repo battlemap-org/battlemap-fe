@@ -17,6 +17,8 @@ Frontend repository for **Battlemap project**
 cd battlemap-fe   # 디렉토리 이동
 npm install       # dependency 최신화
 npm run dev       # 개발 서버 실행
+```
+
 🔹 Pull Request 규칙
 PR 진행 시 팀원과 상호 연락
 
