@@ -74,3 +74,9 @@ components : 공용 컴포넌트
  코드 리뷰 완료 후 merge → feature 브랜치 삭제
 
 
+
+ 기능 단위로 PR 생성
+
+ 코드 리뷰 완료 후 merge → feature 브랜치 삭제
+
+
