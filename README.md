@@ -14,6 +14,15 @@ Node.js: 22 (📌 .nvmrc 참고)
 Utility-first 접근 → 가능한 Tailwind class 사용 (별도 CSS 최소화)
 색상/spacing 단위는 필요 시 tailwind.config.js에서 커스터마이징
 
+### 💻 개발 세팅
+nvm install 22
+nvm use 22 
+rm -rf node_modules
+rm package-lock.json
+npm install
+npm run dev
+
+
 ### 🔹 Pull Request 규칙
 PR 진행 시 팀원과 상호 연락
 코드 리뷰 후 merge
@@ -65,3 +74,5 @@ npm run lint : 코드 검사 (ESLint)
  공유 파일(Router.jsx 등) 수정 시 팀에 공지
  기능 단위로 PR 생성
  코드 리뷰 완료 후 merge → feature 브랜치 삭제
+ 긴급 수정 외에는 main 직접 푸시 금지
+ 기능 작업은 feature 브랜치 → dev → main 흐름 고정
