@@ -1,5 +1,5 @@
-import React from 'react';
-import { Settings, UserCircle, Flag, ScrollText, Coffee } from 'lucide-react';
+import React, { useState } from 'react';
+import { Settings, UserCircle, Flag, ScrollText, Coffee, ChevronRight, X } from 'lucide-react';
 
 const Header = () => {
   return (
@@ -28,8 +28,9 @@ const Header = () => {
 };
 
 function Profile() {
-  const userName = '사용자 이름'; 
+  const userName = '사용자 이름';
   const points = 2650;
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
@@ -65,10 +66,18 @@ function Profile() {
                   padding: '2px 8px',
                   borderRadius: 12,
                   fontWeight: 600,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
                 }}
               >
                 P {points}
               </span>
+              <ChevronRight
+                size={18}
+                style={{ cursor: 'pointer' }}
+                onClick={() => setShowModal(true)}
+              />
             </div>
 
             <button
@@ -94,9 +103,7 @@ function Profile() {
         <hr style={{ border: '1px solid #e5e7eb', marginBottom: 24 }} />
 
         <div style={{ marginBottom: 24 }}>
-          <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>
-            현 시즌 점령 현황
-          </div>
+          <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>현 시즌 점령 현황</div>
           <div style={{ fontSize: 18, color: '#374151', marginBottom: 2 }}>
             - 리그 순위: <span style={{ fontWeight: 600 }}>4위</span>
           </div>
@@ -203,6 +210,123 @@ function Profile() {
           />
         </div>
       </main>
+
+      {/* 모달 */}
+      {showModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+          }}
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 20,
+              padding: 24,
+              width: '90%',
+              maxWidth: 420,
+              position: 'relative',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <X
+              size={28}
+              style={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                cursor: 'pointer',
+                color: '#444',
+              }}
+              onClick={() => setShowModal(false)}
+            />
+
+            {/* 포인트 */}
+            <div style={{ marginBottom: 8 }}>
+              <span
+                style={{
+                  background: '#FDE68A',
+                  color: '#6b7280',
+                  padding: '2px 8px',
+                  borderRadius: 16,
+                  fontWeight: 600,
+                  display: 'inline-block',
+                  fontSize: 18,
+                }}
+              >
+                P {points}
+              </span>
+            </div>
+
+
+            {/* 지역 화폐 충전 버튼 */}
+            <button
+              style={{
+                background: '#5E936C',
+                color: '#fff',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: 10,
+                cursor: 'pointer',
+                fontSize: 15,
+                fontWeight: 600,
+                marginBottom: 20,
+              }}
+            >
+              지역 화폐 충전
+            </button>
+
+            {/* 쿠폰 섹션 */}
+            <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 12 }}>쿠폰</div>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: 12,
+              }}
+            >
+              {['P 2000', 'P 2000', 'P 2000', 'P 5000', 'P 5000', 'P 5000', 'P 5000', 'P 5000', 'P 5000'].map(
+                (value, idx) => (
+                  <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                    <div
+                      style={{
+                        background: '#f3f4f6',
+                        borderRadius: 14,
+                        height: 80,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%',
+                      }}
+                    >
+                    </div>
+                    <div
+                      style={{
+                        fontWeight: 600,
+                        color: '#374151',
+                        fontSize: 15,
+                      }}
+                    >
+                      {value}
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
