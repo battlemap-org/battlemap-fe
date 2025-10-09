@@ -3,7 +3,6 @@ import Onboarding from "./pages/onboarding/Onboarding.jsx";
 import Login from "./pages/login/Login.jsx";
 import Join from "./pages/join/Join.jsx";
 import Filter from "./pages/filter/Filter.jsx";
-
 import Profile from "./pages/profile/Profile.jsx";
 import Whereistoday from "./pages/whereistoday/Whereistoday.jsx";
 

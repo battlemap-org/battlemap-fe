@@ -38,13 +38,11 @@ function LogIn() {
           </div>
         </div>
         <div>
-          {/* //onClick={handleLogin} 추가필요 */}
           <button className="LoginButton">로그인</button>
         </div>
         <hr className="slice"></hr>
         <div className="MakeUser">계정이 없으신가요? 계정을 만들어보세요</div>
         <div>
-          {/* //onClick 버튼 추가 */}
           <button className="JoinUserButton">회원가입</button>
         </div>
       </div>

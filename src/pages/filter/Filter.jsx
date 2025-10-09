@@ -1,6 +1,5 @@
 import React from "react";
 import "./Filter.css";
-import Footer from "../../components/Footer";
 
 const categories = [
   { name: "식당", icon: "/assets/restaurant.png" },
@@ -14,11 +13,11 @@ function Filter() {
     <div className="filter-page">
       <header className="header">
         <div className="location">
-          <img src="/assets/location.png" alt="location" />
+          <img src="/assets/location.png" />
           <span>부천시</span>
         </div>
         <div className="point">
-          <img src="/assets/point.png" alt="point" />
+          <img src="/assets/point.png" />
           <span>1400</span>
         </div>
       </header>
@@ -34,8 +33,6 @@ function Filter() {
           ))}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
