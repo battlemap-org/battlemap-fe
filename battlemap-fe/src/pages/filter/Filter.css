@@ -14,18 +14,15 @@
   padding: 16px;
 }
 
-.location,
-.point {
+.location, .point {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
 .location span {
   font-weight: 700;
   font-size: 20px;
 }
-
 .location img {
   width: 24px;
   height: 24px;
@@ -35,16 +32,16 @@
   padding: 4px 8px;
   border-radius: 9999px;
 }
-
 .point span {
   font-weight: 700;
   font-size: 18px;
+  
+}
+.point img {
+  width: 30px;
+  height: 33px;
 }
 
-.point img {
-  width: 35px;
-  height: 40px;
-}
 
 .main {
   flex-grow: 1;
@@ -55,28 +52,29 @@
   padding-right: 16px;
 }
 
+
 .region {
-  background-color: #a3b9a2;
+  background-color: #A3B9A2;
   color: #27272a;
   font-weight: 700;
   padding: 12px 32px;
   border-radius: 9999px;
   margin-top: 16px;
   margin-bottom: 16px;
-  font-size: 18px;
+  font-size: 1.125rem;
 }
 
 .category {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* 2열 그리드 */
   gap: 16px;
   margin-top: 16px;
   margin-bottom: 16px;
 }
 
 .category-button {
-  background-color: #f3f3f3;
+  background-color: #F3F3F3;
   color: black;
   border: none;
   border-radius: 16px;
@@ -89,21 +87,19 @@
   cursor: pointer;
   transition: transform 0.2s;
 }
-
 .category-button:hover {
   transform: scale(1.05);
 }
-
 .category-button:active {
   transform: scale(0.95);
 }
-
 .category-button img {
   width: 48px;
   height: 48px;
 }
-
 .category-button span {
   font-weight: 600;
-  font-size: 18px;
+  font-size: 1.125rem;
 }
+
+
