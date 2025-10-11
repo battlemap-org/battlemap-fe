@@ -15,38 +15,31 @@ const Footer = () => {
       style={{
         position: 'fixed',
         bottom: 0,
-        left: 0,
         width: '100%',
         height: 64,
         background: '#fff',
         borderTop: '1px solid #e5e7eb',
-        zIndex: 1000,
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        zIndex: 2000,
       }}
     >
-      <nav
-        style={{
-          height: '100%',
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-        }}
-      >
-        {menubar.map(({ icon: Icon, path }) => (
-          <NavLink
-            key={path}
-            to={path}
-            style={() => ({
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              textDecoration: 'none',
-              color: '#000',
-            })}
-          >
-            <Icon size={36} style={{ color: '#000' }} />
-          </NavLink>
-        ))}
-      </nav>
+      {menubar.map(({ icon: Icon, path }) => (
+        <NavLink
+          key={path}
+          to={path}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textDecoration: 'none',
+            color: '#000',
+          }}
+        >
+          <Icon size={36} style={{ color: '#000' }} />
+        </NavLink>
+      ))}
     </footer>
   );
 };

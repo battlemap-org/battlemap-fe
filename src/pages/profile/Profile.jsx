@@ -256,12 +256,20 @@ function Profile() {
               <span
                 style={{
                   background: '#FDE68A',
+<<<<<<< Updated upstream
                   color: '#6b7280',
                   padding: '2px 8px',
                   borderRadius: 16,
                   fontWeight: 600,
                   display: 'inline-block',
                   fontSize: 18,
+=======
+                  padding: '2px 8px',
+                  borderRadius: 12,
+                  fontWeight: 600,
+                  display: 'inline-block',
+                  fontSize: 22,
+>>>>>>> Stashed changes
                 }}
               >
                 P {points}
