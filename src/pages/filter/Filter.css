@@ -7,40 +7,6 @@
   flex-direction: column;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-}
-
-.location,
-.point {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.location span {
-  font-weight: 700;
-  font-size: 20px;
-}
-.location img {
-  width: 24px;
-  height: 24px;
-}
-
-.point {
-  padding: 4px 8px;
-  border-radius: 9999px;
-}
-.point span {
-  font-weight: 700;
-  font-size: 18px;
-}
-.point img {
-  width: 30px;
-  height: 33px;
-}
 
 .main {
   flex-grow: 1;
