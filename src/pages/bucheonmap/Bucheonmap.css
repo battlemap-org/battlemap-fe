@@ -1,0 +1,43 @@
+/* 전체 구조는 column, Header/Footer 제외 */
+.bucheonmap-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 수직 중앙 */
+  align-items: center; /* 수평 중앙 */
+  min-height: calc(100vh - 160px); /* Header+Footer 높이 제외 (대략값) */
+  gap: 20px;
+  box-sizing: border-box;
+  padding-bottom: 40px; /* Footer와 간격 확보 */
+}
+
+/* 지도 카드 */
+.bucheonmap-card {
+  background-color: #fffcfc;
+  border: 3px solid black;
+  border-radius: 30px;
+  padding: 3vw 2vw;
+  width: 28vw;
+  max-width: 342px;
+  min-width: 250px;
+  aspect-ratio: 342 / 507;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* 퀘스트 카드 */
+.quest-card {
+  width: 387px;
+  height: 115px;
+  background-color: #a9c2b0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
