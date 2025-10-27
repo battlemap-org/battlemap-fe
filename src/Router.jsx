@@ -11,6 +11,7 @@ import PickCafe from "./pages/pickCafe/PickCafe.jsx";
 import Bucheonmap from "./pages/bucheonmap/Bucheonmap.jsx";
 // 1. Footer가 포함된 올바른 Layout 컴포넌트를 임포트합니다.
 import Layout from "./components/Layout.jsx";
+import StatusModal from "./components/statusmodal/StatusModal.jsx";
 
 // 2. 기존 Router.jsx 파일에 있던 불필요한 Layout 함수는 제거합니다.
 
@@ -35,7 +36,7 @@ export default function Router() {
           <Route path="/filter" element={<Filter />} />
           <Route path="/pickCafe" element={<PickCafe />} />
           <Route path="/bucheonmap" element={<Bucheonmap />} />
-          {/* 여기에 /ranking 등 Footer가 필요한 다른 페이지들도 추가하면 됩니다. */}
+          <Route path="/statusModal" element={<StatusModal />} />
         </Route>
       </Routes>
     </BrowserRouter>
