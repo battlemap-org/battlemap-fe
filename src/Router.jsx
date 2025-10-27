@@ -7,6 +7,7 @@ import Join from './pages/join/Join.jsx';
 import Filter from './pages/filter/Filter.jsx';
 import Profile from './pages/profile/Profile.jsx';
 import Whereistoday from './pages/whereistoday/Whereistoday.jsx';
+import PickCafe from './pages/pickCafe/PickCafe.jsx';
 
 // 1. Footer가 포함된 올바른 Layout 컴포넌트를 임포트합니다.
 import Layout from './components/Layout.jsx';
@@ -21,7 +22,6 @@ export default function Router() {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
-        <Route path="/filter" element={<Filter />} />
 
         {/* 3. Layout(Footer)가 필요한 페이지들을 그룹으로 묶습니다.
           <Layout />을 element로 사용하는 부모 Route를 만들고,
@@ -32,6 +32,8 @@ export default function Router() {
         <Route element={<Layout />}>
           <Route path="/profile" element={<Profile />} />
           <Route path="/whereistoday" element={<Whereistoday />} />
+          <Route path="/filter" element={<Filter />} />
+          <Route path="/pickCafe" element={<PickCafe />} />
           {/* 여기에 /ranking 등 Footer가 필요한 다른 페이지들도 추가하면 됩니다. */}
         </Route>
       </Routes>

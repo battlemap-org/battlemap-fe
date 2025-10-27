@@ -1,0 +1,101 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;  /* 전체 스크롤 방지 */
+}
+
+.cafe-page {
+  width: 100%;
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  color: #000000;
+  font-family: "Pretendard Variable", Pretardard, sans-serif;
+  overflow: hidden; 
+}
+
+.cafe-page .app-header {
+  background-color: #ffffff;
+  color: #000000;
+  flex-shrink: 0;
+}
+.cafe-page .app-header .point-info {
+  background-color: #f0f0f0;
+}
+
+.cafe-main-content {
+  flex-grow: 1;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
+}
+
+.static-content {
+  padding-bottom: 1.5rem;
+  flex-shrink: 0;
+}
+
+.page-controls {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.back-button {
+  background-color: #f0f0f0; border: 1px solid #e0e0e0;
+  width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem;
+  color: #555; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.category-tag {
+  background-color: #A3B9A2; color: #ffffff; font-weight: 700; padding: 0.6rem 1.8rem;
+  border-radius: 9999px; font-size: 20px;
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#map {
+  width: 100%;
+  height: 230px;
+  border-radius: 12px;
+  background-color: #f0f0f0;
+}
+
+.cafe-list-wrapper {
+  flex-grow: 1;
+  overflow-y: auto; /* 내용이 넘칠 때만 스크롤바 생성 */
+  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-bottom: 80px;
+}
+
+.cafe-list-item {
+  background-color: #f3f3f3;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+  flex-shrink: 0;
+}
+.cafe-list-item:hover { background-color: #e9e9e9; }
+.cafe-list-item.selected { border-color: #A3B9A2; background-color: #e8f0e8; }
+.cafe-list-item .cafe-name {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 0.25rem;
+}
+.cafe-list-item .cafe-address {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
