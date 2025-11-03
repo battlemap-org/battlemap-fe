@@ -1,0 +1,90 @@
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background-color: #ffffff;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+.title {
+  background-color: #A3B9A2;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px 32px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.location-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 32px;
+}
+
+.location-info img {
+  height: 24px;
+  width: 24px;
+  margin-right: 5px;
+}
+
+.quest-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-weight: bold;
+}
+
+.quest-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f3f3f3;
+  padding: 35px;
+  padding-left: 28px;
+  padding-right: 28px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-size: 17px;
+  color: #333;
+  width: 80%;
+  align-self: center;
+}
+
+.questlist-point {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+.questlist-point img {
+  width: 30px;
+  height: 33px;
+  margin-top: 7px;
+}
