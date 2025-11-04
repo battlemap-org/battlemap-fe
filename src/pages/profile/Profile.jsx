@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LogOut, UserCircle, Flag, ScrollText, Coffee, ChevronRight, X } from 'lucide-react';
+import { LogOut, UserCircle, Flag, ScrollText, Coffee, ChevronRight, X, ChevronLeft } from 'lucide-react';
 
 const Header = ({ onLogoutClick }) => {
   return (
@@ -36,6 +36,9 @@ function Profile() {
   const [modalStep, setModalStep] = useState(0); // 0: 닫힘, 1: 쿠폰함, 2: 충전, 3: 확인
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showOwnedCouponModal, setShowOwnedCouponModal] = useState(false);
+  const [showExchangeModal, setShowExchangeModal] = useState(false);
+  const [showBarcodeModal, setShowBarcodeModal] = useState(false);
+  const [selectedCoupon, setSelectedCoupon] = useState(null);
 
 
   /* 쿠폰 이미지들 */
@@ -327,6 +330,11 @@ function Profile() {
                         height: 80,
                         width: '100%',
                         objectFit: 'cover',
+                        cursor: 'pointer',
+                      }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowExchangeModal(true);
                       }}
                     />
                     <div
@@ -431,7 +439,7 @@ function Profile() {
         </div>
       )}
 
-      {/* 모달 3: 교환 확인 */}
+      {/* 모달 3: 충전 확인 */}
       {modalStep === 3 && (
         <div
           style={{
@@ -472,7 +480,7 @@ function Profile() {
             />
             
             <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'center', marginBottom: 24, marginTop: 12 }}>
-              해당 쿠폰으로 교환하시겠습니까?
+              지역 화폐를 충전하시겠습니까?
             </div>
             
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
@@ -542,6 +550,17 @@ function Profile() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
+            <X
+              size={28}
+              style={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                cursor: 'pointer',
+                color: '#444',
+              }}
+              onClick={() => setShowLogoutModal(false)}
+            />
             
             <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'center', marginBottom: 24, marginTop: 12 }}>
               로그아웃 하시겠습니까?
@@ -586,7 +605,7 @@ function Profile() {
         </div>
       )}
 
-{/* 모달 5: 보유 쿠폰 */}
+      {/* 모달 5: 보유 쿠폰 */}
       {showOwnedCouponModal && (
         <div
           style={{
@@ -637,7 +656,14 @@ function Profile() {
               }}
             >
               {/* 첫 번째 박스에만 쿠폰 이미지 삽입 */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+              <div 
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, cursor: 'pointer' }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedCoupon(coupons[0]);
+                  setShowBarcodeModal(true);
+                }}
+              >
                 <img
                   src={`/assets/${coupons[0].img}`} // 첫 번째 쿠폰 이미지 사용
                   alt={`${coupons[0].value} 쿠폰`}
@@ -664,6 +690,161 @@ function Profile() {
                   />
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 모달 6: 쿠폰 교환 확인 */}
+      {showExchangeModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1002, 
+          }}
+          onClick={() => setShowExchangeModal(false)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 20,
+              padding: 24,
+              width: '90%',
+              maxWidth: 320, 
+              position: 'relative',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <X
+              size={28}
+              style={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                cursor: 'pointer',
+                color: '#444',
+              }}
+              onClick={() => setShowExchangeModal(false)}
+            />
+            
+            <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'center', marginBottom: 24, marginTop: 12 }}>
+              해당 쿠폰으로 교환하시겠습니까?
+            </div>
+            
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+              <button
+                onClick={() => setShowExchangeModal(false)} 
+                style={{
+                  background: '#5E936C',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                  fontSize: 15,
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+              >
+                확인
+              </button>
+
+              <button
+                onClick={() => setShowExchangeModal(false)} 
+                style={{
+                  background: '#e5e7eb',
+                  color: '#374151',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                  fontSize: 15,
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 모달 7: 바코드 확인 */}
+      {showBarcodeModal && selectedCoupon && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1004,
+          }}
+          onClick={() => setShowBarcodeModal(false)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 20,
+              padding: 24,
+              width: '65%',
+              maxWidth: 420,
+              position: 'relative',
+              minHeight: 400,
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ChevronLeft
+              size={28}
+              style={{
+                position: 'absolute',
+                top: 16,
+                left: 16,
+                cursor: 'pointer',
+                color: '#444',
+              }}
+              onClick={() => setShowBarcodeModal(false)}
+            />
+
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <img
+                src="/assets/cu3000.png"
+                alt="cu3000"
+                style={{
+                  width: '100%',
+                  maxWidth: 300,
+                  height: 'auto',
+                }}
+              />
+            </div>
+            
+            <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 24, textAlign: 'center'}}>
+              CU 모바일 금액권 3000원
+            </div>
+            
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <img
+                src="/assets/barcode.png"
+                alt="바코드"
+                style={{
+                  width: '100%',
+                  maxWidth: 200,
+                  height: 'auto',
+                }}
+              />
             </div>
           </div>
         </div>
