@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./Whereistoday.css";
 import "../../index.css";
+import { useNavigate } from "react-router-dom";
 
 function City() {
   const [selected, setSelected] = useState([]);
+  const navigate = useNavigate();
 
   const cities = [
     "고양시",
@@ -43,8 +45,11 @@ function City() {
   };
 
   const handleConfirm = () => {
-    if (selected.length === 0) return;
-    alert(`선택된 도시: ${selected.join(", ")}`);
+    if (selected.length === 0) {
+      console.log("선택된 기본 도시:", "부천시");
+      return "부천";
+    }
+    navigate("/bucheonmap");
   };
 
   const onEsc = useCallback((e) => {
