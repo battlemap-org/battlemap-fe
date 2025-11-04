@@ -18,7 +18,7 @@ function LogIn() {
       .then((res) => {
         console.log("로그인 성공:", res.data);
 
-        navigate("/whereistoday");
+        navigate("/whereistoday"); //성공하면 도시 선택으로 이동
       })
       .catch((err) => {
         console.error("로그인 실패:", err);
@@ -31,7 +31,7 @@ function LogIn() {
   return (
     <div className="login-container">
       <div className="titleWrap">로그인</div>
-      {/* 아이디입력칸 */}
+
       <div className="contentWrap">
         <div className="InputId">
           <input
