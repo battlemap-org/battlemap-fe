@@ -11,7 +11,7 @@ function LogIn() {
 
   const handleRegister = () => {
     axios
-      .post("http://3.35.246.97:8081/api/login", {
+      .post("http://3.35.246.97:8081/api/users/login", {
         id,
         pw,
       })
