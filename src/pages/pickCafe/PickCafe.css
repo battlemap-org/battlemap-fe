@@ -28,27 +28,29 @@ html, body {
 
 .cafe-main-content {
   flex-grow: 1;
-  padding: 0 1rem;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
   overflow: hidden; 
 }
 
 .static-content {
-  padding-bottom: 1.5rem;
+  padding-bottom: 24px;
   flex-shrink: 0;
 }
 
 .page-controls {
   display: flex;
   align-items: center;
-  margin: 1rem 0;
+  margin: 16px 0;
+  margin-top: 30px;
+  margin-bottom:30px;
   position: relative;
 }
 
 .back-button {
   background-color: #f0f0f0; border: 1px solid #e0e0e0;
-  width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem;
+  width: 40px; height: 40px; border-radius: 50%; font-size: 24px;
   color: #555; cursor: pointer; display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
@@ -71,10 +73,10 @@ html, body {
 .cafe-list-wrapper {
   flex-grow: 1;
   overflow-y: auto; /* 내용이 넘칠 때만 스크롤바 생성 */
-  padding-bottom: 1rem;
+  padding-bottom: 16px;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px;
   padding-bottom: 80px;
 }
 
@@ -92,7 +94,7 @@ html, body {
 .cafe-list-item .cafe-name {
   font-size: 18px;
   font-weight: 500;
-  margin: 0 0 0.25rem;
+  margin: 0 0 4px;
 }
 .cafe-list-item .cafe-address {
   font-size: 14px;

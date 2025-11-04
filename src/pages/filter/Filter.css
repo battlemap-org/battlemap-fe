@@ -1,7 +1,7 @@
 .filter-page {
   width: 100%;
   min-height: 100vh;
-  background-color: #d9d9d9;
+  background-color: #ffffff;
   color: rgb(0, 0, 0);
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@
 
 .region {
   background-color: #a3b9a2;
-  color: #27272a;
+  color: #ffffff;
   font-weight: 700;
   padding: 12px 32px;
   border-radius: 9999px;
@@ -31,10 +31,10 @@
 .category {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2열 그리드 */
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-top: 25px;
+  margin-bottom: 20px;
 }
 
 .category-button {
@@ -46,8 +46,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 32px 0;
+  gap: 10px;
+  padding: 70px 0;
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -63,5 +63,5 @@
 }
 .category-button span {
   font-weight: 600;
-  font-size: 1.125rem;
+  font-size: 18px;
 }
