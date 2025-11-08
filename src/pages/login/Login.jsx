@@ -13,37 +13,6 @@ import "../../index.css";
 //   };
 
 function LogIn() {
-<<<<<<< Updated upstream
-=======
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
-  const navigate = useNavigate();
-
-  const handleRegister = () => {
-    axios
-      .post("http://3.35.246.97:8081/api/users/login", {
-        id,
-        pw,
-      })
-      .then((res) => {
-        console.log("로그인 성공:", res.data);
-
-        if (res.data.token) {
-          localStorage.setItem("token", res.data.token);
-          console.log("localStorage에 토큰 저장 완료");
-        }
-
-        navigate("/whereistoday"); //성공하면 도시 선택으로 이동
-      })
-      .catch((err) => {
-        console.error("로그인 실패:", err);
-        alert("아이디 또는 비밀번호를 확인하세요!");
-      });
-  };
-  const handleJoinClick = () => {
-    navigate("/join"); // join 페이지로 이동
-  };
->>>>>>> Stashed changes
   return (
     //로그인 텍스트
     <div className="login-container">
