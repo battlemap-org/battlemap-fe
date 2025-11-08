@@ -1,12 +1,16 @@
 body {
-  background-color: #f5f5f5; /* 연한 회색 */
+  background-color: #f5f5f5;
 }
 
 .login-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center; /* ← 중앙 정렬 때문에 제목이랑 안 맞음 */
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #f5f5f5;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 80px;
 }
 .titleWrap {
   font-size: 38px;
@@ -16,6 +20,7 @@ body {
   size: 15px;
   color: #949494;
   margin-bottom: 11px;
+  margin-left: 40px;
 }
 
 .LoginButton {
@@ -24,6 +29,7 @@ body {
   background-color: #3e5f44;
   color: white;
   border-radius: 14px;
+  transition: all 0.1s ease-in-out;
 }
 
 .InputId,
@@ -54,6 +60,7 @@ body {
   height: 65px;
   border-radius: 14px;
   border-width: 1px;
+  transition: all 0.1s ease-in-out;
 }
 
 .personicon {
@@ -64,4 +71,8 @@ body {
 .lockicon {
   transform: translateY(-180%);
   margin-left: 10px;
+}
+.JoinUserButton:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #c2c3cb;
 }

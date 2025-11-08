@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Settings, UserCircle, Flag, ScrollText, Coffee, ChevronRight, X } from 'lucide-react';
+import { LogOut, UserCircle, Flag, ScrollText, Coffee, ChevronRight, X, ChevronLeft } from 'lucide-react';
 
-const Header = () => {
+const Header = ({ onLogoutClick }) => {
   return (
     <header
       style={{
@@ -20,8 +20,11 @@ const Header = () => {
         alt="Battlemap 로고"
         style={{ height: 48, width: 'auto' }}
       />
-      <div style={{ position: 'absolute', right: 16 }}>
-        <Settings size={30} style={{ color: '#000' }} strokeWidth={1.5} />
+      <div 
+        style={{ position: 'absolute', right: 16, cursor: 'pointer' }}
+        onClick={onLogoutClick}
+      >
+        <LogOut size={30} style={{ color: '#000' }} strokeWidth={2.5} />
       </div>
     </header>
   );
@@ -30,11 +33,30 @@ const Header = () => {
 function Profile() {
   const userName = '사용자 이름';
   const points = 2650;
-  const [showModal, setShowModal] = useState(false);
+  const [modalStep, setModalStep] = useState(0); // 0: 닫힘, 1: 쿠폰함, 2: 충전, 3: 확인
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showOwnedCouponModal, setShowOwnedCouponModal] = useState(false);
+  const [showExchangeModal, setShowExchangeModal] = useState(false);
+  const [showBarcodeModal, setShowBarcodeModal] = useState(false);
+  const [selectedCoupon, setSelectedCoupon] = useState(null);
+
+
+  /* 쿠폰 이미지들 */
+  const coupons = [
+    { img: 'cu3000.png', value: 'P 3000' },
+    { img: 'cu5000.png', value: 'P 5000' },
+    { img: 'cu10000.png', value: 'P 10000' },
+    { img: 'mega5000.png', value: 'P 5000' },
+    { img: 'mega10000.png', value: 'P 10000' },
+    { img: 'mega20000.png', value: 'P 20000' },
+    { img: 'olive5000.png', value: 'P 5000' },
+    { img: 'olive10000.png', value: 'P 10000' },
+    { img: 'olive20000.png', value: 'P 20000' },
+  ];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
-      <Header />
+      <Header onLogoutClick={() => setShowLogoutModal(true)} />
 
       <main style={{ padding: 16, background: '#fff' }}>
         {/* 프로필 영역 */}
@@ -76,11 +98,12 @@ function Profile() {
               <ChevronRight
                 size={18}
                 style={{ cursor: 'pointer' }}
-                onClick={() => setShowModal(true)}
+                onClick={() => setModalStep(1)}
               />
             </div>
 
             <button
+              onClick={() => setShowOwnedCouponModal(true)}
               style={{
                 marginTop: 8,
                 background: '#5E936C',
@@ -211,8 +234,8 @@ function Profile() {
         </div>
       </main>
 
-      {/* 모달 */}
-      {showModal && (
+      {/* 모달 1: 쿠폰함 */}
+      {modalStep >= 1 && (
         <div
           style={{
             position: 'fixed',
@@ -226,7 +249,7 @@ function Profile() {
             justifyContent: 'center',
             zIndex: 1000,
           }}
-          onClick={() => setShowModal(false)}
+          onClick={() => setModalStep(0)}
         >
           <div
             style={{
@@ -248,7 +271,7 @@ function Profile() {
                 cursor: 'pointer',
                 color: '#444',
               }}
-              onClick={() => setShowModal(false)}
+              onClick={() => setModalStep(0)}
             />
 
             {/* 포인트 */}
@@ -257,7 +280,7 @@ function Profile() {
                 style={{
                   background: '#FDE68A',
                   padding: '2px 8px',
-                  borderRadius: 12,
+                  borderRadius: 20,
                   fontWeight: 600,
                   display: 'inline-block',
                   fontSize: 22,
@@ -270,6 +293,7 @@ function Profile() {
 
             {/* 지역 화폐 충전 버튼 */}
             <button
+              onClick={() => setModalStep(2)}
               style={{
                 background: '#5E936C',
                 color: '#fff',
@@ -294,22 +318,25 @@ function Profile() {
                 gap: 12,
               }}
             >
-              {['P 2000', 'P 2000', 'P 2000', 'P 5000', 'P 5000', 'P 5000', 'P 5000', 'P 5000', 'P 5000'].map(
-                (value, idx) => (
+              {coupons.map(
+                (coupon, idx) => (
                   <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                    <div
+                    <img
+                      src={`/assets/${coupon.img}`}
+                      alt={`${coupon.value} 쿠폰`}
                       style={{
                         background: '#f3f4f6',
                         borderRadius: 14,
                         height: 80,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
                         width: '100%',
+                        objectFit: 'cover',
+                        cursor: 'pointer',
                       }}
-                    >
-                    </div>
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowExchangeModal(true);
+                      }}
+                    />
                     <div
                       style={{
                         fontWeight: 600,
@@ -317,7 +344,7 @@ function Profile() {
                         fontSize: 15,
                       }}
                     >
-                      {value}
+                      {coupon.value}
                     </div>
                   </div>
                 )
@@ -326,6 +353,503 @@ function Profile() {
           </div>
         </div>
       )}
+
+      {/* 모달 2: 충전 */}
+      {modalStep >= 2 && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1001, 
+          }}
+          onClick={() => setModalStep(0)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 20,
+              padding: 24,
+              width: '90%',
+              maxWidth: 320, 
+              position: 'relative',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <X
+              size={28}
+              style={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                cursor: 'pointer',
+                color: '#444',
+              }}
+              onClick={() => setModalStep(0)}
+            />
+            
+            <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'center', marginBottom: 20 }}>
+              지역 화폐 충전
+            </div>
+            
+            <div style={{ display: 'flex', gap: 8, marginBottom: 12, alignItems: 'center' }}>
+              <input
+                type="text"
+                placeholder="충전 금액을 입력하세요."
+                style={{
+                  flex: 1,
+                  border: '1px solid #d1d5db',
+                  borderRadius: 8,
+                  padding: '8px 12px',
+                  fontSize: 14,
+                  width: '100%',
+                }}
+              />
+              <button
+                onClick={() => setModalStep(3)}
+                style={{
+                  background: '#5E936C',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '8px 16px',
+                  borderRadius: 8,
+                  cursor: 'pointer',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                확인
+              </button>
+            </div>
+
+            <div style={{ fontSize: 13, color: '#000000ff', textAlign: 'center' }}>
+              충전 가능 금액: {points}원
+            </div>
+            <div style={{ fontSize: 13, color: '#000000ff', textAlign: 'center' }}>
+              보유 지역 화폐: 450원
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 모달 3: 충전 확인 */}
+      {modalStep === 3 && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1002, 
+          }}
+          onClick={() => setModalStep(0)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 20,
+              padding: 24,
+              width: '90%',
+              maxWidth: 320, 
+              position: 'relative',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <X
+              size={28}
+              style={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                cursor: 'pointer',
+                color: '#444',
+              }}
+              onClick={() => setModalStep(0)}
+            />
+            
+            <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'center', marginBottom: 24, marginTop: 12 }}>
+              지역 화폐를 충전하시겠습니까?
+            </div>
+            
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+              <button
+                onClick={() => setModalStep(0)} 
+                style={{
+                  background: '#5E936C',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                  fontSize: 15,
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+              >
+                확인
+              </button>
+
+              <button
+                onClick={() => setModalStep(0)} 
+                style={{
+                  background: '#e5e7eb',
+                  color: '#374151',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                  fontSize: 15,
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 모달 4: 로그아웃 확인 */}
+      {showLogoutModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1003, 
+          }}
+          onClick={() => setShowLogoutModal(false)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 20,
+              padding: 24,
+              width: '90%',
+              maxWidth: 320, 
+              position: 'relative',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <X
+              size={28}
+              style={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                cursor: 'pointer',
+                color: '#444',
+              }}
+              onClick={() => setShowLogoutModal(false)}
+            />
+            
+            <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'center', marginBottom: 24, marginTop: 12 }}>
+              로그아웃 하시겠습니까?
+            </div>
+            
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+              <button
+                onClick={() => setShowLogoutModal(false)} // 
+                style={{
+                  background: '#5E936C',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                  fontSize: 15,
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+              >
+                확인
+              </button>
+
+              <button
+                onClick={() => setShowLogoutModal(false)} 
+                style={{
+                  background: '#e5e7eb',
+                  color: '#374151',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                  fontSize: 15,
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 모달 5: 보유 쿠폰 */}
+      {showOwnedCouponModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+          }}
+          onClick={() => setShowOwnedCouponModal(false)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 20,
+              padding: 24,
+              width: '90%',
+              maxWidth: 420,
+              position: 'relative',
+              minHeight: 400,
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <X
+              size={28}
+              style={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                cursor: 'pointer',
+                color: '#444',
+              }}
+              onClick={() => setShowOwnedCouponModal(false)}
+            />
+
+            <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 12, textAlign: 'center' }}>보유쿠폰</div>
+            
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: 12,
+              }}
+            >
+              {/* 첫 번째 박스에만 쿠폰 이미지 삽입 */}
+              <div 
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, cursor: 'pointer' }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedCoupon(coupons[0]);
+                  setShowBarcodeModal(true);
+                }}
+              >
+                <img
+                  src={`/assets/${coupons[0].img}`} // 첫 번째 쿠폰 이미지 사용
+                  alt={`${coupons[0].value} 쿠폰`}
+                  style={{
+                    background: '#f3f4f6',
+                    borderRadius: 14,
+                    height: 80,
+                    width: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+              </div>
+
+              {/* 나머지 5개는 회색 박스로 유지 */}
+              {[...Array(5)].map((_, idx) => (
+                <div key={idx + 1} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                  <div
+                    style={{
+                      background: '#f3f4f6',
+                      borderRadius: 14,
+                      height: 80,
+                      width: '100%',
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 모달 6: 쿠폰 교환 확인 */}
+      {showExchangeModal && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1002, 
+          }}
+          onClick={() => setShowExchangeModal(false)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 20,
+              padding: 24,
+              width: '90%',
+              maxWidth: 320, 
+              position: 'relative',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <X
+              size={28}
+              style={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                cursor: 'pointer',
+                color: '#444',
+              }}
+              onClick={() => setShowExchangeModal(false)}
+            />
+            
+            <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'center', marginBottom: 24, marginTop: 12 }}>
+              해당 쿠폰으로 교환하시겠습니까?
+            </div>
+            
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+              <button
+                onClick={() => setShowExchangeModal(false)} 
+                style={{
+                  background: '#5E936C',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                  fontSize: 15,
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+              >
+                확인
+              </button>
+
+              <button
+                onClick={() => setShowExchangeModal(false)} 
+                style={{
+                  background: '#e5e7eb',
+                  color: '#374151',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: 10,
+                  cursor: 'pointer',
+                  fontSize: 15,
+                  fontWeight: 600,
+                  flex: 1,
+                }}
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 모달 7: 바코드 확인 */}
+      {showBarcodeModal && selectedCoupon && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1004,
+          }}
+          onClick={() => setShowBarcodeModal(false)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 20,
+              padding: 24,
+              width: '65%',
+              maxWidth: 420,
+              position: 'relative',
+              minHeight: 400,
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ChevronLeft
+              size={28}
+              style={{
+                position: 'absolute',
+                top: 16,
+                left: 16,
+                cursor: 'pointer',
+                color: '#444',
+              }}
+              onClick={() => setShowBarcodeModal(false)}
+            />
+
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <img
+                src="/assets/cu3000.png"
+                alt="cu3000"
+                style={{
+                  width: '100%',
+                  maxWidth: 300,
+                  height: 'auto',
+                }}
+              />
+            </div>
+            
+            <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 24, textAlign: 'center'}}>
+              CU 모바일 금액권 3000원
+            </div>
+            
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <img
+                src="/assets/barcode.png"
+                alt="바코드"
+                style={{
+                  width: '100%',
+                  maxWidth: 200,
+                  height: 'auto',
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

@@ -27,7 +27,4 @@ body {
   body {
     background-color: #cccccc;
   }
-  #app {
-    width: 388px; /* 고정 */
-  }
 }

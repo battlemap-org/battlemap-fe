@@ -24,7 +24,7 @@ export default function Router() {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
-
+        <Route path="/whereistoday" element={<Whereistoday />} />
         {/* 3. Layout(Footer)가 필요한 페이지들을 그룹으로 묶습니다.
           <Layout />을 element로 사용하는 부모 Route를 만들고,
           그 안에 자식 Route들을 정의하면 됩니다.
@@ -33,7 +33,7 @@ export default function Router() {
         */}
         <Route element={<Layout />}>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/whereistoday" element={<Whereistoday />} />
+
           <Route path="/filter" element={<Filter />} />
           <Route path="/stores/:categoryCode" element={<PickCafe />} />
           <Route path="/questlist" element={<QuestList />} />
