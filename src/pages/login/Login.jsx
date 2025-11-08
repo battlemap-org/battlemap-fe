@@ -18,6 +18,11 @@ function LogIn() {
       .then((res) => {
         console.log("로그인 성공:", res.data);
 
+        if (res.data.token) {
+          localStorage.setItem("token", res.data.token);
+          console.log("localStorage에 토큰 저장 완료");
+        }
+
         navigate("/whereistoday"); //성공하면 도시 선택으로 이동
       })
       .catch((err) => {
