@@ -15,7 +15,7 @@ function QuestList() {
   return (
     <>
       <Header />
-      <div className="page-wrapper">
+      <div className="page-wrapper">d
         <nav className="navigation">
           <button className="back-button">
             {'<'}
