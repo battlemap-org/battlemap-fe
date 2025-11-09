@@ -14,6 +14,7 @@ import Entirelevel from "./pages/entirelevel/Entirelevel.jsx";
 // 1. Footer가 포함된 올바른 Layout 컴포넌트를 임포트합니다.
 import Layout from "./components/Layout.jsx";
 import StatusModal from "./components/statusmodal/StatusModal.jsx";
+import Myoccupy from "./pages/myoccupy/Myoccupy.jsx";
 
 // 2. 기존 Router.jsx 파일에 있던 불필요한 Layout 함수는 제거합니다.
 
@@ -40,6 +41,7 @@ export default function Router() {
           <Route path="/questlist" element={<QuestList />} />
           <Route path="/bucheonmap" element={<Bucheonmap />} />
           <Route path="/statusModal" element={<StatusModal />} />
+          <Route path="/myoccupy" element={<Myoccupy />} />
         </Route>
       </Routes>
     </BrowserRouter>
