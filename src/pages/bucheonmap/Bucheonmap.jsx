@@ -4,7 +4,7 @@ import "./Bucheonmap.css";
 import Header from "../../components/header/Header";
 import Footer from "../../components/Footer";
 import StatusModal from "../../components/statusmodal/StatusModal";
-import imageMapResize from "image-map-resizer"; // ✅ ➊ 추가
+import imageMapResize from "image-map-resizer"; 
 
 function Bucheonmap() {
   const [quest, setQuest] = useState("");
@@ -16,7 +16,6 @@ function Bucheonmap() {
     setTopPlayer("고은우");
   }, []);
 
-  // ✅ ➋ 이미지맵 리사이저 실행 (좌표 자동 조정)
   useEffect(() => {
     imageMapResize();
   }, []);

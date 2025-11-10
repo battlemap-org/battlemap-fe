@@ -4,21 +4,6 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/Footer";
 //import axios from "axios";
 
-// ✅ API에서 랭킹 불러오기
-const fetchRanking = async () => {
-  try {
-    const res = await axios.get("http://3.35.246.97:8081/api/leaderboard");
-    console.log("📡 랭킹 데이터:", res.data);
-
-    // 백엔드에서 데이터 형태가 아래와 같다고 가정:
-    // { leaderboard: [...], me: { rank: 4, name: "이하느니", point: 1550 } }
-    setRanking(res.data.leaderboard);
-    setMyInfo(res.data.me);
-  } catch (error) {
-    console.error("❌ 랭킹 불러오기 실패:", error);
-    alert("랭킹 데이터를 불러오는 중 오류가 발생했습니다.");
-  }
-};
 
 //   // API에서 랭킹 불러오기
 //   const fetchRanking = async () => {

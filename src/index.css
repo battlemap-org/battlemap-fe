@@ -20,9 +20,9 @@ body {
   #app {
     width: 100%; /* ✅ 전체 반응형 */
     max-width: 1200px; /* ✅ 적절한 제한 */
-    margin: 0 auto; /* ✅ 가운데 정렬 */
+    margin: 0 auto; 
   }
-} /* 반응형: 데스크톱 */
+} 
 @media (min-width: 769px) {
   body {
     background-color: #cccccc;
