@@ -12,7 +12,7 @@ function Myoccupy() {
   //   const fetchYeogokData = async () => {
   //     try {
   //       // 예시 API 엔드포인트 삽입
-  //       const res = await axios.get("http://3.35.246.97:8081/api/area/yeogok");
+  //       const res = await axios.get("api/area/yeogok");
   //       console.log("역곡동 데이터:", res.data);
 
   //       // 예시 응답 형태:
