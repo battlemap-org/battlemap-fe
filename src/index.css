@@ -18,11 +18,11 @@ body {
     background-color: #f7f8fa;
   }
   #app {
-    width: 100%; /* ✅ 전체 반응형 */
-    max-width: 1200px; /* ✅ 적절한 제한 */
-    margin: 0 auto; 
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-} 
+}
 @media (min-width: 769px) {
   body {
     background-color: #cccccc;
