@@ -30,7 +30,7 @@ function Join() {
       })
       .then((res) => {
         console.log("회원가입:", res.data);
-        navigate("/whereistoday");
+        navigate("/login");
       })
       .catch((err) => {
         console.error("회원가입 실패:", err);
