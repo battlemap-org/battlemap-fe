@@ -9,6 +9,7 @@ import Profile from "./pages/profile/Profile.jsx";
 import Whereistoday from "./pages/whereistoday/Whereistoday.jsx";
 import PickCafe from "./pages/pickCafe/PickCafe.jsx";
 import QuestList from "./pages/questlist/QuestList.jsx";
+import QuestContents from "./pages/questcontents/QuestContents.jsx";
 import Bucheonmap from "./pages/bucheonmap/Bucheonmap.jsx";
 import Entirelevel from "./pages/entirelevel/Entirelevel.jsx";
 // 1. Footer가 포함된 올바른 Layout 컴포넌트를 임포트합니다.
@@ -35,6 +36,7 @@ export default function Router() {
         */}
         <Route element={<Layout />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/questcontents" element={<QuestContents />} />
           <Route path="/entirelevel" element={<Entirelevel />} />
           <Route path="/filter" element={<Filter />} />
           <Route path="/stores/:categoryCode" element={<PickCafe />} />
