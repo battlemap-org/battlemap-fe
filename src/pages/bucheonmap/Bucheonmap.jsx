@@ -12,7 +12,7 @@ function Bucheonmap() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedArea, setSelectedArea] = useState(null);
 
-  // ✅ 점령 상태 관리
+  // 점령 상태 관리
   const [territories, setTerritories] = useState({
     역곡동: { owner: "고은우", color: "#FFD700" },
     // 필요 시 초기값 더 추가 가능
@@ -27,14 +27,14 @@ function Bucheonmap() {
     imageMapResize();
   }, []);
 
-  // ✅ 클릭 시 모달 열기
+  // 클릭 시 모달 열기
   const handleAreaClick = (areaName) => {
     console.log(`${areaName} 클릭됨!`);
     setSelectedArea(areaName);
     setIsModalOpen(true);
   };
 
-  // ✅ 점령 색상 업데이트 콜백
+  //  점령 색상 업데이트 콜백
   const handleConquer = (areaName, newOwner) => {
     const colorMap = {
       고은우: "#FFD700",
@@ -87,7 +87,7 @@ function Bucheonmap() {
               />
             ))}
 
-            {/* ✅ 클릭 가능한 영역 전체 */}
+            {/* 클릭 가능한 영역 전체 */}
             <map name="image-map">
               {[
                 "옥길동",
