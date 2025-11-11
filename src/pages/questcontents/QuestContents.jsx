@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import './QuestContents.css';
 import Header from '../../components/header/Header';
 import Footer from '../../components/Footer';
-import ResultModal from '../../resultmodal/ResultModal';
+import ResultModal from '../../components/resultmodal/ResultModal';
 import fail_image1 from '/assets/fail_image1.png';
 import fail_image2 from '/assets/fail_image2.png';
 import fail_image3 from '/assets/fail_image3.png';
