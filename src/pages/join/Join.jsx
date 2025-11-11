@@ -31,7 +31,7 @@ function Join() {
     }
 
     axios
-      .post("http://3.35.246.97:8081/api/users/register", {
+      .post("http://3.39.56.40:8080/api/users/register", {
         name,
         id,
         email,
