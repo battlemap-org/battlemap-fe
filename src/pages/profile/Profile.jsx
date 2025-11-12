@@ -26,7 +26,9 @@ const Header = ({ onLogoutClick }) => {
 };
 
 function Profile() {
-  const userName = '사용자 이름';
+  const [userName, setUserName] = useState('사용자 이름');
+  const [userNameLoading, setUserNameLoading] = useState(true);
+  const [userNameError, setUserNameError] = useState(null);
   
   const [points, setPoints] = useState(null); // points state
   const [loading, setLoading] = useState(true); // 로딩 state
@@ -232,6 +234,36 @@ function Profile() {
       setTotalQuestsLoading(false); 
     }
   };
+  {/* API 호출 (사용자 이름) */}
+    const fetchUserName = async () => {
+    const token = localStorage.getItem("token"); 
+    if (!token) {
+      setUserNameError("로그인 필요"); 
+      setUserNameLoading(false);
+      setUserName('사용자 이름'); // 기본값 유지
+      return;
+    }
+
+    try {
+      setUserNameLoading(true); 
+      const response = await axios.get(
+        "http://3.39.56.40:8080/api/users/name", 
+        { headers: { "Authorization": `Bearer ${token}` } }
+      );
+      setUserName(response.data.success.userName); 
+      setUserNameError(null); 
+    } catch (err) {
+      console.error("사용자 이름 조회 실패:", err); 
+      if (err.response) {
+        setUserNameError("서버 오류");
+      } else {
+        setUserNameError("조회 실패");
+      }
+      setUserName('사용자 이름'); // 에러 시 기본값 유지
+    } finally {
+      setUserNameLoading(false); 
+    }
+  };
 
   {/* API 호출 (마운트) */}
   useEffect(() => {
@@ -239,6 +271,7 @@ function Profile() {
     fetchLocalCurrency(); 
     fetchCompletedQuests();
     fetchTotalQuests();
+    fetchUserName();
   }, []); 
 
   {/* 텍스트 (포인트) */}
