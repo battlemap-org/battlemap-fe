@@ -51,15 +51,15 @@ function Profile() {
 
   {/* [수정] API 요청을 위해 brand, name, amount(숫자) 필드 추가 */}
   const coupons = [
-    { img: 'cu3000.png', value: 'P 3000', brand: 'CU', name: 'CU 3000원권', amount: 3000 },
-    { img: 'cu5000.png', value: 'P 5000', brand: 'CU', name: 'CU 5000원권', amount: 5000 },
-    { img: 'cu10000.png', value: 'P 10000', brand: 'CU', name: 'CU 10000원권', amount: 10000 },
-    { img: 'mega5000.png', value: 'P 5000', brand: '메가커피', name: '메가커피 5000원권', amount: 5000 },
-    { img: 'mega10000.png', value: 'P 10000', brand: '메가커피', name: '메가커피 10000원권', amount: 10000 },
-    { img: 'mega20000.png', value: 'P 20000', brand: '메가커피', name: '메가커피 20000원권', amount: 20000 },
-    { img: 'olive5000.png', value: 'P 5000', brand: '올리브영', name: '올리브영 5000원권', amount: 5000 },
-    { img: 'olive10000.png', value: 'P 10000', brand: '올리브영', name: '올리브영 10000원권', amount: 10000 },
-    { img: 'olive20000.png', value: 'P 20000', brand: '올리브영', name: '올리브영 20000원권', amount: 20000 },
+    { img: 'cu3000.png', value: ' 3000', brand: 'CU', name: 'CU 3000원권', amount: 3000 },
+    { img: 'cu5000.png', value: ' 5000', brand: 'CU', name: 'CU 5000원권', amount: 5000 },
+    { img: 'cu10000.png', value: ' 10000', brand: 'CU', name: 'CU 10000원권', amount: 10000 },
+    { img: 'mega5000.png', value: ' 5000', brand: '메가커피', name: '메가커피 5000원권', amount: 5000 },
+    { img: 'mega10000.png', value: ' 10000', brand: '메가커피', name: '메가커피 10000원권', amount: 10000 },
+    { img: 'mega20000.png', value: ' 20000', brand: '메가커피', name: '메가커피 20000원권', amount: 20000 },
+    { img: 'olive5000.png', value: ' 5000', brand: '올리브영', name: '올리브영 5000원권', amount: 5000 },
+    { img: 'olive10000.png', value: ' 10000', brand: '올리브영', name: '올리브영 10000원권', amount: 10000 },
+    { img: 'olive20000.png', value: ' 20000', brand: '올리브영', name: '올리브영 20000원권', amount: 20000 },
   ];
 
   {/* API 호출 (포인트) */}
@@ -153,7 +153,7 @@ function Profile() {
   }, []); 
 
   {/* 텍스트 (포인트) */}
-  const pointsText = loading ? '로딩중...' : (error ? '에러' : `P ${points}`);
+  const pointsText = loading ? '로딩중...' : (error ? '에러' : `${points}`);
   const pointsValue = loading || error ? 0 : points; 
 
   {/* 텍스트 (지역 화폐) */}
@@ -355,17 +355,12 @@ function Profile() {
   	 	 	   }}
   	 	 	 >
   	 	 	   <span>사용 가능 포인트</span>
-  	 	 	   <span
-  	 	 	 	 style={{
-  	 	 	 	   background: '#FDE68A',
-  	 	 	 	   padding: '2px 8px',
-  	 	 	 	   borderRadius: 12,
-  	 	 	 	   fontWeight: 600,
-  	 	 	 	   display: 'flex',
-  	 	 	 	   alignItems: 'center',
-  	 	 	 	   gap: 4,
-  	 	 	 	 }}
-  	 	 	   >
+           <img
+              src="/assets/point.png"
+              alt="포인트"
+              style={{ width: 28, height: 32 }}
+            />
+  	 	 	   <span>
   	 	 	 	 {pointsText} 
   	 	 	   </span>
   	 	 	   <ChevronRight
@@ -548,19 +543,24 @@ function Profile() {
   	 	 	 />
 
   	 	 	 {/* 포인트 */}
-  	 	 	 <div style={{ marginBottom: 8 }}>
-  	 	 	   <span
-  	 	 	 	 style={{
-  	 	 	 	   background: '#FDE68A',
-  	 	 	 	   padding: '2px 8px',
-  	 	 	 	   borderRadius: 20,
-  	 	 	 	   fontWeight: 600,
-  	 	 	 	   display: 'inline-block',
-  	 	 	 	   fontSize: 22,
-  	 	 	 	 }}
-  	 	 	   >
-  	 	 	 	 {pointsText}
-  	 	 	   </span>
+  	 	 	 <div style={{
+             marginBottom: 8,
+             display: 'flex',
+             alignItems: 'center',
+             gap: 8 
+          }}>
+            <img
+              src="/assets/point.png"
+              style={{ width: 40, height: 44 }}
+            />
+  	 	 	    <span
+  	 	 	 	    style={{
+  	 	 	 	    fontWeight: 600,
+  	 	 	 	    fontSize: 22,
+  	 	 	 	  }}
+  	 	 	    >
+  	 	 	 	  {pointsText}
+  	 	 	    </span>
   	 	 	 </div>
 
 
@@ -615,9 +615,17 @@ function Profile() {
   	 	 	 		   style={{
   	 	 	 			 fontWeight: 600,
   	 	 	 			 color: '#374151',
+               display: 'flex',
+               justifyContent: 'center',
+               alignItems: 'center',
   	 	 	 			 fontSize: 15,
   	 	 	 		   }}
   	 	 	 		 >
+            <img 
+    	  	 	 	 src="/assets/point.png" 
+    	  	 	 	 alt="P" 
+    	  	 	 	 style={{ width: 24, height: 28 }} 
+    	  	 	 />
   	 	 	 		   {coupon.value}
   	 	 	 		 </div>
   	 	 	 	   </div>
@@ -779,89 +787,6 @@ function Profile() {
 
   	 	 	   <button
   	 	 	 	 onClick={() => setModalStep(2)} 
-  	 	 	 	 style={{
-  	 	 	 	   background: '#e5e7eb',
-  	 	 	 	   color: '#374151',
-  	 	 	 	   border: 'none',
-  	 	 	 	   padding: '10px 20px',
-  	 	 	 	   borderRadius: 10,
-  	 	 	 	   cursor: 'pointer',
-  	 	 	 	   fontSize: 15,
-  	 	 	 	   fontWeight: 600,
-  	 	 	 	   flex: 1,
-  	 	 	 	 }}
-  	 	 	   >
-  	 	 	 	 취소
-  	 	 	   </button>
-  	 	 	 </div>
-  	 	   </div>
-  	 	 </div>
-  	  )}
-
-  	  {/* 모달 4: 로그아웃 확인 */}
-  	  {showLogoutModal && (
-  	 	 <div
-  	 	   style={{
-  	 	 	 position: 'fixed',
-  	 	 	 top: 0,
-  	 	 	 left: 0,
-  	 	 	 width: '100%',
-  	 	 	 height: '100%',
-  	 	 	 background: 'rgba(0,0,0,0.5)',
-  	 	 	 display: 'flex',
-  	 	 	 alignItems: 'center',
-  	 	 	 justifyContent: 'center',
-  	 	 	 zIndex: 1003, 
-  	 	   }}
-  	 	   onClick={() => setShowLogoutModal(false)}
-  	 	 >
-  	 	   <div
-  	 	 	 style={{
-  	 	 	 	 background: '#fff',
-  	 	 	 	 borderRadius: 20,
-  	 	 	 	 padding: 24,
-  	 	 	 	 width: '90%',
-  	 	 	 	 maxWidth: 320, 
-  	 	 	 	 position: 'relative',
-  	 	 	   }}
-  	 	 	   onClick={(e) => e.stopPropagation()}
-  	 	   >
-  	 	 	 <X
-  	 	 	   size={28}
-  	 	 	   style={{
-  	 	 	 	 position: 'absolute',
-  	 	 	 	 top: 16,
-  	 	 	 	 right: 16,
-  	 	 	 	 cursor: 'pointer',
-  	 	 	 	 color: '#444',
-  	 	 	   }}
-  	 	 	   onClick={() => setShowLogoutModal(false)}
-  	 	 	 />
-  	 	 	 
-  	 	 	 <div style={{ fontSize: 18, fontWeight: 700, textAlign: 'center', marginBottom: 24, marginTop: 12 }}>
-  	 	 	   로그아웃 하시겠습니까?
-  	 	 	 </div>
-  	 	 	 
-  	 	 	 <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-  	 	 	   <button
-  	 	 	 	 onClick={() => setShowLogoutModal(false)} // 
-  	 	 	 	 style={{
-  	 	 	 	   background: '#5E936C',
-  	 	 	 	   color: '#fff',
-  	 	 	 	   border: 'none',
-  	 	 	 	   padding: '10px 20px',
-  	 	 	 	   borderRadius: 10,
-  	 	 	 	   cursor: 'pointer',
-  	 	 	 	   fontSize: 15,
-  	 	 	 	   fontWeight: 600,
-  	 	 	 	   flex: 1,
-  	 	 	 	 }}
-  	 	 	   >
-  	 	 	 	 확인
-  	 	 	   </button>
-
-  	 	 	   <button
-  	 	 	 	 onClick={() => setShowLogoutModal(false)} 
   	 	 	 	 style={{
   	 	 	 	   background: '#e5e7eb',
   	 	 	 	   color: '#374151',
