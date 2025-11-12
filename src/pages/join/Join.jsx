@@ -14,17 +14,15 @@ function Join() {
   const [pw, setPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState(""); // ✅ 모달 메시지
+  const [modalMessage, setModalMessage] = useState(""); // 모달 메시지
 
   const handleRegister = () => {
-    // ✅ 비밀번호 유효성 검사 (영문+숫자+특수문자, 8자 이상)
     const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=]).{8,}$/;
     if (!pwRegex.test(pw)) {
       alert("비밀번호는 영문, 숫자, 특수문자를 포함해 8자 이상이어야 합니다.");
       return;
     }
 
-    // ✅ 비밀번호 일치 확인
     if (pw !== confirmPw) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
@@ -43,7 +41,6 @@ function Join() {
       })
       .catch((err) => {
         console.error("회원가입 실패:", err);
-        // ✅ 중복 아이디/이메일 처리 (409)
         if (err.response && err.response.status === 409) {
           setModalMessage("이미 존재하는 아이디 또는 이메일입니다.");
           setShowModal(true);
