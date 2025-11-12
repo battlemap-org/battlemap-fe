@@ -1,7 +1,7 @@
 import React from 'react';
 import './QuestList.css'; 
 import Header from '../../components/header/Header';
-import Footer from '../../components/Footer';
+import Footer from '../../components/footer/Footer';
 
 const questListData = [
   { id: 1, name: '퀘스트 1', points: 50 },

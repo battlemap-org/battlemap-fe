@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './PickCafe.css';
 import Header from '../../components/header/Header';
-import Footer from '../../components/Footer';
+import Footer from '../../components/footer/Footer';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const KAKAO_API_KEY = "3a11aa359ca635ecbd8260eb1d2271db";
-const BASE_URL = "http://3.35.246.97:8081";
+const BASE_URL = "http://3.39.56.40:8080";
 
 const categoryNames = {
   FD6: "식당",
