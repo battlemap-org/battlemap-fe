@@ -53,6 +53,10 @@ function Profile() {
   const [questsLoading, setQuestsLoading] = useState(true);
   const [questsError, setQuestsError] = useState(null);
 
+  const [totalQuests, setTotalQuests] = useState(null);
+  const [totalQuestsLoading, setTotalQuestsLoading] = useState(true);
+  const [totalQuestsError, setTotalQuestsError] = useState(null);
+
   const coupons = [
     { img: 'cu3000.png', value: ' 3000', brand: 'CU', name: 'CU 3000원권' },
     { img: 'cu5000.png', value: ' 5000', brand: 'CU', name: 'CU 5000원권' },
@@ -189,11 +193,52 @@ function Profile() {
     }
   };
 
+  {/* API 호출 (총 퀘스트) */}
+  const fetchTotalQuests = async () => {
+    const token = localStorage.getItem("token"); 
+    if (!token) {
+      setTotalQuestsError("로그인 필요"); 
+      setTotalQuestsLoading(false);
+      setTotalQuests(0);
+      return;
+    }
+
+    try {
+      setTotalQuestsLoading(true); 
+      
+      const response = await axios.get(
+        "http://3.39.56.40:8080/api/users/quests/count", 
+        {
+          headers: { "Authorization": `Bearer ${token}` }
+        }
+      );
+      
+      setTotalQuests(response.data.success.totalCount); 
+      setTotalQuestsError(null); 
+      
+    } catch (err) {
+      console.error("총 퀘스트 조회 실패:", err); 
+      if (err.response) {
+        if (err.response.status === 401 || err.response.status === 404) {
+          setTotalQuestsError("인증 실패");
+        } else {
+          setTotalQuestsError("서버 오류");
+        }
+      } else {
+         setTotalQuestsError("조회 실패");
+      }
+      setTotalQuests(0);
+    } finally {
+      setTotalQuestsLoading(false); 
+    }
+  };
+
   {/* API 호출 (마운트) */}
   useEffect(() => {
     fetchPoints(); 
     fetchLocalCurrency(); 
     fetchCompletedQuests();
+    fetchTotalQuests();
   }, []); 
 
   {/* 텍스트 (포인트) */}
@@ -203,8 +248,11 @@ function Profile() {
   {/* 텍스트 (지역 화폐) */}
   const localCurrencyText = localCurrencyLoading ? '로딩중...' : (localCurrencyError ? localCurrencyError : `${localCurrency}원`);
 
-  {/* [수정] 텍스트 (완료 퀘스트) */}
+  {/* 텍스트 (완료 퀘스트) */}
   const completedQuestsText = questsLoading ? '...' : (questsError ? '!' : `${completedQuests || 0}개`);
+
+  {/* 텍스트 (총 퀘스트) */}
+  const totalQuestsText = totalQuestsLoading ? '...' : (totalQuestsError ? '!' : `${totalQuests || 0}개`);
 
   {/* API 호출 (보유 쿠폰) */}
   const handleShowOwnedCoupons = async () => {
@@ -258,7 +306,7 @@ function Profile() {
       alert("로그인 정보가 올바르지 않습니다. 다시 로그인해주세요.");
       setModalStep(0); 
       return;
-  _   }
+    }
 
     const amount = parseInt(chargeAmount, 10);
     if (isNaN(amount) || amount <= 0) {
@@ -406,7 +454,7 @@ function Profile() {
            <span>
            {pointsText} 
            </span>
-           <ChevronRight
+          <ChevronRight
            size={18}
            style={{ cursor: 'pointer' }}
            onClick={() => setModalStep(1)}
@@ -424,7 +472,7 @@ function Profile() {
            borderRadius: 8,
            cursor: 'pointer',
            fontSize: 14,
-           fontWeight: 600,
+           fontWeight: 600,
            alignSelf: 'flex-start',
            }}
          >
@@ -488,7 +536,7 @@ function Profile() {
          }}
          >
          <ScrollText size={52} style={{ color: '#374151' }} />
-         <span style={{ marginTop: 8, fontWeight: 600 }}>125개</span>
+         <span style={{ marginTop: 8, fontWeight: 600 }}>{totalQuestsText}</span>
          </div>
 
          {/* 박스 3 */}
@@ -529,7 +577,7 @@ function Profile() {
        <div
          style={{
          width: '100%',
-         display: 'flex',
+         display: 'flex',
          justifyContent: 'center',
          marginBottom: 24,
          }}
@@ -563,7 +611,7 @@ function Profile() {
          zIndex: 1000,
          }}
          onClick={() => setModalStep(0)}
-       >
+       >
          <div
          style={{
            background: '#fff',
@@ -744,7 +792,7 @@ function Profile() {
            onClick={() => setModalStep(3)} // 확인 모달로
            style={{
              background: '#5E936C',
-            color: '#fff',
+             color: '#fff',
              border: 'none',
              padding: '8px 16px',
              borderRadius: 8,
@@ -769,7 +817,7 @@ function Profile() {
       )}
 
       {/* 모달 3: 충전 확인 */}
-     {modalStep === 3 && (
+     {modalStep === 3 && (
        <div
          style={{
          position: 'fixed',
@@ -821,7 +869,7 @@ function Profile() {
              border: 'none',
              padding: '10px 20px',
              borderRadius: 10,
-             cursor: 'pointer',
+             cursor: 'pointer',
              fontSize: 15,
              fontWeight: 600,
              flex: 1,
@@ -856,7 +904,7 @@ function Profile() {
        <div
          style={{
          position: 'fixed',
-         top: 0,
+         top: 0,
          left: 0,
          width: '100%',
          height: '100%',
@@ -871,7 +919,7 @@ function Profile() {
          <div
          style={{
            background: '#fff',
-           borderRadius: 20,
+           borderRadius: 20,
            padding: 24,
            width: '90%',
            maxWidth: 420,
@@ -935,7 +983,7 @@ function Profile() {
                  background: '#f3f4f6',
                  borderRadius: 14,
                  height: 80,
-                 width: '100%',
+                 width: '100%',
                  objectFit: 'cover',
                }}
                />
@@ -946,7 +994,7 @@ function Profile() {
                )}
              </div>
              ))}
-           </div>
+       </div>
            )}
          </div>
          </div>
@@ -986,7 +1034,7 @@ function Profile() {
          >
          <X
          size={28}
-         style={{
+         style={{
            position: 'absolute',
            top: 16,
            right: 16,
@@ -1064,12 +1112,12 @@ function Profile() {
          }}
          onClick={() => setShowBarcodeModal(false)}>
          <div
-         style={{
+         style={{
          background: '#fff',
          borderRadius: 20,
          padding: 24,
          width: '65%',
-         maxWidth: 420,
+         maxWidth: 420,
          position: 'relative',
          minHeight: 400,
          }}
@@ -1103,7 +1151,7 @@ function Profile() {
          </div>
          
          <div style={{ display: 'flex', justifyContent: 'center' }}>
-         <img
+         <img
            src={selectedCoupon.barcodeImg}
            alt="바코드"
            style={{
