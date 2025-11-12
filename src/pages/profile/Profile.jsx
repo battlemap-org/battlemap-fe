@@ -86,7 +86,7 @@ function Profile() {
     try {
       setLoading(true); // 로딩 시작
       const response = await axios.get(
-        "http://3.35.246.97:8081/api/points", // GET 요청
+        "http://3.39.56.40:8080/api/points", // GET 요청
         {
           headers: {
             "Authorization": `Bearer ${token}` // 헤더 설정
@@ -94,7 +94,7 @@ function Profile() {
         }
       );
 
-      setPoints(response.data.points); // state 업데이트
+      setPoints(response.data.success.currentPoint); // state 업데이트
       setError(null); 
 
     } catch (err) {
@@ -131,7 +131,7 @@ function Profile() {
       
       // [수정] 명세서대로 /api/wallet/balance 호출
       const response = await axios.get(
-        "http://3.35.246.97:8081/api/wallet/balance", 
+        "http://3.39.56.40:8080/api/wallet/balance", 
         {
           headers: { "Authorization": `Bearer ${token}` }
         }
@@ -189,7 +189,7 @@ function Profile() {
     try {
       // GET 요청 (API 명세서의 'Body'는 GET에서 비표준이므로 헤더만 전송)
       const response = await axios.get(
-        "http://3.35.246.97:8081/api/coupons", 
+        "http://3.39.56.40:8080/api/coupons", 
         {
           headers: { "Authorization": `Bearer ${token}` }
         }
@@ -248,7 +248,7 @@ function Profile() {
     try {
       // API 명세서에 따른 POST 요청
       await axios.post(
-        "http://3.35.246.97:8081/api/wallet/charge",
+        "http://3.39.56.40:8080/api/wallet/charge",
         { 
           userId: Number(userId), // API Body 1 (숫자 타입으로)
           amount: amount          // API Body 2
@@ -363,7 +363,7 @@ function Profile() {
           </div>
           <div style={{ fontSize: 18, color: '#374151' }}>
             {/* 1550p 수정 안함 */}
-            - 포인트: <span style={{ fontWeight: 600 }}>1550p</span>
+            - 리그 포인트: <span style={{ fontWeight: 600 }}>1550p</span>
           </div>
         </div>
 

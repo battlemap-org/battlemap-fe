@@ -9,35 +9,45 @@ function LogIn() {
   const [pw, setPw] = useState("");
   const navigate = useNavigate();
 
-  const handleRegister = () => {
-    console.log("서버로 보낼 ID:", id); // <-- 확인용
-    console.log("서버로 보낼 PW:", pw); // <-- 확인용
-    axios
-      .post("http://3.39.56.40:8080/api/users/login", {
-        id,
-        pw,
-      })
-      .then((res) => {
-        console.log("로그인 응답 전체:", res.data);
+  const handleRegister = () => {
+    axios
+  .post("http://3.39.56.40:8080/api/users/login", { id, pw })
+  .then((res) => {
+    console.log("로그인 응답 전체:", res.data);
 
-        const success = res.data?.success;
-        // --- 디버깅 로그 추가 ---
-        console.log("success 객체 자체:", success);
-        // ----------------------
+    const success = res.data?.success;
 
-        const token = success?.token;
-        if (token) {
-          localStorage.setItem("token", token);
-          console.log("localStorage에 토큰 저장 완료:", token);
-        } else {
-          console.warn("서버 응답에 token이 없습니다.");
-        }
+    // 토큰 저장
+    const token = success?.token;
+    if (token) {
+      localStorage.setItem("token", token);
+      console.log("토큰 저장 완료:", token);
+    } else {
+      console.warn("서버 응답에 token이 없습니다.");
+    }
 
-        // --- 여기가 핵심 디버깅 ---
-        console.log("success.user_id 값 (그대로):", success.user_id);
-        console.log("success?.user_id 값 (optional):", success?.user_id);
-        console.log("success?.userId 값 (camelCase):", success?.userId);
-        // ----------------------
+    // userId (camelCase로 접근해야 함)
+    const userId = success?.userId;
+    if (userId) {
+      localStorage.setItem("userId", userId);
+      console.log("userId 저장 완료:", userId);
+    } else {
+      console.warn("서버 응답에 userId가 없습니다. Profile 페이지에서 충전이 작동하지 않을 수 있습니다.");
+    }
+
+    navigate("/whereistoday");
+  })
+  .catch((err) => {
+    console.error("로그인 실패:", err);
+    alert("아이디 또는 비밀번호를 확인하세요!");
+  });
+  };
+  const handleJoinClick = () => {
+    navigate("/join"); // join 페이지로 이동
+  };
+  return (
+    <div className="login-container">
+      <div className="titleWrap">로그인</div>
 
         const userId = success?.user_id || success?.userId;
 

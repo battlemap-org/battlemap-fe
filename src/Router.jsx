@@ -40,7 +40,7 @@ export default function Router() {
           <Route path="/entirelevel" element={<Entirelevel />} />
           <Route path="/filter" element={<Filter />} />
           <Route path="/stores/:categoryCode" element={<PickCafe />} />
-          <Route path="/questlist" element={<QuestList />} />
+          <Route path="/questlist/:storeId" element={<QuestList />} />
           <Route path="/bucheonmap" element={<Bucheonmap />} />
           <Route path="/statusModal" element={<StatusModal />} />
           <Route path="/myoccupy" element={<Myoccupy />} />

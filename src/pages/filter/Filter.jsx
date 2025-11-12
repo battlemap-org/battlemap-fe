@@ -1,7 +1,7 @@
 import React from "react";
 import "./Filter.css";
 import Header from '../../components/header/Header';
-import Footer from '../../components/Footer';
+import Footer from '../../components/footer/Footer';
 import { useNavigate } from "react-router-dom";
 
 const categoryNames = {

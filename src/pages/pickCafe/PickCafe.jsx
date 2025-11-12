@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './PickCafe.css';
 import Header from '../../components/header/Header';
-import Footer from '../../components/Footer';
+import Footer from '../../components/footer/Footer';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const KAKAO_API_KEY = "3a11aa359ca635ecbd8260eb1d2271db";
-const BASE_URL = "http://3.35.246.97:8081";
+const BASE_URL = "http://3.39.56.40:8080";
 
 const categoryNames = {
   FD6: "식당",
@@ -35,14 +35,27 @@ function CafePage() {
     const fetchStores = async () => {
       const cityName = '부천시'; 
       const dongName = '역곡동'; 
-      // (TODO: 나중에는 이 값들을 동적으로 받아와야 함)
+      // 나중에는 이 값들을 동적으로 받아와야됨
+
+      const token = localStorage.getItem("token");
+      // 토큰이 없을 때 에러메시지
+      if (!token) {
+        setError("로그인이 필요합니다.");
+        setLoading(false);
+        return;
+      }
 
       try {
         setLoading(true);
         setError(null);
         
         const response = await axios.get(
-          `${BASE_URL}/api/regions/${cityName}/dongs/${dongName}/stores?category=${categoryCode}`
+          `${BASE_URL}/api/regions/${cityName}/dongs/${dongName}/stores?category=${categoryCode}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}` 
+            }
+          }
         );
 
         setStores(response.data.stores); 
@@ -76,9 +89,15 @@ function CafePage() {
     script.onload = () => {
       window.kakao.maps.load(() => {
         const mapContainer = document.getElementById('map');
+
+        if (!mapContainer) {
+          console.warn("mapContainer를 찾을 수 없습니다.");
+          return; 
+        }
+        
         const firstStore = stores[0];
         const options = {
-          center: new window.kakao.maps.LatLng(firstStore.x, firstStore.y),
+          center: new window.kakao.maps.LatLng(firstStore.y, firstStore.x),
           level: 3,
         };
 
@@ -97,12 +116,12 @@ function CafePage() {
           const position = new window.kakao.maps.LatLng(store.y, store.x);
           const marker = new window.kakao.maps.Marker({
             position: position,
-            title: store.name // 마커에 카페 이름 저장 (검색용)
+            title: store.place_name // 마커에 카페 이름 저장 (검색용)
           });
 
           // 마커 클릭 이벤트: Map -> List
           window.kakao.maps.event.addListener(marker, 'click', () => {
-            setSelectedCafe(store); // 클릭된 마커의 카페로 state 변경
+            setSelectedStore(store); // 클릭된 마커의 카페로 state 변경
           });
 
           marker.setMap(mapInstance);
@@ -133,12 +152,14 @@ function CafePage() {
     // 해당 위치로 지도 부드럽게 이동
     mapRef.current.panTo(position);
 
+    mapRef.current.setLevel(2); // 지도 확대
+
     // Ref에 저장된 마커 목록에서 현재 선택된 카페의 마커 찾기
-    const marker = markersRef.current.find(m => m.getTitle() === selectedStore.name);
+    const marker = markersRef.current.find(m => m.getTitle() === selectedStore.place_name);
 
     if (marker) {
       // 인포윈도우 내용 설정 및 마커 위에 열기
-      const content = `<div style="padding:5px 10px;font-size:14px;font-weight:bold;">${selectedStore.name}</div>`;
+      const content = `<div style="padding:5px 10px;font-size:14px;font-weight:bold;">${selectedStore.place_name}</div>`;
       infowindowRef.current.setContent(content);
       infowindowRef.current.open(mapRef.current, marker);
     }
@@ -147,8 +168,14 @@ function CafePage() {
 
 
   // 목록 아이템 클릭 이벤트: List -> Map
-  const handleCafeClick = (store) => {
+  const handleStoreClick = (store) => {
     setSelectedStore(store); // 클릭된 리스트의 카페로 state 변경
+  }
+
+  const handleQuestClick = (event, storeId) => {
+    event.stopPropagation(); // 이벤트 버블링 방지
+
+    navigate(`/questlist/${storeId}`);
   };
 
   // 로딩, 에러
@@ -188,8 +215,21 @@ function CafePage() {
               className={`cafe-list-item ${selectedStore?.id === store.id ? 'selected' : ''}`}
               onClick={() => handleStoreClick(store)}
             >
-              <h3 className="cafe-name">{store.name}</h3>
-              <p className="cafe-address">{store.address}</p>
+              <div className="store-info">
+                <h3 className="cafe-name">{store.place_name}</h3>
+                <p className="cafe-address">{store.address_name}</p>
+              </div>
+              <button 
+                className="quest-button" 
+                onClick={(e) => handleQuestClick(e, store.id)}
+              >
+                <img 
+                  src="/assets/quest.png" 
+                  alt="퀘스트 목록" 
+                />
+              </button>
+
+              
             </div>
           ))}
         </div>
