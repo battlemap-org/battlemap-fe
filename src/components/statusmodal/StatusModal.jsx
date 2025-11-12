@@ -14,7 +14,7 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
 
   useEffect(() => {
     const client = new Client({
-      brokerURL: "ws://3.35.246.97:8081/ws",
+      brokerURL: "ws:/3.39.56.40:8080/ws",
       connectHeaders: {
         Authorization: `Bearer ${token}`,
       },
@@ -83,10 +83,7 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
 
   return (
     <div className="status-overlay" onClick={onClose}>
-      <div
-        className="status-card"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="status-card" onClick={(e) => e.stopPropagation()}>
         <div className="status-header">
           {areaName} 점령 현황{" "}
           <span

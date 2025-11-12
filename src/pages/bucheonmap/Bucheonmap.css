@@ -29,3 +29,23 @@
   display: block;
   border-radius: 20px;
 }
+
+.map-wrapper {
+  position: relative; /* marker 기준 */
+  width: 350px; /* 이미지랑 동일하게 맞춰줌 */
+  height: auto;
+}
+
+.dong-marker {
+  position: absolute; /* 부모(map-wrapper)를 기준으로 좌표 계산 */
+  transform: translate(-50%, -50%); /* 중심 기준 정렬 */
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10; /* 이미지 위로 */
+  opacity: 0.9;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+}
