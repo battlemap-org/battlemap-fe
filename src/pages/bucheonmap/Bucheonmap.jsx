@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "./Bucheonmap.css";
 import Header from "../../components/header/Header";
-import Footer from "../../components/Footer";
+import Footer from "../../components/footer/Footer";
 import StatusModal from "../../components/statusmodal/StatusModal";
 import imageMapResize from "image-map-resizer";
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import './QuestList.css'; 
 import Header from '../../components/header/Header';
-import Footer from '../../components/Footer';
+import Footer from '../../components/footer/Footer';
+import { useNavigate } from 'react-router-dom';
 
 const questListData = [
   { id: 1, name: '퀘스트 1', points: 50 },
@@ -12,14 +13,13 @@ const questListData = [
 ];
 
 function QuestList() { 
+  const navigate = useNavigate();
   return (
     <>
       <Header />
       <div className="page-wrapper">
         <nav className="navigation">
-          <button className="back-button">
-            {'<'}
-          </button>
+          <button className="back-button" onClick={() => navigate(-1)}>{'<'}</button>
           <div className="title">퀘스트</div>
         </nav>
 
