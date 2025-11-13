@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { LogOut, UserCircle, Flag, ScrollText, Coffee, ChevronRight, X, ChevronLeft } from 'lucide-react';
+import { UserCircle, Flag, ScrollText, Coffee, ChevronRight, X, ChevronLeft } from 'lucide-react';
 
-const Header = ({ onLogoutClick }) => {
+const Header = () => {
   return (
     <header
       style={{
@@ -35,7 +35,6 @@ function Profile() {
   const [error, setError] = useState(null); // 에러 state
 
   const [modalStep, setModalStep] = useState(0); 
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showOwnedCouponModal, setShowOwnedCouponModal] = useState(false);
   const [showExchangeModal, setShowExchangeModal] = useState(false);
   const [showBarcodeModal, setShowBarcodeModal] = useState(false);
@@ -453,7 +452,7 @@ function Profile() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
-      <Header onLogoutClick={() => setShowLogoutModal(true)} />
+      <Header />
 
       <main style={{ padding: 16, background: '#fff' }}>
        {/* 프로필 영역 */}
