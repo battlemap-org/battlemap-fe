@@ -18,8 +18,7 @@
   align-items: center;
   text-align: center;
   text-align: center;
-  white-space: nowrap; /* 🔥 줄바꿈 금지 */
-  overflow: hidden;
+  white-space: nowrap;
 }
 
 .map-wrapper {
