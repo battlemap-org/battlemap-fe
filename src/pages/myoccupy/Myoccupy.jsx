@@ -1,58 +1,58 @@
 import "./Myoccupy.css";
-// import axios from "axios";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 
 function Myoccupy() {
-  //api 연결 부분 우선 주석처리
-  //   const [point, setPoint] = useState(0);
-  //   const [score, setScore] = useState(0);
+  const [areas, setAreas] = useState([]);
 
-  //   // 역곡동 포인트/점수 불러오기
-  //   const fetchYeogokData = async () => {
-  //     try {
-  //       // 예시 API 엔드포인트 삽입
-  //       const res = await axios.get("api/area/yeogok");
-  //       console.log("역곡동 데이터:", res.data);
-
-  //       // 예시 응답 형태:
-  //       // { point: 1550, score: 12 } 이렇게
-  //       setPoint(res.data.point);
-  //       setScore(res.data.score);
-  //     } catch (err) {
-  //       console.error(" 역곡동 데이터 불러오기 실패:", err);
-  //       alert("역곡동 데이터를 불러오는 중 오류가 발생했습니다.");
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     fetchYeogokData();
-  //   }, []);
-
-  {
-    /* 목데이터 사용 */
-  }
-  const [point, setPoint] = useState(0);
-  const [score, setScore] = useState(0);
-
-  const fetchYeogokData = async () => {
+  const fetchMyAreas = async () => {
     try {
-      const mockData = {
-        point: 1550,
-        score: 12,
-      };
+      const token = localStorage.getItem("token");
 
-      console.log(" (Mock) 역곡동 데이터:", mockData);
+      const res = await axios.get(
+        "http://3.39.56.40:8080/api/users/me/cities/부천시/dongs/points-and-quests",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-      setPoint(mockData.point);
-      setScore(mockData.score);
+      console.log("역곡동 점령 현황:", res.data);
+
+      const data = res.data.success;
+
+      const real =
+        Array.isArray(data) && data.length > 0
+          ? {
+              dongName: data[0].dongName,
+              myPoint: data[0].myPoint,
+              completedQuestCount: data[0].completedQuestCount,
+            }
+          : {
+              dongName: "역곡동",
+              myPoint: 0,
+              completedQuestCount: 0,
+            };
+
+      const dummy = [
+        { dongName: "중동", myPoint: 0, completedQuestCount: 0 },
+        { dongName: "원미동", myPoint: 0, completedQuestCount: 0 },
+      ];
+
+      setAreas([real, ...dummy]);
     } catch (err) {
-      console.error(" 역곡동 데이터 세팅 실패:", err);
+      console.error("점령 현황 불러오기 실패:", err);
+
+      setAreas([
+        { dongName: "역곡동", myPoint: 0, completedQuestCount: 0 },
+        { dongName: "중동", myPoint: 0, completedQuestCount: 0 },
+        { dongName: "원미동", myPoint: 0, completedQuestCount: 0 },
+      ]);
     }
   };
 
   useEffect(() => {
-    fetchYeogokData();
+    fetchMyAreas();
   }, []);
 
   return (
@@ -64,66 +64,31 @@ function Myoccupy() {
       <div className="occupy-page">
         <div className="occupy-title">나의 점령 현황</div>
 
-        <div className="yeogok">
-          <h3>역곡동</h3>
-          <p>
-            <img
-              src="/assets/point.png"
-              alt="포인트 아이콘"
-              className="pointicon"
-            />
-            나의 포인트: {point}P
-          </p>
-          <p>
-            <img
-              src="/assets/quest.png"
-              alt="퀘스트 아이콘"
-              className="questicon"
-            />
-            완료한 퀘스트 수: {score}개
-          </p>
-        </div>
-
-        <div className="wonmi">
-          <h3>원미동</h3>
-          <p>
-            <img
-              src="/assets/point.png"
-              alt="포인트 아이콘"
-              className="pointicon"
-            />
-            나의 포인트: 400P
-          </p>
-
-          <p>
-            <img
-              src="/assets/quest.png"
-              alt="퀘스트 아이콘"
-              className="questicon"
-            />
-            완료한 퀘스트 수: 7개
-          </p>
-        </div>
-
-        <div className="sosa">
-          <h3>소사동</h3>
-          <p>
-            <img
-              src="/assets/point.png"
-              alt="포인트 아이콘"
-              className="pointicon"
-            />
-            나의 포인트: 650P
-          </p>
-          <p>
-            <img
-              src="/assets/quest.png"
-              alt="퀘스트 아이콘"
-              className="questicon"
-            />
-            완료한 퀘스트 수: 10개
-          </p>
-        </div>
+        {areas.length === 0 ? (
+          <p className="empty-message">점령한 동이 없습니다.</p>
+        ) : (
+          areas.map((area) => (
+            <div key={area.dongName} className="dong-card">
+              <h3>{area.dongName}</h3>
+              <p>
+                <img
+                  src="/assets/point.png"
+                  alt="포인트 아이콘"
+                  className="pointicon"
+                />
+                나의 포인트: {area.myPoint}P
+              </p>
+              <p>
+                <img
+                  src="/assets/quest.png"
+                  alt="퀘스트 아이콘"
+                  className="questicon"
+                />
+                완료한 퀘스트 수: {area.completedQuestCount}개
+              </p>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
