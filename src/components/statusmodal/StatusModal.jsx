@@ -45,7 +45,6 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
         }
       });
 
-      // 스냅샷 요청
       client.publish({
         destination: `/app/league/${areaId}/snapshot`,
         body: JSON.stringify({
@@ -73,7 +72,6 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
     };
   }, [areaId]);
 
-  // ✅ 점령 버튼 클릭 시
   const handleConquer = () => {
     const myName = "김민지"; // 예시, 실제 로그인 정보로 교체 가능
     onConquer(areaName, myName);
@@ -110,13 +108,8 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
           <p>데이터 수신 대기 중...</p>
         )}
 
-        {/* ✅ 점령 / 탈취 버튼 추가 */}
         <button className="status-conquer" onClick={handleConquer}>
           {currentOwner ? "탈취하기" : "점령하기"}
-        </button>
-
-        <button className="status-close" onClick={onClose}>
-          닫기
         </button>
       </div>
     </div>
