@@ -64,7 +64,13 @@ function QuestList() {
   }, [storeId]); // storeId가 바뀔 때마다 실행
 
   const handleQuestClick = (questId) => {
-    navigate(`/quests/${questId}/solve`); 
+    navigate(`/quests/${questId}/solve`,
+      { 
+        state: { 
+          storeName: storeName // 함께 보낼 데이터 (가게이름)
+        } 
+      }
+    );
   }; // 풀이화면 페이지로 이동
 
   if (loading) {
