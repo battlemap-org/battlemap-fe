@@ -36,7 +36,7 @@ export default function Router() {
         */}
         <Route element={<Layout />}>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/questcontents" element={<QuestContents />} />
+          <Route path="/quests/:questId/solve" element={<QuestContents />} />
           <Route path="/entirelevel" element={<Entirelevel />} />
           <Route path="/filter" element={<Filter />} />
           <Route path="/stores/:categoryCode" element={<PickCafe />} />
