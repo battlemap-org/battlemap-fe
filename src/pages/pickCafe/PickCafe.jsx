@@ -24,6 +24,7 @@ function CafePage() {
   const [selectedStore, setSelectedStore] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [dongId, setDongId] = useState(null);
 
   // 카카오맵 인스턴스 (지도, 마커, 인포윈도우)를 저장할 Ref
   const mapRef = useRef(null);
@@ -59,6 +60,7 @@ function CafePage() {
         );
 
         setStores(response.data.stores); 
+        setDongId(response.data.dongId || 42);
 
       } catch (err) {
         console.error("API 호출 에러:", err);
@@ -172,11 +174,90 @@ function CafePage() {
     setSelectedStore(store); // 클릭된 리스트의 카페로 state 변경
   }
 
-  const handleQuestClick = (event, storeId) => {
-    event.stopPropagation(); // 이벤트 버블링 방지
+  const handleQuestClick = async (event, store) => {
+    event.stopPropagation(); // 부모 요소(리스트 아이템) 클릭 방지
 
-    navigate(`/questlist/${storeId}`);
+    if (!dongId) {
+      alert("dongId를 찾을 수 없습니다. (fetchStores 확인 필요)");
+      return;
+    }
+
+    const getNumericId = (code) => {
+    if (code === "FD6") return 5;
+    if (code === "CE7") return 6;
+    if (code === "CULTURE") return 7;
+    if (code === "AD5") return 8;
+    return 0; // 기본값 (백엔드와 협의 필요) ??
   };
+
+    const numericId = getNumericId(categoryCode);
+    console.log("URL에서 가져온 categoryCode:", categoryCode);
+    console.log("변환된 numericId:", numericId);
+
+    const requestBody = {
+      dongId: dongId || 42,
+      categoryId: getNumericId(categoryCode),
+      storeInfo: {   
+        id: store.id,
+        place_name: store.place_name,
+        address_name: store.address_name,
+        place_url: store.place_url,
+        x: parseFloat(store.x),
+        y: parseFloat(store.y)
+      }
+    };
+
+    // URL에 사용할 카카오 ID
+    const kakao_store_id = store.id;
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    try {
+      const config = {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    };
+
+    console.log("요청 URL:", `${BASE_URL}/api/quests/${kakao_store_id}/stores`);
+    console.log("요청 헤더:", config.headers);
+    
+      // 3. "퀘스트 생성" API (POST) 호출
+      const response = await axios.post(
+        `${BASE_URL}/api/quests/${kakao_store_id}/stores`,
+        requestBody,
+        config
+       ) // 👈 ⭐️ 명세서에 맞게 만든 Body 전달
+
+      console.log("퀘스트 생성 성공 응답:", response.data);
+    const dbStoreId = response.data.success?.storeId;
+    if (dbStoreId) {
+      navigate(`/questlist/${dbStoreId}`);
+    } else {
+      alert(response.data.success?.message || "DB ID를 받지 못했습니다.");
+      console.log("퀘스트 생성 응답:", response.data);
+    }
+
+  } catch (err) {
+    console.error("퀘스트 생성 API 호출 에러:", err);
+    if (err.response) {
+      console.error("서버 응답 데이터:", err.response.data);
+      console.error("서버 응답 상태:", err.response.status);
+      alert(`에러: ${err.response.data.message || '서버 응답 확인 필요 (status: ' + err.response.status + ')'}`);
+    } else if (err.request) {
+      console.error("응답을 받지 못함:", err.request);
+      alert("서버에 연결할 수 없습니다. 네트워크를 확인하세요.");
+    } else {
+      console.error("요청 설정 에러:", err.message);
+      alert(`요청 중 오류 발생: ${err.message}`);
+    }
+  }
+};
 
   // 로딩, 에러
   if (loading) {
@@ -209,7 +290,9 @@ function CafePage() {
         
         {/* 여기만 스크롤 됨 */}
         <div className="cafe-list-wrapper">
-          {stores.map((store) => (
+          {stores.map((store) => {
+            console.log("store 객체 확인:", store);
+            return (
             <div 
               key={store.id} 
               className={`cafe-list-item ${selectedStore?.id === store.id ? 'selected' : ''}`}
@@ -221,7 +304,7 @@ function CafePage() {
               </div>
               <button 
                 className="quest-button" 
-                onClick={(e) => handleQuestClick(e, store.id)}
+                onClick={(e) => handleQuestClick(e, store)}
               >
                 <img 
                   src="/assets/quest.png" 
@@ -231,7 +314,8 @@ function CafePage() {
 
               
             </div>
-          ))}
+            );
+          })}
         </div>
       </main>
       
