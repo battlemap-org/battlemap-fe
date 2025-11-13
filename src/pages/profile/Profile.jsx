@@ -58,6 +58,11 @@ function Profile() {
   const [totalQuestsLoading, setTotalQuestsLoading] = useState(true);
   const [totalQuestsError, setTotalQuestsError] = useState(null);
 
+  const [myRank, setMyRank] = useState(null);
+  const [mySeasonPoint, setMySeasonPoint] = useState(null);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(true);
+  const [leaderboardError, setLeaderboardError] = useState(null);
+
   const coupons = [
     { img: 'cu3000.png', value: ' 3000', brand: 'CU', name: 'CU 3000원권' },
     { img: 'cu5000.png', value: ' 5000', brand: 'CU', name: 'CU 5000원권' },
@@ -264,6 +269,47 @@ function Profile() {
     }
   };
 
+  {/* [추가] API 호출 (리더보드) */}
+    const fetchLeaderboard = async () => {
+    const token = localStorage.getItem("token");
+    const cityName = "부천"; 
+
+    if (!token) {
+      setLeaderboardError("로그인 필요"); 
+      setLeaderboardLoading(false);
+      return;
+    }
+
+    try {
+      setLeaderboardLoading(true);
+      const response = await axios.get(
+        `http://3.39.56.40:8080/api/regions/${cityName}/leaderboard`, 
+        {
+          headers: { "Authorization": `Bearer ${token}` }
+        }
+      );
+
+      setMyRank(response.data.success.myRank); 
+      setMySeasonPoint(response.data.success.mySeasonPoint); 
+      setLeaderboardError(null); 
+      
+    } catch (err) {
+      console.error("리그 순위/포인트 조회 실패:", err);
+      if (err.response) {
+        if (err.response.status === 401 || err.response.status === 404) {
+          setLeaderboardError("인증/조회 실패");
+        } else {
+          setLeaderboardError("서버 오류");
+        }
+      } else {
+         setLeaderboardError("조회 실패");
+      }
+
+    } finally {
+      setLeaderboardLoading(false); 
+    }
+  };
+
   {/* API 호출 (마운트) */}
   useEffect(() => {
     fetchPoints(); 
@@ -285,6 +331,10 @@ function Profile() {
 
   {/* 텍스트 (총 퀘스트) */}
   const totalQuestsText = totalQuestsLoading ? '...' : (totalQuestsError ? '!' : `${totalQuests || 0}개`);
+
+  {/* 텍스트 (리그 순위/리그 포인트) */}
+  const myRankText = leaderboardLoading ? '...' : (leaderboardError ? '!' : `${myRank || '?'}위`);
+  const mySeasonPointText = leaderboardLoading ? '...' : (leaderboardError ? '!' : `${mySeasonPoint || 0}p`);
 
   {/* API 호출 (보유 쿠폰) */}
   const handleShowOwnedCoupons = async () => {
@@ -519,10 +569,10 @@ function Profile() {
        <div style={{ marginBottom: 24 }}>
          <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>현 시즌 점령 현황</div>
          <div style={{ fontSize: 18, color: '#374151', marginBottom: 2 }}>
-         - 리그 순위: <span style={{ fontWeight: 600 }}>4위</span>
+         - 리그 순위: <span style={{ fontWeight: 600 }}>{myRankText}</span>
          </div>
          <div style={{ fontSize: 18, color: '#374151' }}>
-         - 리그 포인트: <span style={{ fontWeight: 600 }}>1550p</span>
+         - 리그 포인트: <span style={{ fontWeight: 600 }}>{mySeasonPointText}</span>
          </div>
        </div>
 
