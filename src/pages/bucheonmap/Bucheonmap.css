@@ -1,18 +1,14 @@
-/* 전체 구조는 column, Header/Footer 제외 */
 .bucheonmap-main {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* 수직 중앙 */
-  align-items: center; /* 수평 중앙 */
-  min-height: calc(100vh - 160px); /* Header+Footer 높이 제외 (대략값) */
+  align-items: center;
+  min-height: calc(100vh - 160px);
   gap: 20px;
-  box-sizing: border-box;
-  padding-bottom: 40px; /* Footer와 간격 확보 */
+  padding-bottom: 40px;
 }
 
-/* 퀘스트 카드 */
 .quest-card {
-  width: 387px;
+  min-width: 387px;
   height: 110px;
   margin-top: 30px;
   background-color: #a9c2b0;
@@ -21,31 +17,39 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  box-sizing: border-box;
-}
-.bucheonmap-image {
-  width: 350px;
-  height: auto;
-  display: block;
-  border-radius: 20px;
+  text-align: center;
+  white-space: nowrap; /* 🔥 줄바꿈 금지 */
+  overflow: hidden;
 }
 
 .map-wrapper {
-  position: relative; /* marker 기준 */
-  width: 350px; /* 이미지랑 동일하게 맞춰줌 */
+  position: relative;
+  width: 350px;
+  height: 481px; /* 원본 비율 기반 */
+  padding-bottom: 15px;
+}
+
+.bucheonmap-image {
+  width: 350px;
   height: auto;
+  border-radius: 20px;
+  pointer-events: none !important;
 }
 
 .dong-marker {
-  position: absolute; /* 부모(map-wrapper)를 기준으로 좌표 계산 */
-  transform: translate(-50%, -50%); /* 중심 기준 정렬 */
+  position: absolute;
+  transform: translate(-50%, -50%);
   color: white;
   font-size: 11px;
   font-weight: bold;
   padding: 3px 6px;
   border-radius: 6px;
   cursor: pointer;
-  z-index: 10; /* 이미지 위로 */
+  z-index: 9999;
   opacity: 0.9;
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+}
+
+.dong-marker:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }

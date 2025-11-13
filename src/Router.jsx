@@ -24,7 +24,7 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
         {/* Layout(Footer)가 필요 없는 페이지들 */}
-        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/" element={<Onboarding />} />
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/whereistoday" element={<Whereistoday />} />
