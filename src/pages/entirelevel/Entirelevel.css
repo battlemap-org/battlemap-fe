@@ -1,5 +1,6 @@
 .level-container {
-  margin: 0 auto 100px auto;
+  padding: 80px 20px 180px 20px;
+  margin: 0 auto;
   border-radius: 20px;
   padding: 20px;
   font-family: "Pretendard", "Inter", sans-serif;
@@ -35,6 +36,12 @@
   align-items: stretch; 
 }
 .my-rank {
+  /* 고정시키기 */
+  position: fixed;
+  z-index: 99; /* 스크롤 목록보다 위에 오도록 */
+  bottom: 80px;
+  left: 0;
+  right: 0;
   background-color: #e8e8e8;
   border-radius: 14px;
   padding: 12px 18px;
