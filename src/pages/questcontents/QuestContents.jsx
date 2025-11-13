@@ -197,9 +197,9 @@ function QuestContents() {
     switch (questType) {
       case 'short_answer':
         return (
-          <textarea 
+          <textarea
             name="answer"
-            className="quest-answer-input" 
+            className="quest-answer-input"
             placeholder="정답을 입력하세요."
             rows={4}
             value={shortAnswer}
@@ -217,7 +217,7 @@ function QuestContents() {
               capture="environment" // 카메라 실행
               ref={imageInputRef}
               onChange={handleFileChange}
-              style={{ display: 'none' }} 
+              style={{ display: "none" }}
             />
             {/* 갤러리 */}
             <input 
@@ -230,7 +230,11 @@ function QuestContents() {
 
             <div className="photo-upload-box">
               {preview ? (
-                <img src={preview} alt="미리보기" className="photo-preview-image" />
+                <img
+                  src={preview}
+                  alt="미리보기"
+                  className="photo-preview-image"
+                />
               ) : (
                 <span className="photo-placeholder-text"></span>
               )}
@@ -294,7 +298,7 @@ function QuestContents() {
           </form>
         </div>
       </main>
-      
+
       <Footer />
 
       {isModalOpen && (
