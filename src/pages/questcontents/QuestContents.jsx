@@ -1,13 +1,13 @@
-import React, { useState, useRef } from "react";
-import "./QuestContents.css";
-import Header from "../../components/header/Header";
-import Footer from "../../components/Footer";
-import ResultModal from "../../components/resultmodal/ResultModal";
-import fail_image1 from "/assets/fail_image1.png";
-import fail_image2 from "/assets/fail_image2.png";
-import fail_image3 from "/assets/fail_image3.png";
-import fail_image4 from "/assets/fail_image4.png";
-import success_image from "/assets/success_image.png";
+import React, { useState, useRef } from 'react';
+import './QuestContents.css';
+import Header from '../../components/header/Header';
+import Footer from '../../components/footer/Footer';
+import ResultModal from '../../components/resultmodal/ResultModal';
+import fail_image1 from '/assets/fail_image1.png';
+import fail_image2 from '/assets/fail_image2.png';
+import fail_image3 from '/assets/fail_image3.png';
+import fail_image4 from '/assets/fail_image4.png';
+import success_image from '/assets/success_image.png';
 
 // 목데이터----------------------------
 const questData = {

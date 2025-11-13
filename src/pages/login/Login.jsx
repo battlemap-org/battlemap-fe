@@ -26,8 +26,10 @@ function LogIn() {
           console.warn("서버 응답에 token이 없습니다.");
         }
 
-        // userId 저장
-        const userId = success?.userId;
+        // userId (두 형태 모두 대응)
+        const userId = success?.user_id || success?.userId;
+        console.log("userId 변수에 최종 할당된 값:", userId);
+
         if (userId) {
           localStorage.setItem("userId", userId);
           console.log("userId 저장 완료:", userId);
@@ -67,20 +69,18 @@ function LogIn() {
           />
         </div>
 
-        <div>
-          <div className="InputPwd">
-            <input
-              type="password"
-              value={pw}
-              onChange={(e) => setPw(e.target.value)}
-              placeholder="비밀번호"
-            />
-            <img
-              src="/assets/lock.png"
-              alt="비밀번호 아이콘"
-              className="lockicon"
-            />
-          </div>
+        <div className="InputPwd">
+          <input
+            type="password"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
+            placeholder="비밀번호"
+          />
+          <img
+            src="/assets/lock.png"
+            alt="비밀번호 아이콘"
+            className="lockicon"
+          />
         </div>
 
         <div>
