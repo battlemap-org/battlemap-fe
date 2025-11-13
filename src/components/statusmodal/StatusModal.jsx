@@ -1,79 +1,46 @@
 // src/pages/statusModal/StatusModal.jsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./StatusModal.css";
-import { Client } from "@stomp/stompjs";
+import axios from "axios";
 
 function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
   const [ranking, setRanking] = useState([]);
-  const [myInfo, setMyInfo] = useState(null);
+  const [myNickname, setMyNickname] = useState(""); // ⭐ 내 닉네임 저장
   const [isConnected, setIsConnected] = useState(false);
 
-  const token = "YOUR_JWT_TOKEN_HERE";
-  const areaId = areaName === "역곡동" ? "yeokgok-dong" : "unknown";
-  const clientRef = useRef(null);
+  const fetchRanking = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await axios.get(
+        `http://3.39.56.40:8080/api/regions/부천시/leaderboard`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = res.data.success;
+      if (!data) return;
+
+      setRanking(data.leaderboard || []);
+      setMyNickname(data.myNickname); // ⭐ 내 닉네임 설정
+      setIsConnected(true);
+    } catch (err) {
+      console.error("랭킹 불러오기 실패:", err);
+      setIsConnected(false);
+    }
+  };
 
   useEffect(() => {
-    const client = new Client({
-      brokerURL: "ws:/3.39.56.40:8080/ws",
-      connectHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-      reconnectDelay: 1000,
-      heartbeatIncoming: 10000,
-      heartbeatOutgoing: 10000,
-      debug: (msg) => console.log("[STOMP]", msg),
-    });
-
-    client.onConnect = () => {
-      console.log("✅ WebSocket 연결됨");
-      setIsConnected(true);
-
-      client.subscribe(`/topic/league/${areaId}`, (message) => {
-        const payload = JSON.parse(message.body);
-        console.log("받은 메시지:", payload);
-
-        switch (payload.type) {
-          case "LEADERBOARD_SNAPSHOT":
-          case "SCORE_UPDATED":
-            setRanking(payload.data.leaderboard || []);
-            break;
-          case "ERROR":
-            alert(payload.message || "에러 발생");
-            break;
-          default:
-            console.log("Unhandled type:", payload.type);
-        }
-      });
-
-      client.publish({
-        destination: `/app/league/${areaId}/snapshot`,
-        body: JSON.stringify({
-          type: "SNAPSHOT_REQUEST",
-          areaId,
-        }),
-      });
-    };
-
-    client.onDisconnect = () => {
-      console.log(" WebSocket 연결 종료됨");
-      setIsConnected(false);
-    };
-
-    client.onStompError = (frame) => {
-      console.error(" STOMP 에러:", frame.headers["message"]);
-      setIsConnected(false);
-    };
-
-    client.activate();
-    clientRef.current = client;
-
-    return () => {
-      if (clientRef.current) clientRef.current.deactivate();
-    };
-  }, [areaId]);
+    fetchRanking();
+    const interval = setInterval(fetchRanking, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleConquer = () => {
-    const myName = "김민지"; // 예시, 실제 로그인 정보로 교체 가능
+    const myName = myNickname; // ⭐ 자동으로 로그인된 유저 이름 사용
     onConquer(areaName, myName);
     alert(`${areaName}을(를) 점령했습니다!`);
     onClose();
@@ -83,27 +50,38 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
     <div className="status-overlay" onClick={onClose}>
       <div className="status-card" onClick={(e) => e.stopPropagation()}>
         <div className="status-header">
-          {areaName} 점령 현황{" "}
+          {areaName} 점령 현황
           <span
             className={`status-dot ${
               isConnected ? "connected" : "disconnected"
             }`}
           ></span>
+          <span className="modal-close" onClick={onClose}>
+            ✕
+          </span>
         </div>
 
         {ranking.length > 0 ? (
-          <>
-            {ranking.slice(0, 3).map((user, index) => (
-              <div key={index} className="rank-item">
-                🏅 {index + 1}위 — {user.user} ({user.point}점)
-              </div>
-            ))}
-            {myInfo && (
-              <div className="me">
-                <strong>나:</strong> {myInfo.user} — {myInfo.point}점
-              </div>
-            )}
-          </>
+          ranking.map((user, index) => (
+            <div
+              key={index}
+              className={`rank-item ${
+                user.nickname === myNickname ? "me" : ""
+              }`}
+            >
+              <span
+                className="rank-color"
+                style={{ backgroundColor: user.userColorCode }}
+              ></span>
+
+              <span className="rank-name">{user.nickname}</span>
+
+              <span className="rank-point">
+                <img src="/assets/point.png" alt="포인트" />
+                {user.totalPoints}
+              </span>
+            </div>
+          ))
         ) : (
           <p>데이터 수신 대기 중...</p>
         )}
