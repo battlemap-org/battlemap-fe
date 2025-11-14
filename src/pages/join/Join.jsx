@@ -29,7 +29,7 @@ function Join() {
     }
 
     axios
-      .post("http://3.39.56.40:8080/api/users/register", {
+      .post("https://www.battlemap.kr/api/users/register", {
         name,
         id,
         email,
