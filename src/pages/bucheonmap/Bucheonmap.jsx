@@ -94,7 +94,7 @@ function Bucheonmap() {
 
     axios
       .post(
-        `/api/quests/${todayQuestId}/answers-today`,
+        `https://www.battlemap.kr/api/quests/${todayQuestId}/answers-today`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )
