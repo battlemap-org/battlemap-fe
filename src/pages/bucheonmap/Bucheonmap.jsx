@@ -62,7 +62,7 @@ function Bucheonmap() {
 
     // 오늘의 퀘스트 텍스트 + todayQuestId (GET)
     axios
-      .get("/api/quests/today", { headers })
+      .get("https://www.battlemap.kr/api/quests/today", { headers })
       .then((res) => {
         const q = res.data.success?.todayContent;
         const id = res.data.success?.todayQuestId;
@@ -118,7 +118,9 @@ function Bucheonmap() {
 
     axios
       .get(
-        `/api/regions/부천시/dongs/${encodeURIComponent("역곡동")}/leaderboard`,
+        `https://www.battlemap.kr/api/regions/부천시/dongs/${encodeURIComponent(
+          "역곡동"
+        )}/leaderboard`,
         { headers }
       )
       .then((res) => {
