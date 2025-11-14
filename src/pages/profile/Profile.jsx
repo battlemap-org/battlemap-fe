@@ -317,6 +317,7 @@ function Profile() {
     fetchCompletedQuests();
     fetchTotalQuests();
     fetchUserName();
+    fetchLeaderboard();
   }, []); 
 
   {/* 텍스트 (포인트) */}
@@ -1089,7 +1090,7 @@ function Profile() {
                }}
                />
                {coupon.value && (
-                 <div style={{ fontWeight: 600, color: '#374151', fontSize: 15, textAlign: 'center' }}>
+                 <div style={{ fontWeight: 600, color: '#374151', fontSize: 14, textAlign: 'center' }}>
                  {coupon.value}
                  </div>
                )}
