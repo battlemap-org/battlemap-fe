@@ -13,6 +13,8 @@ function Entirelevel() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const myColor = localStorage.getItem("userColor") || '#CCCCCC'; // 기본색
+
   // 랭킹불러옴
   const fetchRanking = async () => {
     const cityName = "부천시"; 
@@ -96,6 +98,10 @@ function Entirelevel() {
             >
               <div className="rank-left">
                 <span className="rank-number">{user.rank}.</span>
+                <div
+                  className="rank-color-circle"
+                  style={{ backgroundColor: user.userColorCode || '#CCCCCC' }}
+                ></div>
                 <span className="rank-name">{user.name}</span>
               </div>
               <div className="rank-right">
@@ -110,11 +116,18 @@ function Entirelevel() {
 
       {myInfo && (
           <div className="my-rank">
-            <span>
-              {myInfo.rank}. {myInfo.name}
-            </span>
-            <span>P {myInfo.point}</span>
-          </div>
+            <div className="rank-left">
+              <span className="rank-number">{myInfo.rank}.</span>
+              <div
+                className="rank-color-circle"
+                style={{ backgroundColor: myColor }}
+              ></div>
+              <span className="rank-name">{myInfo.name}</span>
+            </div>
+            <div className="rank-right">
+              <span>P {myInfo.point}</span>
+            </div>
+          </div>
         )}
 
       <Footer />

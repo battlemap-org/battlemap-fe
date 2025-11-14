@@ -1,14 +1,19 @@
-// src/pages/statusModal/StatusModal.jsx
 import React, { useState, useEffect } from "react";
 import "./StatusModal.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
+function StatusModal({ onClose, areaName }) {
   const [ranking, setRanking] = useState([]);
-  const [myNickname, setMyNickname] = useState(""); // ⭐ 내 닉네임 저장
+  const [myNickname, setMyNickname] = useState("");
+  const [myColor, setMyColor] = useState("#cccccc");
   const [isConnected, setIsConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchRanking = async () => {
+    setIsLoading(true);
+
     try {
       const token = localStorage.getItem("token");
 
@@ -24,12 +29,22 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
       const data = res.data.success;
       if (!data) return;
 
-      setRanking(data.leaderboard || []);
-      setMyNickname(data.myNickname); // ⭐ 내 닉네임 설정
+      const currentLeaderboard = data.leaderboard || [];
+      setRanking(currentLeaderboard);
+      setMyNickname(data.myNickname);
       setIsConnected(true);
+
+      const myData = currentLeaderboard.find(
+        (user) => user.nickname === data.myNickname
+      );
+      if (myData) {
+        setMyColor(myData.userColorCode);
+      }
     } catch (err) {
       console.error("랭킹 불러오기 실패:", err);
       setIsConnected(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -39,11 +54,10 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
     return () => clearInterval(interval);
   }, []);
 
-  const handleConquer = () => {
-    const myName = myNickname; // ⭐ 자동으로 로그인된 유저 이름 사용
-    onConquer(areaName, myName);
-    alert(`${areaName}을(를) 점령했습니다!`);
-    onClose();
+
+  const handleGoToFilter = () => {
+    navigate("/filter");
+    onClose(); // 페이지 이동 후 모달 닫기
   };
 
   return (
@@ -61,7 +75,9 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
           </span>
         </div>
 
-        {ranking.length > 0 ? (
+        {isLoading ? (
+          <p>데이터 수신 대기 중...</p>
+        ) : ranking.length > 0 ? (
           ranking.map((user, index) => (
             <div
               key={index}
@@ -73,9 +89,7 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
                 className="rank-color"
                 style={{ backgroundColor: user.userColorCode }}
               ></span>
-
               <span className="rank-name">{user.nickname}</span>
-
               <span className="rank-point">
                 <img src="/assets/point.png" alt="포인트" />
                 {user.totalPoints}
@@ -83,11 +97,11 @@ function StatusModal({ onClose, areaName, currentOwner, onConquer }) {
             </div>
           ))
         ) : (
-          <p>데이터 수신 대기 중...</p>
+          <p>랭킹 정보가 없습니다.</p>
         )}
 
-        <button className="status-conquer" onClick={handleConquer}>
-          {currentOwner ? "탈취하기" : "점령하기"}
+        <button className="status-conquer" onClick={handleGoToFilter}>
+          탈취하기
         </button>
       </div>
     </div>

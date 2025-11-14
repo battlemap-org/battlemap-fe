@@ -5,22 +5,15 @@ import Footer from "../../components/footer/Footer";
 import StatusModal from "../../components/statusmodal/StatusModal";
 import axios from "axios";
 
-const colorMap = {
-  하늘: "#FFD700",
-  고은우: "#FFD700",
-  김민지: "#87CEFA",
-  이하늘: "#98FB98",
-  default: "#CCCCCC",
-};
-
 function Bucheonmap() {
   const [quest, setQuest] = useState("");
   const [topPlayer, setTopPlayer] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedArea, setSelectedArea] = useState(null);
   const [dongList, setDongList] = useState([]);
-  const [territories, setTerritories] = useState({});
-  const [bounds, setBounds] = useState(null);
+  
+  // 역곡동 1등의 색상을 저장
+  const [yeokgokdongColor, setYeokgokdongColor] = useState("#cccccc");
 
   const coordsMap = {
     대장동: { x: 140, y: 79 },
@@ -49,7 +42,7 @@ function Bucheonmap() {
     계수동: { x: 242, y: 420 },
   };
 
-  // 1) 퀘스트 + 전체 리더보드
+  // 1) 퀘스트 + 전체 리더보드 (유지)
   useEffect(() => {
     const token = localStorage.getItem("token");
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
@@ -70,7 +63,7 @@ function Bucheonmap() {
       .catch(() => setQuest("퀘스트를 불러오는 데 실패했습니다."));
   }, []);
 
-  // 2) 동 목록 불러오기 + lat/lon 범위 계산
+  // 2) 동 목록 불러오기 (유지)
   useEffect(() => {
     const token = localStorage.getItem("token");
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
@@ -79,78 +72,49 @@ function Bucheonmap() {
       .get("http://3.39.56.40:8080/api/regions/부천시/dongs", { headers })
       .then((res) => {
         const list = res.data;
-        if (!list) return;
-
-        setDongList(list);
-
-        // lat/lon 범위 자동 계산
-        const lats = list.map((d) => d.latitude);
-        const lons = list.map((d) => d.longitude);
-
-        setBounds({
-          latMin: Math.min(...lats),
-          latMax: Math.max(...lats),
-          lonMin: Math.min(...lons),
-          lonMax: Math.max(...lons),
-        });
+        if (list) setDongList(list);
       });
   }, []);
 
-  // 3) 각 동 점령자 색칠
+  // 역곡동 1등 색상만 불러오기
   useEffect(() => {
-    if (dongList.length === 0) return;
-
     const token = localStorage.getItem("token");
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-    const fetchOwners = async () => {
-      const reqs = dongList.map((d) =>
-        axios
-          .get(
-            `http://3.39.56.40:8080/api/regions/부천시/dongs/${encodeURIComponent(
-              d.dongName
-            )}/leaderboard`,
-            { headers }
-          )
-          .then((res2) => {
-            const owner = res2.data.success?.top3?.[0]?.name || null;
-            return { dongName: d.dongName, owner };
-          })
-          .catch(() => ({ dongName: d.dongName, owner: null }))
-      );
-
-      const results = await Promise.all(reqs);
-
-      const t = {};
-      results.forEach(({ dongName, owner }) => {
-        t[dongName] = {
-          owner,
-          color: colorMap[owner] || colorMap.default,
-        };
-      });
-
-      setTerritories(t);
+    const fetchYeokgokdongOwner = async () => {
+      try {
+        const res = await axios.get(
+          `http://3.39.56.40:8080/api/regions/부천시/dongs/${encodeURIComponent(
+            "역곡동"
+          )}/leaderboard`,
+          { headers }
+        );
+        // API 명세서(top3)에 따라 1등 정보를 가져옴
+        const topUser = res.data.success?.top3?.[0];
+        if (topUser && topUser.userColorCode) {
+          setYeokgokdongColor(topUser.userColorCode);
+        } else {
+          setYeokgokdongColor("#cccccc"); // 데이터가 없으면 기본색
+        }
+      } catch (err) {
+        console.error("역곡동 1등 정보 로딩 실패:", err);
+        setYeokgokdongColor("#cccccc"); // 오류 시 기본색
+      }
     };
 
-    fetchOwners();
-  }, [dongList]);
+    fetchYeokgokdongOwner();
+  }, []);
 
+  // '역곡동'만 클릭되도록 수정
   const handleAreaClick = (dongName) => {
-    setSelectedArea(dongName);
-    setIsModalOpen(true);
+    if (dongName === "역곡동") {
+      setSelectedArea(dongName);
+      setIsModalOpen(true);
+    } else {
+      alert("현재 '역곡동'의 점령 현황만 조회할 수 있습니다.");
+    }
   };
 
-  const handleConquer = (dongName, newOwner) => {
-    const color = colorMap[newOwner] || colorMap.default;
-
-    setTerritories((prev) => ({
-      ...prev,
-      [dongName]: { owner: newOwner, color },
-    }));
-  };
-
-  console.log("마커 개수:", dongList.length);
-  console.log("territories:", territories);
   return (
     <>
       <Header />
@@ -171,9 +135,10 @@ function Bucheonmap() {
 
             {dongList.map((dong) => {
               const pos = coordsMap[dong.dongName];
-              const info = territories[dong.dongName];
-
               if (!pos) return null;
+
+              const isYeokgokdong = dong.dongName === "역곡동";
+              const markerColor = isYeokgokdong ? yeokgokdongColor : "#cccccc";
 
               return (
                 <div
@@ -182,7 +147,8 @@ function Bucheonmap() {
                   style={{
                     left: `${pos.x}px`,
                     top: `${pos.y}px`,
-                    backgroundColor: info?.color || "#cccccc",
+                    backgroundColor: markerColor,
+                    cursor: isYeokgokdong ? "pointer" : "default",
                   }}
                   onClick={() => handleAreaClick(dong.dongName)}
                 >
@@ -200,8 +166,6 @@ function Bucheonmap() {
         <StatusModal
           onClose={() => setIsModalOpen(false)}
           areaName={selectedArea}
-          currentOwner={territories[selectedArea]?.owner}
-          onConquer={handleConquer}
         />
       )}
     </>

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Filter.css";
-import Header from '../../components/header/Header';
-import Footer from '../../components/footer/Footer';
+import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 import { useNavigate } from "react-router-dom";
 
 const categoryNames = {
@@ -13,28 +13,43 @@ const categoryNames = {
 
 function Filter() {
   const categories = [
-    { name: "식당", code: "FD6", icon: "/assets/restaurant.png"},
-    { name: "카페", code: "CE7", icon: "/assets/cafe.png"},
+    { name: "식당", code: "FD6", icon: "/assets/restaurant.png" },
+    { name: "카페", code: "CE7", icon: "/assets/cafe.png" },
     { name: "문화 체험", code: "CULTURE", icon: "/assets/entertainment.png" },
     { name: "숙박", code: "AD5", icon: "/assets/hotel.png" },
   ];
 
   const navigate = useNavigate();
 
-  const handleCategoryClick = (code) => { 
+  const handleCategoryClick = (code) => {
     navigate(`/stores/${code}`);
+  };
+
+  // ⭐ [추가] 뒤로가기 버튼 핸들러
+  const handleBackClick = () => {
+    navigate(-1); // -1은 "이전 페이지"로 이동하라는 의미입니다.
   };
 
   return (
     <div className="filter-page">
-
       <Header />
 
       <main className="main">
+        {/* ⭐ [추가] 뒤로가기 버튼을 담을 헤더 */}
+        <div className="filter-header">
+          <button className="back-button" onClick={handleBackClick}>
+            {'<'}
+          </button>
+        </div>
+
         <div className="region">역곡동</div>
         <div className="category">
           {categories.map((category) => (
-            <button key={category.name} className="category-button" onClick={() => handleCategoryClick(category.code)}>
+            <button
+              key={category.name}
+              className="category-button"
+              onClick={() => handleCategoryClick(category.code)}
+            >
               <img src={category.icon} alt={category.name} />
               <span>{category.name}</span>
             </button>
