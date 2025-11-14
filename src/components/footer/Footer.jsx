@@ -5,9 +5,9 @@ import './Footer.css';
 
 const Footer = () => {
   const menubar = [
-    { icon: Home, path: '/' },
-    { icon: Trophy, path: '/ranking' },
-    { icon: ClipboardList, path: '/result' },
+    { icon: Home, path: '/bucheonmap' },
+    { icon: Trophy, path: '/entirelevel' },
+    { icon: ClipboardList, path: '/myoccupy' },
     { icon: User, path: '/profile' },
   ];
 
