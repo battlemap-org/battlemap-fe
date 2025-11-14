@@ -1,0 +1,3 @@
+  from = "/api/*"
+  to = "http://3.39.56.40:8080/api/:splat"
+  status = 200

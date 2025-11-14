@@ -52,7 +52,9 @@ function Bucheonmap() {
 
     // Top 사용자
     axios
-      .get("http://3.39.56.40:8080/api/regions/부천시/leaderboard", { headers })
+      .get("https://www.battlemap.kr/api/regions/부천시/leaderboard", {
+        headers,
+      })
       .then((res) => {
         const top1 = res.data.success.leaderboard?.[0]?.nickname;
         if (top1) setTopPlayer(top1);
@@ -60,7 +62,7 @@ function Bucheonmap() {
 
     // 오늘의 퀘스트 텍스트 + todayQuestId (GET)
     axios
-      .get("http://3.39.56.40:8080/api/quests/today", { headers })
+      .get("/api/quests/today", { headers })
       .then((res) => {
         const q = res.data.success?.todayContent;
         const id = res.data.success?.todayQuestId;
@@ -77,7 +79,7 @@ function Bucheonmap() {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
     axios
-      .get("http://3.39.56.40:8080/api/regions/부천시/dongs", { headers })
+      .get("https://www.battlemap.kr/api/regions/부천시/dongs", { headers })
       .then((res) => {
         const list = res.data;
         if (list) setDongList(list);
@@ -92,7 +94,7 @@ function Bucheonmap() {
 
     axios
       .post(
-        `http://3.39.56.40:8080/api/quests/${todayQuestId}/answers-today`,
+        `/api/quests/${todayQuestId}/answers-today`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -116,9 +118,7 @@ function Bucheonmap() {
 
     axios
       .get(
-        `http://3.39.56.40:8080/api/regions/부천시/dongs/${encodeURIComponent(
-          "역곡동"
-        )}/leaderboard`,
+        `/api/regions/부천시/dongs/${encodeURIComponent("역곡동")}/leaderboard`,
         { headers }
       )
       .then((res) => {

@@ -12,7 +12,7 @@ function StatusModal({ onClose, areaName }) {
 
   const fetchRanking = async () => {
     // areaName이 없으면 API를 호출하지 않음
-    if (!areaName) return; 
+    if (!areaName) return;
 
     setIsLoading(true);
 
@@ -21,7 +21,7 @@ function StatusModal({ onClose, areaName }) {
 
       // 클릭된 '동'의 리더보드 API 호출 (역곡동)
       const res = await axios.get(
-        `http://3.39.56.40:8080/api/regions/부천시/dongs/${encodeURIComponent(
+        `https://www.battlemap.kr//api/regions/부천시/dongs/${encodeURIComponent(
           areaName
         )}/leaderboard`,
         {
@@ -34,13 +34,12 @@ function StatusModal({ onClose, areaName }) {
       const data = res.data.success;
       if (!data) return;
       setRanking(data.top3 || []);
-      
+
       if (data.me) {
         setMyNickname(data.me.name);
       }
-      
-      setIsConnected(true);
 
+      setIsConnected(true);
     } catch (err) {
       console.error(`${areaName} 랭킹 불러오기 실패:`, err);
       setIsConnected(false);
@@ -57,13 +56,12 @@ function StatusModal({ onClose, areaName }) {
   // 탈취하기 버튼 -> 필터페이지
   const handleGoToFilter = () => {
     navigate("/filter");
-    onClose(); 
+    onClose();
   };
 
   return (
     <div className="status-overlay" onClick={onClose}>
       <div className="status-card" onClick={(e) => e.stopPropagation()}>
-
         <div className="status-header">
           {areaName} 점령 현황
           <span
@@ -82,9 +80,7 @@ function StatusModal({ onClose, areaName }) {
           ranking.map((user, index) => (
             <div
               key={index}
-              className={`rank-item ${
-                user.name === myNickname ? "me" : "" 
-              }`}
+              className={`rank-item ${user.name === myNickname ? "me" : ""}`}
             >
               <span
                 className="rank-color"

@@ -4,21 +4,19 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import axios from "axios";
 
-const BASE_URL = "http://3.39.56.40:8080";
-
 function Entirelevel() {
   const [ranking, setRanking] = useState([]);
   const [myInfo, setMyInfo] = useState(null);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const myColor = localStorage.getItem("userColor") || '#CCCCCC'; // 기본색
+  const myColor = localStorage.getItem("userColor") || "#CCCCCC"; // 기본색
 
   // 랭킹불러옴
   const fetchRanking = async () => {
-    const cityName = "부천시"; 
-    
+    const cityName = "부천시";
+
     const token = localStorage.getItem("token");
     if (!token) {
       setError("로그인이 필요합니다.");
@@ -31,37 +29,34 @@ function Entirelevel() {
       setError(null);
 
       const res = await axios.get(
-        `${BASE_URL}/api/regions/${cityName}/leaderboard`, 
+        `https://www.battlemap.kr/api/regions/${cityName}/leaderboard`,
         {
-          headers: { 'Authorization': `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
-      
+
       console.log("랭킹 데이터:", res.data);
 
       // 응답 데이터로 state 설정
       if (res.data && res.data.success) {
-
         const topRankers = res.data.success.leaderboard || [];
         const standardizedRanking = topRankers.map((user) => ({
           ...user,
           name: user.nickname,
           point: user.totalPoints,
         }));
-        
+
         setRanking(standardizedRanking);
 
         const myData = {
           rank: res.data.success.myRank,
           name: res.data.success.myNickname,
-          point: res.data.success.mySeasonPoint
+          point: res.data.success.mySeasonPoint,
         };
         setMyInfo(myData);
-        
       } else {
         setError("데이터 형식이 올바르지 않습니다.");
       }
-      
     } catch (err) {
       console.error("랭킹 불러오기 실패:", err);
       if (err.response) {
@@ -107,35 +102,40 @@ function Entirelevel() {
                 <span className="rank-number">{user.rank}.</span>
                 <div
                   className="rank-color-circle"
-                  style={{ backgroundColor: user.userColorCode || '#CCCCCC' }}
+                  style={{ backgroundColor: user.userColorCode || "#CCCCCC" }}
                 ></div>
                 <span className="rank-name">{user.name}</span>
               </div>
               <div className="rank-right">
-                <span><img src="/assets/point.png" alt="포인트아이콘"/> {user.point}</span>
+                <span>
+                  <img src="/assets/point.png" alt="포인트아이콘" />{" "}
+                  {user.point}
+                </span>
               </div>
             </div>
           ))}
         </div>
-
-        
       </div>
 
       {myInfo && (
-          <div className="my-rank">
-            <div className="rank-left">
-              <span className="rank-number">{myInfo.rank}.</span>
-              <div
-                className="rank-color-circle"
-                style={{ backgroundColor: myColor }}
-              ></div>
-              <span className="rank-name">{myInfo.name}</span>
-            </div>
-            <div className="rank-right">
-              <span><img src="/assets/point.png" alt="포인트아이콘"/> {myInfo.point}</span>
-            </div>
-          </div>
-        )}
+        <div className="my-rank">
+          <div className="rank-left">
+                        <span className="rank-number">{myInfo.rank}.</span>
+            <div
+              className="rank-color-circle"
+              style={{ backgroundColor: myColor }}
+            ></div>
+            <span className="rank-name">{myInfo.name}</span>
+          </div>
+          <div className="rank-right">
+                       {" "}
+            <span>
+              <img src="/assets/point.png" alt="포인트아이콘" /> {myInfo.point}
+            </span>
+          </div>
+                   {" "}
+        </div>
+      )}
 
       <Footer />
     </div>

@@ -11,7 +11,7 @@ function LogIn() {
 
   const handleRegister = () => {
     axios
-      .post("http://3.39.56.40:8080/api/users/login", { id, pw })
+      .post("https://www.battlemap.kr/api/users/login", { id, pw })
       .then((res) => {
         console.log("로그인 응답 전체:", res.data);
 
@@ -27,21 +27,21 @@ function LogIn() {
         }
 
         const userColor = success?.userColorCode;
-        const myName = success?.name;
+        const myName = success?.name;
 
         if (userColor) {
-          localStorage.setItem("userColor", userColor);
-          console.log("userColor 저장 완료:", userColor);
-        } else {
-          console.warn("서버 응답에 userColorCode가 없습니다.");
-        }
+          localStorage.setItem("userColor", userColor);
+          console.log("userColor 저장 완료:", userColor);
+        } else {
+          console.warn("서버 응답에 userColorCode가 없습니다.");
+        }
 
         if (myName) {
           localStorage.setItem("myName", myName);
-          console.log("myName 저장 완료:", myName);
-        } else {
-          console.warn("서버 응답에 name이 없습니다.");
-        }
+          console.log("myName 저장 완료:", myName);
+        } else {
+          console.warn("서버 응답에 name이 없습니다.");
+        }
 
         // userId (두 형태 모두 대응)
         const userId = success?.user_id || success?.userId;

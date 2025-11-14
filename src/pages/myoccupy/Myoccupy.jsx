@@ -11,7 +11,7 @@ function Myoccupy() {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://3.39.56.40:8080/api/users/me/cities/부천시/dongs/points-and-quests",
+        "/api/users/me/cities/부천시/dongs/points-and-quests",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
