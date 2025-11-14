@@ -63,6 +63,11 @@ function Profile() {
   const [leaderboardLoading, setLeaderboardLoading] = useState(true);
   const [leaderboardError, setLeaderboardError] = useState(null);
 
+  const [topCategory, setTopCategory] = useState(null);
+  const [topCategoryLoading, setTopCategoryLoading] = useState(true);
+  const [topCategoryError, setTopCategoryError] = useState(null);
+
+
   const coupons = [
     { img: 'cu3000.png', amount: 3000, brand: 'CU', name: 'CU 3000원권' },
     { img: 'cu5000.png', amount: 5000, brand: 'CU', name: 'CU 5000원권' },
@@ -74,6 +79,14 @@ function Profile() {
     { img: 'olive10000.png', amount: 10000, brand: '올리브영', name: '올리브영 10000원권' },
     { img: 'olive20000.png', amount: 20000, brand: '올리브영', name: '올리브영 20000원권' },
   ];
+
+  const categoryIcons = {
+    "식당": "/assets/restaurant.png",
+    "카페": "/assets/cafe.png",
+    "문화 체험": "/assets/entertainment.png",
+    "숙박": "/assets/hotel.png",
+  };
+
 
   {/* API 호출 (포인트) */}
   const fetchPoints = async () => {
@@ -269,7 +282,7 @@ function Profile() {
     }
   };
 
-  {/* [추가] API 호출 (리더보드) */}
+  {/* API 호출 (리더보드) */}
     const fetchLeaderboard = async () => {
     const token = localStorage.getItem("token");
     const cityName = "부천"; 
@@ -310,6 +323,40 @@ function Profile() {
     }
   };
 
+  {/* API 호출 (많이 활동한 카테고리) */}  
+  const fetchTopCategory = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setTopCategoryError("로그인 필요");
+      setTopCategoryLoading(false);
+      setTopCategory(null);
+      return;
+    }
+
+    try {
+      setTopCategoryLoading(true);
+
+      const response = await axios.get(
+        "http://3.39.56.40:8080/api/users/categories/top",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setTopCategory(response.data.success); // "식당", "카페", "문화체험", "숙박"
+      setTopCategoryError(null);
+
+    } catch (err) {
+      console.error("카테고리 조회 실패:", err);
+      setTopCategoryError("조회 실패");
+      setTopCategory(null);
+    } finally {
+      setTopCategoryLoading(false);
+    }
+  };
+
+
   {/* API 호출 (마운트) */}
   useEffect(() => {
     fetchPoints(); 
@@ -318,6 +365,7 @@ function Profile() {
     fetchTotalQuests();
     fetchUserName();
     fetchLeaderboard();
+    fetchTopCategory();
   }, []); 
 
   {/* 텍스트 (포인트) */}
@@ -641,22 +689,36 @@ function Profile() {
          <span style={{ marginTop: 8, fontWeight: 600 }}>{totalQuestsText}</span>
          </div>
 
-         {/* 박스 3 */}
-         <div
-         style={{
-           flex: 1,
-           background: '#f3f4f6',
-           borderRadius: 12,
-           display: 'flex',
-           flexDirection: 'column',
-           alignItems: 'center',
-           justifyContent: 'center',
-           aspectRatio: '1 / 1',
-         }}
-         >
-         <Coffee size={52} style={{ color: '#374151' }} />
-         <span style={{ marginTop: 8, fontWeight: 600 }}>카페인 중독자</span>
-         </div>
+        {/* 박스 3 : 많이 활동한 카테고리 */}
+        <div
+          style={{
+            flex: 1,
+            background: '#f3f4f6',
+            borderRadius: 12,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            aspectRatio: '1 / 1',
+          }}
+        >
+          {topCategoryLoading ? (
+            <span>...</span>
+          ) : topCategoryError ? (
+            <span>!</span>
+          ) : (
+            <>
+              <img
+                src={categoryIcons[topCategory]}
+                alt={topCategory}
+                style={{ width: 52, height: 52 }}
+              />
+              <span style={{ marginTop: 8, fontWeight: 600 }}>
+                {topCategory}
+              </span>
+            </>
+          )}
+        </div>
        </div>
 
        {/* 박스 하단 텍스트 */}
