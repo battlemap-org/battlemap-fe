@@ -83,7 +83,7 @@ function Profile() {
   const categoryIcons = {
     "식당": "/assets/restaurant.png",
     "카페": "/assets/cafe.png",
-    "문화 체험": "/assets/entertainment.png",
+    "문화·체험": "/assets/entertainment.png",
     "숙박": "/assets/hotel.png",
   };
 
