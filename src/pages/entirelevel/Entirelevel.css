@@ -79,6 +79,18 @@
   position: relative;
 }
 
+.rank-color-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.my-rank .rank-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 /* 숫자 스타일 */
 .rank-number {
   font-weight: 600;
@@ -89,36 +101,4 @@
   font-weight: 600;
 }
 
-.rank-number::after {
-  content: "";
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-left: 8px;
-  vertical-align: middle;
-}
-.level-1 .rank-number::after {
-  background-color: #a26be0;
-}
-.level-2 .rank-number::after {
-  background-color: #f2994a;
-}
-.level-3 .rank-number::after {
-  background-color: #eb5757;
-}
-.level-4 .rank-number::after {
-  background-color: #6fcf97;
-}
-.level-5 .rank-number::after {
-  background-color: #f2c94c;
-}
-.level-6 .rank-number::after {
-  background-color: #2d9cdb;
-}
-.level-7 .rank-number::after {
-  background-color: #56ccf2;
-}
-.level-8 .rank-number::after {
-  background-color: #9bde7e;
-}
+

@@ -75,9 +75,9 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* 4등(혹은 특정 등수) 강조 */
+/* 강조 */
 .rank-item.me {
-  background: #f3f4f6; /* 부드러운 회색 */
+  background: #ebedef;
 }
 
 /* 색상 동그라미 */

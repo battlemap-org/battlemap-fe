@@ -26,6 +26,23 @@ function LogIn() {
           console.warn("서버 응답에 token이 없습니다.");
         }
 
+        const userColor = success?.userColorCode;
+        const myName = success?.name;
+
+        if (userColor) {
+          localStorage.setItem("userColor", userColor);
+          console.log("userColor 저장 완료:", userColor);
+        } else {
+          console.warn("서버 응답에 userColorCode가 없습니다.");
+        }
+
+        if (myName) {
+          localStorage.setItem("myName", myName);
+          console.log("myName 저장 완료:", myName);
+        } else {
+          console.warn("서버 응답에 name이 없습니다.");
+        }
+
         // userId (두 형태 모두 대응)
         const userId = success?.user_id || success?.userId;
         console.log("userId 변수에 최종 할당된 값:", userId);
