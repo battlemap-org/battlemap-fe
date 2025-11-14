@@ -80,8 +80,8 @@
 }
 
 .rank-color-circle {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
 }
 
@@ -93,12 +93,27 @@
 
 /* 숫자 스타일 */
 .rank-number {
-  font-weight: 600;
+  font-weight: 550;
 }
 
 /* 이름 스타일 */
 .rank-name {
-  font-weight: 600;
+  font-weight: 550;
 }
 
+.rank-span {
+  font-weight: 550;
+}
 
+.rank-right img {
+  width: 30px;
+  height: 33px;
+  vertical-align: middle;
+}
+
+.my-rank .rank-number,
+.my-rank .rank-name,
+.my-rank span {
+  font-weight: 600;
+  color: #000000;
+}

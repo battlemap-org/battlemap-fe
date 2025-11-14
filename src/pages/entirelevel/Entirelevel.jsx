@@ -41,8 +41,15 @@ function Entirelevel() {
 
       // 응답 데이터로 state 설정
       if (res.data && res.data.success) {
+
+        const topRankers = res.data.success.leaderboard || [];
+        const standardizedRanking = topRankers.map((user) => ({
+          ...user,
+          name: user.nickname,
+          point: user.totalPoints,
+        }));
         
-        setRanking(res.data.success.leaderboard || []);
+        setRanking(standardizedRanking);
 
         const myData = {
           rank: res.data.success.myRank,
@@ -105,7 +112,7 @@ function Entirelevel() {
                 <span className="rank-name">{user.name}</span>
               </div>
               <div className="rank-right">
-                <span>P {user.point}</span>
+                <span><img src="/assets/point.png" alt="포인트아이콘"/> {user.point}</span>
               </div>
             </div>
           ))}
@@ -125,7 +132,7 @@ function Entirelevel() {
               <span className="rank-name">{myInfo.name}</span>
             </div>
             <div className="rank-right">
-              <span>P {myInfo.point}</span>
+              <span><img src="/assets/point.png" alt="포인트아이콘"/> {myInfo.point}</span>
             </div>
           </div>
         )}
