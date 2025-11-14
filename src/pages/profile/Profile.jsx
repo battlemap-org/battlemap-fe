@@ -541,7 +541,7 @@ function Profile() {
 
     try {
       await axios.post(
-        "/api/wallet/charge",
+        "https://www.battlemap.kr/api/wallet/charge",
         {
           userId: Number(userId),
           amount: amount,
