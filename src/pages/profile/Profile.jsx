@@ -64,15 +64,15 @@ function Profile() {
   const [leaderboardError, setLeaderboardError] = useState(null);
 
   const coupons = [
-    { img: 'cu3000.png', value: ' 3000', brand: 'CU', name: 'CU 3000원권' },
-    { img: 'cu5000.png', value: ' 5000', brand: 'CU', name: 'CU 5000원권' },
-    { img: 'cu10000.png', value: ' 10000', brand: 'CU', name: 'CU 10000원권' },
-    { img: 'mega5000.png', value: ' 5000', brand: '메가커피', name: '메가커피 5000원권' },
-    { img: 'mega10000.png', value: ' 10000', brand: '메가커피', name: '메가커피 10000원권' },
-    { img: 'mega20000.png', value: ' 20000', brand: '메가커피', name: '메가커피 20000원권' },
-    { img: 'olive5000.png', value: ' 5000', brand: '올리브영', name: '올리브영 5000원권' },
-    { img: 'olive10000.png', value: ' 10000', brand: '올리브영', name: '올리브영 10000원권' },
-    { img: 'olive20000.png', value: ' 20000', brand: '올리브영', name: '올리브영 20000원권' },
+    { img: 'cu3000.png', amount: 3000, brand: 'CU', name: 'CU 3000원권' },
+    { img: 'cu5000.png', amount: 5000, brand: 'CU', name: 'CU 5000원권' },
+    { img: 'cu10000.png', amount: 10000, brand: 'CU', name: 'CU 10000원권' },
+    { img: 'mega5000.png', amount: 5000, brand: '메가커피', name: '메가커피 5000원권' },
+    { img: 'mega10000.png', amount: 10000, brand: '메가커피', name: '메가커피 10000원권' },
+    { img: 'mega20000.png', amount: 20000, brand: '메가커피', name: '메가커피 20000원권' },
+    { img: 'olive5000.png', amount: 5000, brand: '올리브영', name: '올리브영 5000원권' },
+    { img: 'olive10000.png', amount: 10000, brand: '올리브영', name: '올리브영 10000원권' },
+    { img: 'olive20000.png', amount: 20000, brand: '올리브영', name: '올리브영 20000원권' },
   ];
 
   {/* API 호출 (포인트) */}
@@ -336,47 +336,66 @@ function Profile() {
   const myRankText = leaderboardLoading ? '...' : (leaderboardError ? '!' : `${myRank || '?'}위`);
   const mySeasonPointText = leaderboardLoading ? '...' : (leaderboardError ? '!' : `${mySeasonPoint || 0}p`);
 
-  {/* API 호출 (보유 쿠폰) */}
-  const handleShowOwnedCoupons = async () => {
-    setShowOwnedCouponModal(true); 
-    setCouponLoading(true);
-    setCouponError(null);
-    setOwnedCoupons([]); 
 
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setCouponError("로그인이 필요합니다.");
-      setCouponLoading(false);
-      return;
-    }
+  {/* API 호출 (보유 쿠폰) */}
+  const handleShowOwnedCoupons = async () => {
+    setShowOwnedCouponModal(true); 
+    setCouponLoading(true);
+    setCouponError(null);
+    setOwnedCoupons([]);
 
-    try {
-      const response = await axios.get(
-       "http://3.39.56.40:8080/api/coupons", 
-       {
-         headers: { "Authorization": `Bearer ${token}` }
-       }
-      );
-      
-      setOwnedCoupons(response.data.coupons || []); 
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setCouponError("로그인이 필요합니다.");
+      setCouponLoading(false);
+      return;
+    }
 
-    } catch (err) {
-      console.error("쿠폰 조회 실패:", err);
-      if (err.response) {
-       if (err.response.status === 401) {
-         setCouponError("인증에 실패했습니다.");
-       } else if (err.response.status === 404) {
-         setCouponError("사용자를 찾을 수 없습니다.");
-       } else {
-         setCouponError("서버 오류가 발생했습니다.");
-       }
-      } else {
-       setCouponError("쿠폰 조회 중 오류 발생");
-      }
-    } finally {
-      setCouponLoading(false); 
-    }
-  };
+    try {
+      const response = await axios.get(
+        "http://3.39.56.40:8080/api/coupons",
+        {
+          headers: { "Authorization": `Bearer ${token}` }
+        }
+      );
+      
+      // API 데이터 → 모달용 데이터로 변환
+      const apiCoupons = response.data || [];
+
+      const processedCoupons = apiCoupons.map(apiCoupon => {
+        const staticData = coupons.find(
+          c => c.brand.toLowerCase() === apiCoupon.brand.toLowerCase() &&
+              c.amount === apiCoupon.amount
+        );
+
+        return {
+          ...apiCoupon,
+          img: staticData ? `/assets/${staticData.img}` : '/assets/logo_clean.png',
+          value: apiCoupon.name,
+          barcodeImg: 'assets/barcode.png'
+        };
+      });
+
+      setOwnedCoupons(processedCoupons);
+
+    } catch (err) {
+      console.error("쿠폰 조회 실패:", err);
+      if (err.response) {
+        if (err.response.status === 401) {
+          setCouponError("인증에 실패했습니다.");
+        } else if (err.response.status === 404) {
+          setCouponError("사용자를 찾을 수 없습니다.");
+        } else {
+          setCouponError("서버 오류가 발생했습니다.");
+        }
+      } else {
+        setCouponError("쿠폰 조회 중 오류 발생");
+      }
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
 
   {/* API 호출 (지역 화폐 충전) */}
   const handleConfirmCharge = async () => {
@@ -424,7 +443,7 @@ function Profile() {
       console.error("충전 실패:", err);
       if (err.response) {
        if (err.response.status === 400) {
-         alert("포인트가 부족합니다.");
+         alert(err.response.data.message || "잘못된 요청입니다.");
        } else if (err.response.status === 401 || err.response.status === 404) {
          alert("인증 정보가 올바르지 않습니다.");
        } else {
@@ -771,7 +790,7 @@ function Profile() {
              <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
              <img
                src={`/assets/${coupon.img}`}
-               alt={`${coupon.value} 쿠폰`}
+               alt={`${coupon.amount} 쿠폰`}
                style={{
                background: '#f3f4f6',
                borderRadius: 14,
@@ -801,7 +820,7 @@ function Profile() {
                alt="P" 
                style={{ width: 24, height: 28 }} 
              />
-               {coupon.value}
+               {coupon.amount}
              </div>
              </div>
            )
