@@ -52,3 +52,61 @@
   transform: translate(-50%, -50%) scale(1.08);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
+
+/* ====== 인증 모달 전체 화면 덮기 ====== */
+.result-modal-overlay {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999 !important;
+}
+
+/* ====== 모달 박스 ====== */
+.result-modal-box {
+  background: white;
+  width: 300px;
+  padding: 25px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: pop 0.25s ease-out;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ====== 텍스트 ====== */
+.result-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.result-message {
+  font-size: 16px;
+  margin: 10px 0 20px;
+}
+
+/* ====== 닫기 버튼 ====== */
+.result-close-btn {
+  padding: 8px 16px;
+  background: #a9c2b0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

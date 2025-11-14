@@ -11,8 +11,11 @@ function Bucheonmap() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedArea, setSelectedArea] = useState(null);
   const [dongList, setDongList] = useState([]);
-  
-  // 역곡동 1등의 색상을 저장
+
+  // 오늘의 퀘스트 ID 저장 (인증에 필요)
+  const [todayQuestId, setTodayQuestId] = useState(null);
+
+  // 역곡동 색상
   const [yeokgokdongColor, setYeokgokdongColor] = useState("#cccccc");
 
   const coordsMap = {
@@ -42,11 +45,12 @@ function Bucheonmap() {
     계수동: { x: 242, y: 420 },
   };
 
-  // 1) 퀘스트 + 전체 리더보드 (유지)
+  // 전체 리더보드 + 오늘의 퀘스트 텍스트(GET)
   useEffect(() => {
     const token = localStorage.getItem("token");
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
+    // Top 사용자
     axios
       .get("http://3.39.56.40:8080/api/regions/부천시/leaderboard", { headers })
       .then((res) => {
@@ -54,16 +58,20 @@ function Bucheonmap() {
         if (top1) setTopPlayer(top1);
       });
 
+    // 오늘의 퀘스트 텍스트 + todayQuestId (GET)
     axios
       .get("http://3.39.56.40:8080/api/quests/today", { headers })
       .then((res) => {
         const q = res.data.success?.todayContent;
+        const id = res.data.success?.todayQuestId;
+
         if (q) setQuest(q);
+        if (id) setTodayQuestId(id);
       })
       .catch(() => setQuest("퀘스트를 불러오는 데 실패했습니다."));
   }, []);
 
-  // 2) 동 목록 불러오기 (유지)
+  // 동 목록 불러오기
   useEffect(() => {
     const token = localStorage.getItem("token");
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
@@ -76,42 +84,61 @@ function Bucheonmap() {
       });
   }, []);
 
-  // 역곡동 1등 색상만 불러오기
+  // 인증 요청
+  const verifyTodayQuest = () => {
+    if (!todayQuestId) return;
+
+    const token = localStorage.getItem("token");
+
+    axios
+      .post(
+        `http://3.39.56.40:8080/api/quests/${todayQuestId}/answers-today`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        if (res.data.success?.correct) {
+          console.log("🎉 인증 성공!");
+        } else {
+          console.log(res.data.success?.message);
+        }
+      })
+      .catch((err) => {
+        const msg = err.response?.data?.error?.message || "인증 실패";
+        console.log(msg);
+      });
+  };
+
+  // 역곡동 1등 색상
   useEffect(() => {
     const token = localStorage.getItem("token");
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-    const fetchYeokgokdongOwner = async () => {
-      try {
-        const res = await axios.get(
-          `http://3.39.56.40:8080/api/regions/부천시/dongs/${encodeURIComponent(
-            "역곡동"
-          )}/leaderboard`,
-          { headers }
-        );
-        // API 명세서(top3)에 따라 1등 정보를 가져옴
+    axios
+      .get(
+        `http://3.39.56.40:8080/api/regions/부천시/dongs/${encodeURIComponent(
+          "역곡동"
+        )}/leaderboard`,
+        { headers }
+      )
+      .then((res) => {
         const topUser = res.data.success?.top3?.[0];
-        if (topUser && topUser.userColorCode) {
+        if (topUser?.userColorCode) {
           setYeokgokdongColor(topUser.userColorCode);
         } else {
-          setYeokgokdongColor("#cccccc"); // 데이터가 없으면 기본색
+          setYeokgokdongColor("#cccccc");
         }
-      } catch (err) {
-        console.error("역곡동 1등 정보 로딩 실패:", err);
-        setYeokgokdongColor("#cccccc"); // 오류 시 기본색
-      }
-    };
-
-    fetchYeokgokdongOwner();
+      })
+      .catch(() => setYeokgokdongColor("#cccccc"));
   }, []);
 
-  // '역곡동'만 클릭되도록 수정
   const handleAreaClick = (dongName) => {
     if (dongName === "역곡동") {
+      verifyTodayQuest();
       setSelectedArea(dongName);
       setIsModalOpen(true);
     } else {
-      alert("현재 '역곡동'의 점령 현황만 조회할 수 있습니다.");
+      alert("현재는 '역곡동'에서만 인증할 수 있습니다.");
     }
   };
 
@@ -122,7 +149,7 @@ function Bucheonmap() {
         <div className="quest-card">
           📌 오늘의 퀘스트: {quest || "로딩 중..."}
           <br />
-          ⭐️ Top Player: {topPlayer || "로딩 중..."}
+          ⭐️ 이번 시즌 Top Player: {topPlayer || "로딩 중..."}
         </div>
 
         <div className="bucheonmap-card">
@@ -148,7 +175,7 @@ function Bucheonmap() {
                     left: `${pos.x}px`,
                     top: `${pos.y}px`,
                     backgroundColor: markerColor,
-                    cursor: isYeokgokdong ? "pointer" : "default",
+                    cursor: "pointer",
                   }}
                   onClick={() => handleAreaClick(dong.dongName)}
                 >
