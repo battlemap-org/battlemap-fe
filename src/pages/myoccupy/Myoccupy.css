@@ -1,0 +1,80 @@
+.occupy-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 20px;
+  font-family: "Pretendard", "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+/* 제목 */
+.occupy-title {
+  width: 228px;
+  height: 66px;
+  background-color: #cbe0cf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 32px;
+  border-radius: 12px;
+}
+
+/* 각 구역 */
+.occupy-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 20px;
+  font-family: "Pretendard", "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+/* 제목 */
+.occupy-title {
+  width: 228px;
+  height: 66px;
+  background-color: #cbe0cf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 32px;
+  border-radius: 12px;
+}
+
+/* 각 구역 */
+.dong-card {
+  width: 388px;
+  height: 162px;
+  background-color: #e8e8e8;
+  border-radius: 12px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  padding-left: 16px;
+
+  /* 카드가 연달아 나올 때 구분을 위해 마진을 추가하는 것이 좋습니다 */
+  margin-bottom: 16px;
+}
+
+.pointicon,
+.questicon {
+  width: 30px;
+  height: 35px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.pointicon,
+.questicon {
+  width: 30px;
+  height: 35px;
+  vertical-align: middle;
+  margin-right: 8px;
+}

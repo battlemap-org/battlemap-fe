@@ -1,60 +1,68 @@
 html,
 body {
-  background-color: white !important;
-  height: 100%;
+  background-color: #f7f8fa !important;
+  height: 100%; /* 전체 높이 채우기 */
   margin: 0;
   padding: 0;
+  overflow-y: auto; /* ✅ 전체 스크롤 가능 */
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui;
+  box-sizing: border-box;
 }
 
+/* 전체 페이지 */
 .city-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px;
-}
-.city-modal {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  min-height: 100vh;
+  justify-content: flex-start; /* ✅ 상단부터 쌓이게 */
+  min-height: 100%; /* ✅ 화면보다 작을 땐 꽉 차고, 크면 스크롤 */
+  padding: 60px 0 100px; /* 위아래 여유 */
+  box-sizing: border-box;
 }
 
-.city-card {
-  background-color: #e8e8e8;
-  padding: 40px 30px;
-  border-radius: 30px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  width: 342px;
-  height: 507px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -70px;
-}
-
+/* 제목 */
 .city-title {
   font-size: 38px;
   font-weight: 700;
   color: #3e5f44;
+  margin-bottom: 40px;
   text-align: center;
 }
 
+/* 카드 영역 */
+.city-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 400px; /* ✅ 가운데 정렬 유지 */
+}
+
+/* 도시 카드 */
+.city-card {
+  background-color: #e8e8e8;
+  padding: 50px 40px;
+  border-radius: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* 도시 리스트 */
 .city-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  row-gap: 14px;
-  column-gap: 30px;
-  justify-items: center;
+  row-gap: 18px;
+  column-gap: 40px;
+  justify-items: start;
   align-items: start;
   width: 100%;
-  flex-grow: 1;
-  padding: 10px 10px 0;
+  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -70,7 +78,6 @@ body {
   text-align: left;
 }
 
-/* 체크박스 스타일 */
 .city-item input[type="checkbox"] {
   appearance: none;
   width: 18px;
@@ -90,17 +97,17 @@ body {
 .city-item input[type="checkbox"]:checked::after {
   content: "✓";
   position: absolute;
-  top: -2px;
+  top: 0.5px;
   left: 3px;
   color: white;
   font-size: 14px;
   font-weight: 600;
 }
 
+/* 완료 버튼 */
 .city-confirm {
   width: 344px;
   height: 65px;
-  padding: 14px 0;
   border: none;
   border-radius: 12px;
   background-color: #3e5f44;
@@ -109,7 +116,6 @@ body {
   font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
-  margin: 0px;
 }
 
 .city-confirm:disabled {
@@ -119,4 +125,11 @@ body {
 
 .city-confirm:not(:disabled):hover {
   background-color: #2e4632;
+}
+html,
+body,
+#root,
+#app {
+  height: auto !important;
+  overflow-y: auto !important;
 }

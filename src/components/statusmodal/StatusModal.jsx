@@ -1,44 +1,112 @@
-// src/pages/statusModal/StatusModal.jsx
 import React, { useState, useEffect } from "react";
 import "./StatusModal.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function StatusModal() {
-  const [ranking, setRanking] = useState([]); // 전체 랭킹
-  const [myInfo, setMyInfo] = useState(null); // 나의 점수
-  const [isConnected, setIsConnected] = useState(false); // 연결 상태
+function StatusModal({ onClose, areaName }) {
+  const [ranking, setRanking] = useState([]);
+  const [myNickname, setMyNickname] = useState("");
+  const [isConnected, setIsConnected] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
+  const fetchRanking = async () => {
+    // areaName이 없으면 API를 호출하지 않음
+    if (!areaName) return; 
+
+    setIsLoading(true);
+
+    try {
+      const token = localStorage.getItem("token");
+
+      // 클릭된 '동'의 리더보드 API 호출 (역곡동)
+      const res = await axios.get(
+        `http://3.39.56.40:8080/api/regions/부천시/dongs/${encodeURIComponent(
+          areaName
+        )}/leaderboard`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = res.data.success;
+      if (!data) return;
+      setRanking(data.top3 || []);
+      
+      if (data.me) {
+        setMyNickname(data.me.name);
+      }
+      
+      setIsConnected(true);
+
+    } catch (err) {
+      console.error(`${areaName} 랭킹 불러오기 실패:`, err);
+      setIsConnected(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // areaName이 변경될 때마다 랭킹을 새로 불러옴
   useEffect(() => {
-    // 백엔드 WebSocket 완성 후 여기 코드 추가
-  }, []);
+    fetchRanking();
+  }, [areaName]);
+
+  // 탈취하기 버튼 -> 필터페이지
+  const handleGoToFilter = () => {
+    navigate("/filter");
+    onClose(); 
+  };
 
   return (
-    <div className="status-card">
-      <div className="status-header">
-        역곡동 점령 현황{" "}
-        <span
-          className={`status-dot ${isConnected ? "connected" : "disconnected"}`}
-        ></span>
-      </div>
+    <div className="status-overlay" onClick={onClose}>
+      <div className="status-card" onClick={(e) => e.stopPropagation()}>
 
-      {ranking.length > 0 ? (
-        <>
-          {ranking.slice(0, 3).map((user, index) => (
-            <div key={index} className="rank-item">
-              {index === 0}
-              {index === 1}
-              {index === 2}
-              {user.user} — {user.point}점
+        <div className="status-header">
+          {areaName} 점령 현황
+          <span
+            className={`status-dot ${
+              isConnected ? "connected" : "disconnected"
+            }`}
+          ></span>
+          <span className="modal-close" onClick={onClose}>
+            ✕
+          </span>
+        </div>
+
+        {isLoading ? (
+          <p>데이터 수신 대기 중...</p>
+        ) : ranking.length > 0 ? (
+          ranking.map((user, index) => (
+            <div
+              key={index}
+              className={`rank-item ${
+                user.name === myNickname ? "me" : "" 
+              }`}
+            >
+              <span
+                className="rank-color"
+                style={{ backgroundColor: user.userColorCode }}
+              ></span>
+
+              <span className="rank-name">{user.name}</span>
+
+              <span className="rank-point">
+                <img src="/assets/point.png" alt="포인트" />
+                {user.point}
+              </span>
             </div>
-          ))}
-          {myInfo && (
-            <div className="me">
-              <strong>나:</strong> {myInfo.user} — {myInfo.point}점
-            </div>
-          )}
-        </>
-      ) : (
-        <p>데이터 수신 대기 중...</p>
-      )}
+          ))
+        ) : (
+          <p>랭킹 정보가 없습니다.</p>
+        )}
+
+        <button className="status-conquer" onClick={handleGoToFilter}>
+          탈취하기
+        </button>
+      </div>
     </div>
   );
 }

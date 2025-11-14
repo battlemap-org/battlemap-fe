@@ -1,0 +1,119 @@
+.level-container {
+  padding: 80px 20px 180px 20px;
+  margin: 0 auto;
+  border-radius: 20px;
+  padding: 20px;
+  font-family: "Pretendard", "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.entirelevel {
+  width: 228px;
+  height: 66px;
+  background-color: #cbe0cf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 32px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 90%;
+  max-width: 600px;
+  font-size: 25px;
+  margin: 0 auto;
+  align-items: stretch; 
+}
+.my-rank {
+  /* 고정시키기 */
+  position: fixed;
+  z-index: 99; /* 스크롤 목록보다 위에 오도록 */
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  background-color: #e8e8e8;
+  border-radius: 14px;
+  padding: 12px 18px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  color: black;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 370px;
+  height: 75px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+  font-size: 25px;
+}
+
+/* 각 순위 행 */
+.rank-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+  width: 100%;
+  padding: 20px 30px;
+  box-sizing: border-box;
+}
+
+/* 왼쪽: 순위 + 동그라미 + 이름 */
+.rank-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.rank-color-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.my-rank .rank-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 숫자 스타일 */
+.rank-number {
+  font-weight: 550;
+}
+
+/* 이름 스타일 */
+.rank-name {
+  font-weight: 550;
+}
+
+.rank-span {
+  font-weight: 550;
+}
+
+.rank-right img {
+  width: 30px;
+  height: 33px;
+  vertical-align: middle;
+}
+
+.my-rank .rank-number,
+.my-rank .rank-name,
+.my-rank span {
+  font-weight: 600;
+  color: #000000;
+}
