@@ -226,13 +226,13 @@ function CafePage() {
         "요청 URL:",
         `https://www.battlemap.kr/api/quests/${kakao_store_id}/stores`
       );
-      console.log("요청 헤더:", config.headers); // 3. "퀘스트 생성" API (POST) 호출
+      console.log("요청 헤더:", config.headers);
 
       const response = await axios.post(
         `https://www.battlemap.kr/api/quests/${kakao_store_id}/stores`,
         requestBody,
         config
-      ); // 👈 ⭐️ 명세서에 맞게 만든 Body 전달
+      );
 
       console.log("퀘스트 생성 성공 응답:", response.data);
       const dbStoreId = response.data.success?.storeId;

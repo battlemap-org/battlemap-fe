@@ -25,9 +25,8 @@ function Filter() {
     navigate(`/stores/${code}`);
   };
 
-  // ⭐ [추가] 뒤로가기 버튼 핸들러
   const handleBackClick = () => {
-    navigate(-1); // -1은 "이전 페이지"로 이동하라는 의미입니다.
+    navigate(-1);
   };
 
   return (
@@ -35,7 +34,6 @@ function Filter() {
       <Header />
 
       <main className="main">
-        {/* ⭐ [추가] 뒤로가기 버튼을 담을 헤더 */}
         <div className="filter-header">
           <button className="back-button" onClick={handleBackClick}>
             {'<'}
