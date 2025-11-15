@@ -121,7 +121,7 @@ function Profile() {
   const categoryIcons = {
     식당: "/assets/restaurant.png",
     카페: "/assets/cafe.png",
-    문화체험: "/assets/entertainment.png",
+    문화·체험: "/assets/entertainment.png",
     숙박: "/assets/hotel.png",
   };
 
@@ -382,7 +382,7 @@ function Profile() {
         }
       );
 
-      setTopCategory(response.data.success); // "식당", "카페", "문화체험", "숙박"
+      setTopCategory(response.data.success); // "식당", "카페", "문화·체험", "숙박"
       setTopCategoryError(null);
     } catch (err) {
       console.error("카테고리 조회 실패:", err);
