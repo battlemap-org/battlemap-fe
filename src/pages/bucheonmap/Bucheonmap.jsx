@@ -79,7 +79,7 @@ function Bucheonmap() {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
     axios
-      .get("https://www.battlemap.kr/api/regions/부천시/dongs/${encodeURIComponent(dongName)}/leaderboard", { headers })
+      .get("https://www.battlemap.kr/api/regions/부천시/dongs/", { headers })
       .then((res) => {
         const list = res.data;
         if (list) setDongList(list);
