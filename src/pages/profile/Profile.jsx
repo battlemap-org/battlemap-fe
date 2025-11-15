@@ -630,7 +630,7 @@ function Profile() {
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100%" }}
     >
-            <Header />     {" "}
+            <Header /> {" "}
       <main style={{ padding: 16, background: "#fff" }}>
                {/* 프로필 영역 */}       
         <div
@@ -667,8 +667,7 @@ function Profile() {
                 alt="포인트"
                 style={{ width: 28, height: 32 }}
               />
-                         <span>           {pointsText}           </span>       
-               {" "}
+                         <span> {pointsText} </span> {" "}
               <ChevronRight
                 size={18}
                 style={{ cursor: "pointer" }}
@@ -1394,7 +1393,7 @@ function Profile() {
               }}
             >
                          {selectedCoupon?.name || "쿠폰"}으로
-              <br />           교환하시겠습니까?          
+              <br /> 교환하시겠습니까?          
             </div>
                                
             <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
