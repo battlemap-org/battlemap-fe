@@ -121,7 +121,7 @@ function Profile() {
   const categoryIcons = {
     식당: "/assets/restaurant.png",
     카페: "/assets/cafe.png",
-    "문화 체험": "/assets/entertainment.png",
+    문화체험: "/assets/entertainment.png",
     숙박: "/assets/hotel.png",
   };
 
@@ -660,7 +660,7 @@ function Profile() {
                 color: "#6b7280",
               }}
             >
-                         <span>사용 가능 포인트</span>
+              <span>사용 가능 포인트</span>
                          
               <img
                 src="/assets/point.png"
@@ -691,7 +691,7 @@ function Profile() {
                 alignSelf: "flex-start",
               }}
             >
-                         보유 쿠폰          
+              보유 쿠폰          
             </button>
                      
           </div>
@@ -809,7 +809,7 @@ function Profile() {
             marginBottom: 24,
           }}
         >
-                   <span style={{ flex: 1 }}>완료한 퀘스트 수</span>         
+          <span style={{ flex: 1 }}>완료한 퀘스트 수</span>         
           <span style={{ flex: 1 }}>총 퀘스트 수</span>         
           <span style={{ flex: 1 }}>많이 활동한 카테고리</span>       
         </div>
@@ -837,7 +837,7 @@ function Profile() {
         </div>
              {" "}
       </main>
-            {/* 모달 1: 쿠폰함 */}     {" "}
+            {/* 모달 1: 쿠폰함 */}{" "}
       {modalStep >= 1 && (
         <div
           style={{
@@ -896,7 +896,7 @@ function Profile() {
                   fontSize: 22,
                 }}
               >
-                            {pointsText}           {" "}
+                            {pointsText}{" "}
               </span>
                        
             </div>
@@ -915,7 +915,7 @@ function Profile() {
                 marginBottom: 20,
               }}
             >
-                         지역 화폐 충전          
+              지역 화폐 충전          
             </button>
                      {/* 쿠폰 섹션 */}         
             <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 12 }}>
