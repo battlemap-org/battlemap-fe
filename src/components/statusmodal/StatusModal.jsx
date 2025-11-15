@@ -11,18 +11,22 @@ function StatusModal({ onClose, areaName }) {
   const navigate = useNavigate();
 
   const fetchRanking = async () => {
-    // areaName이 없으면 API를 호출하지 않음
     if (!areaName) return;
+
+    // 🔥 핵심: 공백·줄바꿈 제거
+    const cleanAreaName = areaName.trim();
+
+    console.log("🔥 areaName raw:", JSON.stringify(areaName));
+    console.log("🔥 cleaned areaName:", JSON.stringify(cleanAreaName));
 
     setIsLoading(true);
 
     try {
       const token = localStorage.getItem("token");
 
-      // 클릭된 '동'의 리더보드 API 호출 (역곡동)
       const res = await axios.get(
-        `https://www.battlemap.kr//api/regions/부천시/dongs/${encodeURIComponent(
-          areaName
+        `https://www.battlemap.kr/api/regions/부천시/dongs/${encodeURIComponent(
+          cleanAreaName
         )}/leaderboard`,
         {
           headers: {
@@ -31,29 +35,34 @@ function StatusModal({ onClose, areaName }) {
         }
       );
 
-      const data = res.data.success;
-      if (!data) return;
-      setRanking(data.top3 || []);
+      console.log("🔥 API RESPONSE:", res.data);
 
-      if (data.me) {
-        setMyNickname(data.me.name);
+      const data = res.data.success;
+      if (!data) {
+        setRanking([]);
+        return;
       }
+
+      setRanking(data.top3 || []);
+      if (data.me) setMyNickname(data.me.name);
 
       setIsConnected(true);
     } catch (err) {
-      console.error(`${areaName} 랭킹 불러오기 실패:`, err);
+      console.error(
+        `🔥 [${areaName}] 랭킹 호출 에러:`,
+        err.response?.data || err
+      );
+      setRanking([]);
       setIsConnected(false);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // areaName이 변경될 때마다 랭킹을 새로 불러옴
   useEffect(() => {
     fetchRanking();
   }, [areaName]);
 
-  // 탈취하기 버튼 -> 필터페이지
   const handleGoToFilter = () => {
     navigate("/filter");
     onClose();
@@ -63,7 +72,7 @@ function StatusModal({ onClose, areaName }) {
     <div className="status-overlay" onClick={onClose}>
       <div className="status-card" onClick={(e) => e.stopPropagation()}>
         <div className="status-header">
-          {areaName} 점령 현황
+          {areaName.trim()} 점령 현황
           <span
             className={`status-dot ${
               isConnected ? "connected" : "disconnected"
