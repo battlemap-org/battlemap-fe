@@ -49,20 +49,19 @@ function QuestContents() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // 혹시 사용자가 새로고침해서 state가 날아갈 경우를 대비해 기본값 '가게' 설정
+  // 혹시 사용자가 새로고침해서 state가 날아갈 경우를 대비한 기본값 '가게'
   const storeName = location.state?.storeName || "가게";
 
-  // api데이터, 로딩, 에러
-  const [currentQuest, setCurrentQuest] = useState(null); // API로 받아올 퀘스트 (초기값 null)
+  const [currentQuest, setCurrentQuest] = useState(null); // API로 받아올 퀘스트 
   const [questType, setQuestType] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // 유저입력값
-  const [shortAnswer, setShortAnswer] = useState(""); // 주관식 답
-  const [preview, setPreview] = useState(null); // 사진 미리보기
+  const [shortAnswer, setShortAnswer] = useState("");
+  const [preview, setPreview] = useState(null);
   const imageInputRef = useRef(null); // 사진 input
-  const galleryInputRef = useRef(null); // 갤러리에서 사진 불러오기 input
+  const galleryInputRef = useRef(null); // 갤러리에서 불러오는 사진 input
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalProps, setModalProps] = useState({
@@ -131,7 +130,7 @@ function QuestContents() {
     }
   };
   const handleCameraClick = (e) => {
-    // 텍스트 상자(photo-upload-box) 클릭 이벤트가 같이 실행되지 않도록 막기
+    // 텍스트 상자 클릭 중복 막기
     e.stopPropagation();
     imageInputRef.current.click();
   };
@@ -172,7 +171,7 @@ function QuestContents() {
         if (!file) return alert("사진을 첨부해주세요.");
 
         const formData = new FormData();
-        formData.append("image", file); // image 맞는지 백엔드한테 확인받아야됨
+        formData.append("image", file); // image 맞는지 백엔드한테 확인받아야됨 -> 확인 완
 
         submitUrl = `https://www.battlemap.kr/api/quests/${questId}/answers-images`;
 

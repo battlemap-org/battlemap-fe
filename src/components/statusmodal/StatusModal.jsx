@@ -13,11 +13,10 @@ function StatusModal({ onClose, areaName }) {
   const fetchRanking = async () => {
     if (!areaName) return;
 
-    // 🔥 핵심: 공백·줄바꿈 제거
     const cleanAreaName = areaName.trim();
 
-    console.log("🔥 areaName raw:", JSON.stringify(areaName));
-    console.log("🔥 cleaned areaName:", JSON.stringify(cleanAreaName));
+    console.log("areaName raw:", JSON.stringify(areaName));
+    console.log("cleaned areaName:", JSON.stringify(cleanAreaName));
 
     setIsLoading(true);
 
@@ -35,7 +34,7 @@ function StatusModal({ onClose, areaName }) {
         }
       );
 
-      console.log("🔥 API RESPONSE:", res.data);
+      console.log("API RESPONSE:", res.data);
 
       const data = res.data.success;
       if (!data) {
@@ -49,7 +48,7 @@ function StatusModal({ onClose, areaName }) {
       setIsConnected(true);
     } catch (err) {
       console.error(
-        `🔥 [${areaName}] 랭킹 호출 에러:`,
+        `[${areaName}] 랭킹 호출 에러:`,
         err.response?.data || err
       );
       setRanking([]);

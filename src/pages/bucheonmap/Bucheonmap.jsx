@@ -16,7 +16,7 @@ function Bucheonmap() {
   const [todayQuestId, setTodayQuestId] = useState(null);
 
   // 역곡동 색상
-  const [yeokgokdongColor, setYeokgokdongColor] = useState("#cccccc");
+  const [yeokgokdongColor, setYeokgokdongColor] = useState("#cccccc"); // #cccccc는 그냥 기본값임
 
   const coordsMap = {
     대장동: { x: 140, y: 79 },
@@ -148,11 +148,9 @@ function Bucheonmap() {
     <>
       <Header />
       <main className="bucheonmap-main">
-        {/* --- 수정된 부분 (quest-card) --- */}
         <div className="quest-card">
           <div>
             {" "}
-            {/* 텍스트 정렬을 위해 div로 한번 감싸줍니다. */}
             📌 <strong>오늘의 퀘스트:</strong> {quest || "로딩 중..."}
             <br />
             ⭐️ <strong>이번 시즌 부천시 Top Player:</strong>{" "}

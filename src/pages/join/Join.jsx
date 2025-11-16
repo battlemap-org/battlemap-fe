@@ -1,4 +1,3 @@
-// Join.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import "./Join.css";
@@ -14,7 +13,7 @@ function Join() {
   const [pw, setPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState(""); // 모달 메시지
+  const [modalMessage, setModalMessage] = useState("");
 
   const handleRegister = () => {
     const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=]).{8,}$/;
@@ -143,7 +142,7 @@ function Join() {
         </div>
       </div>
 
-      {/* ✅ 모달 */}
+      {/* 모달 */}
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-content">

@@ -24,20 +24,16 @@ function CafePage() {
   const [error, setError] = useState(null);
   const [dongId, setDongId] = useState(null);
 
-  // 카카오맵 인스턴스 (지도, 마커, 인포윈도우)를 저장할 Ref
   const mapRef = useRef(null);
   const markersRef = useRef([]);
   const infowindowRef = useRef(null);
 
-  // API 데이터 호출 useEffect
   useEffect(() => {
     const fetchStores = async () => {
       const cityName = "부천시";
       const dongName = "역곡동";
-      // 나중에는 이 값들을 동적으로 받아와야됨
 
       const token = localStorage.getItem("token");
-      // 토큰이 없을 때 에러메시지
       if (!token) {
         setError("로그인이 필요합니다.");
         setLoading(false);
@@ -99,11 +95,10 @@ function CafePage() {
           level: 3,
         };
 
-        // 지도 생성 및 Ref에 저장
+        // 지도 생성
         const mapInstance = new window.kakao.maps.Map(mapContainer, options);
         mapRef.current = mapInstance;
 
-        // 인포윈도우 생성 및 Ref에 저장
         infowindowRef.current = new window.kakao.maps.InfoWindow({
           zIndex: 1,
           content: '<div style="padding:5px;font-size:12px;"></div>',
@@ -114,10 +109,9 @@ function CafePage() {
           const position = new window.kakao.maps.LatLng(store.y, store.x);
           const marker = new window.kakao.maps.Marker({
             position: position,
-            title: store.place_name, // 마커에 카페 이름 저장 (검색용)
+            title: store.place_name,
           });
 
-          // 마커 클릭 이벤트: Map -> List
           window.kakao.maps.event.addListener(marker, "click", () => {
             setSelectedStore(store); // 클릭된 마커의 카페로 state 변경
           });
@@ -126,7 +120,7 @@ function CafePage() {
           return marker;
         });
 
-        markersRef.current = newMarkers; // 생성된 마커 목록 Ref에 저장
+        markersRef.current = newMarkers;
       });
     };
 
@@ -140,7 +134,7 @@ function CafePage() {
   // 2. selectedStore이 변경될 때 지도 연동
   useEffect(() => {
     if (!mapRef.current || !infowindowRef.current || !selectedStore) {
-      return; // 맵, 인포윈도우, 선택된 카페가 모두 준비되어야 실행
+      return; // 맵, 인포윈도우, 선택된 카페가 모두 준비되어야만 실행됨
     }
 
     // 선택된 카페 위치 생성
@@ -149,12 +143,12 @@ function CafePage() {
       selectedStore.x
     );
 
-    // 해당 위치로 지도 부드럽게 이동
+    // 지도 부드럽게 이동
     mapRef.current.panTo(position);
 
-    mapRef.current.setLevel(2); // 지도 확대
+    mapRef.current.setLevel(2); // 지도 확대정도
 
-    // Ref에 저장된 마커 목록에서 현재 선택된 카페의 마커 찾기
+    // Ref에 저장된 마커 목록에서 선택된 카페마커 찾기
     const marker = markersRef.current.find(
       (m) => m.getTitle() === selectedStore.place_name
     );
@@ -167,13 +161,12 @@ function CafePage() {
     }
   }, [selectedStore]); // selectedStore state가 바뀔 때마다 실행
 
-  // 목록 아이템 클릭 이벤트: List -> Map
   const handleStoreClick = (store) => {
     setSelectedStore(store); // 클릭된 리스트의 카페로 state 변경
   };
 
   const handleQuestClick = async (event, store) => {
-    event.stopPropagation(); // 부모 요소(리스트 아이템) 클릭 방지
+    event.stopPropagation(); // 중복 클릭 방지
 
     if (!dongId) {
       alert("dongId를 찾을 수 없습니다. (fetchStores 확인 필요)");
@@ -263,7 +256,6 @@ function CafePage() {
     }
   };
 
-  // 로딩, 에러
   if (loading) {
     return <div>데이터를 불러오는 중입니다...</div>;
   }

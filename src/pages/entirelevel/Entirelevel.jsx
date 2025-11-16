@@ -120,7 +120,7 @@ function Entirelevel() {
       {myInfo && (
         <div className="my-rank">
           <div className="rank-left">
-                        <span className="rank-number">{myInfo.rank}.</span>
+            <span className="rank-number">{myInfo.rank}.</span>
             <div
               className="rank-color-circle"
               style={{ backgroundColor: myColor }}
@@ -128,12 +128,12 @@ function Entirelevel() {
             <span className="rank-name">{myInfo.name}</span>
           </div>
           <div className="rank-right">
-                       {" "}
+            {" "}
             <span>
               <img src="/assets/point.png" alt="포인트아이콘" /> {myInfo.point}
             </span>
           </div>
-                   {" "}
+          {" "}
         </div>
       )}
 
