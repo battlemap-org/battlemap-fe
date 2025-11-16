@@ -7,9 +7,12 @@
   padding-bottom: 40px;
 }
 
+/* --- 수정된 부분 (퀘스트 카드) --- */
 .quest-card {
-  min-width: 387px;
-  height: 110px;
+  /* min-width: 387px; ❌ 삭제 */
+  width: 350px; /* ✅ 지도 너비와 맞춤 */
+  /* height: 110px; ❌ 삭제 */
+  padding: 20px 25px; /* ✅ 내부 여백으로 높이 자동 조절 */
   margin-top: 30px;
   background-color: #a9c2b0;
   border-radius: 10px;
@@ -17,8 +20,9 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  text-align: center;
-  white-space: nowrap;
+  /* text-align: center; (중복 제거) */
+  /* white-space: nowrap; ❌ 삭제 (줄바꿈 허용) */
+  box-sizing: border-box; /* ✅ 너비 계산 기준 */
 }
 
 .map-wrapper {
