@@ -1,27 +1,24 @@
 html,
 body {
   background-color: #f7f8fa !important;
-  height: 100%; /* 전체 높이 채우기 */
+  height: 100%;
   margin: 0;
   padding: 0;
-  overflow-y: auto; /* ✅ 전체 스크롤 가능 */
+  overflow-y: auto;
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui;
   box-sizing: border-box;
 }
 
-/* --- 수정된 부분 (전체 페이지) --- */
 .city-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* ✅ 상단부터 쌓이게 */
-  min-height: 100%; /* ✅ 화면보다 작을 땐 꽉 차고, 크면 스크롤 */
-  padding: 60px 20px 100px; /* ✅ 좌우 여백 추가 */
+  justify-content: flex-start;
+  min-height: 100%; 
+  padding: 60px 20px 100px; 
   box-sizing: border-box;
 }
-/* --- 수정 끝 --- */
 
-/* 제목 */
 .city-title {
   font-size: 38px;
   font-weight: 700;
@@ -37,13 +34,12 @@ body {
   align-items: center;
   gap: 40px;
   width: 100%;
-  max-width: 400px; /* ✅ 가운데 정렬 유지 */
+  max-width: 400px;
 }
 
-/* --- 수정된 부분 (도시 카드) --- */
 .city-card {
   background-color: #e8e8e8;
-  padding: 30px 5px; /* ✅ 좌우 여백 축소 */
+  padding: 30px 5px;
   border-radius: 30px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -53,23 +49,20 @@ body {
   align-items: center;
   box-sizing: border-box;
 }
-/* --- 수정 끝 --- */
 
 .city-list {
   display: grid;
-  /* grid-template-columns: repeat(2, 1fr); */ /* ❌ 1fr(균등) 대신 auto(자동) 사용 */
-  grid-template-columns: auto auto; /* ✅ 너비 자동 */
-  justify-content: center; /* ✅ 두 열을 묶어서 가운데 정렬 */
+  grid-template-columns: auto auto;
+  justify-content: center;
   row-gap: 18px;
-  column-gap: 40px; /* ✅ 간격은 다시 40px로 늘려도 좋습니다 (가운데 정렬이므로) */
-  justify-items: start; /* ✅ 항목 자체는 왼쪽 정렬 (체크박스 고정) */
+  column-gap: 40px; 
+  justify-items: start;
   align-items: start;
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
 }
 
-/* --- 수정된 부분 (도시 항목) --- */
 .city-item {
   display: flex;
   align-items: center;
@@ -77,10 +70,8 @@ body {
   gap: 8px;
   font-size: 15px;
   color: #2e4632;
-  /* width: 120px; */ /* ❌ 고정 폭 제거 */
   text-align: left;
 }
-/* --- 수정 끝 --- */
 
 .city-item input[type="checkbox"] {
   appearance: none;
@@ -98,10 +89,9 @@ body {
   border-color: #3e5f44;
 }
 
-/* --- 수정된 부분 (완료 버튼) --- */
 .city-confirm {
-  width: 100%; /* ✅ 100%로 변경 */
-  max-width: 344px; /* ✅ 최대 너비 설정 */
+  width: 100%; 
+  max-width: 344px; 
   height: 65px;
   border: none;
   border-radius: 12px;
@@ -112,7 +102,6 @@ body {
   cursor: pointer;
   transition: 0.2s;
 }
-/* --- 수정 끝 --- */
 
 .city-confirm:disabled {
   background-color: #bbb;
