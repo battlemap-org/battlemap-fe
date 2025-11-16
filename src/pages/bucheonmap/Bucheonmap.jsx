@@ -16,7 +16,7 @@ function Bucheonmap() {
   const [todayQuestId, setTodayQuestId] = useState(null);
 
   // 역곡동 색상
-  const [yeokgokdongColor, setYeokgokdongColor] = useState("#cccccc");
+  const [yeokgokdongColor, setYeokgokdongColor] = useState("#cccccc"); // #cccccc는 그냥 기본값임
 
   const coordsMap = {
     대장동: { x: 140, y: 79 },
@@ -35,9 +35,9 @@ function Bucheonmap() {
     역곡동: { x: 246, y: 310 },
     괴안동: { x: 256, y: 350 },
     범박동: { x: 256, y: 390 },
-    옥길동: { x: 308, y: 405 },
+    옥길동: { x: 305, y: 405 },
     송내동: { x: 85, y: 333 },
-    심곡동: { x: 165, y: 310 },
+    심곡동: { x: 150, y: 310 },
     심곡본동: { x: 145, y: 360 },
     소사동: { x: 195, y: 325 },
     소사본동: { x: 197, y: 373 },
@@ -149,9 +149,13 @@ function Bucheonmap() {
       <Header />
       <main className="bucheonmap-main">
         <div className="quest-card">
-          📌 오늘의 퀘스트: {quest || "로딩 중..."}
-          <br />
-          ⭐️ 이번 시즌 부천시 Top Player: {topPlayer || "로딩 중..."}
+          <div>
+            {" "}
+            📌 <strong>오늘의 퀘스트:</strong> {quest || "로딩 중..."}
+            <br />
+            ⭐️ <strong>이번 시즌 부천시 Top Player:</strong>{" "}
+            {topPlayer || "로딩 중..."}
+          </div>
         </div>
 
         <div className="bucheonmap-card">

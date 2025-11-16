@@ -602,11 +602,11 @@ function Profile() {
           // API 명세서 Header
           headers: { Authorization: `Bearer ${token}` },
         }
-      ); // 성공 응답 처리 (명세서 기준)
+      ); // 성공 응답 처리
       alert(response.data.message || "성공적으로 교환되었습니다.");
       setPoints(response.data.remainPoint);
     } catch (err) {
-      console.error("쿠폰 교환 실패:", err); // 에러 처리
+      console.error("쿠폰 교환 실패:", err);
       if (err.response) {
         if (err.response.status === 400) {
           alert("포인트가 부족합니다.");
@@ -630,15 +630,13 @@ function Profile() {
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100%" }}
     >
-            <Header /> {" "}
+      <Header />{" "}
       <main style={{ padding: 16, background: "#fff" }}>
-               {/* 프로필 영역 */}       
+        {/* 프로필 영역 */}
         <div
           style={{ display: "flex", alignItems: "center", marginBottom: 16 }}
         >
-                   
-          <UserCircle size={120} style={{ color: "#000" }} strokeWidth={1} />   
-               
+          <UserCircle size={120} style={{ color: "#000" }} strokeWidth={1} />
           <div
             style={{
               marginLeft: 16,
@@ -648,9 +646,8 @@ function Profile() {
               justifyContent: "center",
             }}
           >
-                     
-            <div style={{ fontSize: 24, fontWeight: 700 }}>{userName}</div>     
-               
+            <div style={{ fontSize: 24, fontWeight: 700 }}>{userName}</div>
+            
             <div
               style={{
                 display: "flex",
@@ -661,21 +658,20 @@ function Profile() {
               }}
             >
               <span>사용 가능 포인트</span>
-                         
+              
               <img
                 src="/assets/point.png"
                 alt="포인트"
                 style={{ width: 28, height: 32 }}
               />
-                         <span> {pointsText} </span> {" "}
+              <span> {pointsText} </span>{" "}
               <ChevronRight
                 size={18}
                 style={{ cursor: "pointer" }}
                 onClick={() => setModalStep(1)}
               />
-                       
+              
             </div>
-                     
             <button
               onClick={handleShowOwnedCoupons}
               style={{
@@ -691,34 +687,28 @@ function Profile() {
                 alignSelf: "flex-start",
               }}
             >
-              보유 쿠폰          
+              보유 쿠폰
             </button>
-                     
           </div>
-                 
         </div>
-               {/* 구분선 */}
-               <hr style={{ border: "1px solid #e5e7eb", marginBottom: 24 }} /> 
-             
+        {/* 구분선 */}
+        <hr style={{ border: "1px solid #e5e7eb", marginBottom: 24 }} />
+        
         <div style={{ marginBottom: 24 }}>
-                   
           <div style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>
             현 시즌 점령 현황
           </div>
-                   
           <div style={{ fontSize: 18, color: "#374151", marginBottom: 2 }}>
-                     - 리그 순위:{" "}
-            <span style={{ fontWeight: 600 }}>{myRankText}</span>         
+            - 리그 순위:{" "}
+            <span style={{ fontWeight: 600 }}>{myRankText}</span>
           </div>
-                   
           <div style={{ fontSize: 18, color: "#374151" }}>
-                     - 리그 포인트:{" "}
-            <span style={{ fontWeight: 600 }}>{mySeasonPointText}</span>       
-             
+            - 리그 포인트:{" "}
+            <span style={{ fontWeight: 600 }}>{mySeasonPointText}</span>
           </div>
-                 
+          
         </div>
-               {/* 박스 3개 */}       
+        {/* 박스 3개 */}
         <div
           style={{
             display: "flex",
@@ -727,7 +717,7 @@ function Profile() {
             marginBottom: 8,
           }}
         >
-                   {/* 박스 1 */}         
+          {/* 박스 1 */}
           <div
             style={{
               flex: 1,
@@ -740,13 +730,12 @@ function Profile() {
               aspectRatio: "1 / 1",
             }}
           >
-                     <Flag size={52} style={{ color: "#374151" }} />         
+            <Flag size={52} style={{ color: "#374151" }} />
             <span style={{ marginTop: 8, fontWeight: 600 }}>
-                         {completedQuestsText}         
+              {completedQuestsText}
             </span>
-                     
           </div>
-                   {/* 박스 2 */}         
+          {/* 박스 2 */}
           <div
             style={{
               flex: 1,
@@ -759,14 +748,12 @@ function Profile() {
               aspectRatio: "1 / 1",
             }}
           >
-                     <ScrollText size={52} style={{ color: "#374151" }} />     
-               
+            <ScrollText size={52} style={{ color: "#374151" }} />
             <span style={{ marginTop: 8, fontWeight: 600 }}>
               {totalQuestsText}
             </span>
-                     
           </div>
-          {/* 박스 3 : 많이 활동한 카테고리 */}
+          {/* 박스 3 */}
           <div
             style={{
               flex: 1,
@@ -796,9 +783,8 @@ function Profile() {
               </>
             )}
           </div>
-                 
         </div>
-               {/* 박스 하단 텍스트 */}       
+        {/* 박스 안 텍스트 */}
         <div
           style={{
             display: "flex",
@@ -809,11 +795,11 @@ function Profile() {
             marginBottom: 24,
           }}
         >
-          <span style={{ flex: 1 }}>완료한 퀘스트 수</span>         
-          <span style={{ flex: 1 }}>총 퀘스트 수</span>         
-          <span style={{ flex: 1 }}>많이 활동한 카테고리</span>       
+          <span style={{ flex: 1 }}>완료한 퀘스트 수</span>
+          <span style={{ flex: 1 }}>총 퀘스트 수</span>
+          <span style={{ flex: 1 }}>많이 활동한 카테고리</span>
         </div>
-               {/* 그래프 이미지 */}       
+        {/* 그래프 이미지 */}
         <div
           style={{
             width: "100%",
@@ -822,7 +808,7 @@ function Profile() {
             marginBottom: 24,
           }}
         >
-                   
+         
           <img
             src="/assets/graph.png"
             alt="활동 그래프"
@@ -833,11 +819,10 @@ function Profile() {
               borderRadius: 12,
             }}
           />
-                 
         </div>
-             {" "}
+        {" "}
       </main>
-            {/* 모달 1: 쿠폰함 */}{" "}
+      {/* 모달 1: 쿠폰함 */}{" "}
       {modalStep >= 1 && (
         <div
           style={{
@@ -854,7 +839,6 @@ function Profile() {
           }}
           onClick={() => setModalStep(0)}
         >
-                   
           <div
             style={{
               background: "#fff",
@@ -866,7 +850,6 @@ function Profile() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-                     
             <X
               size={28}
               style={{
@@ -878,7 +861,7 @@ function Profile() {
               }}
               onClick={() => setModalStep(0)}
             />
-                     {/* 포인트 */}         
+            {/* 포인트 */}
             <div
               style={{
                 marginBottom: 8,
@@ -887,20 +870,19 @@ function Profile() {
                 gap: 8,
               }}
             >
-                         {" "}
+              {" "}
               <img src="/assets/point.png" style={{ width: 40, height: 44 }} /> 
-                       {" "}
+              {" "}
               <span
                 style={{
                   fontWeight: 600,
                   fontSize: 22,
                 }}
               >
-                            {pointsText}{" "}
+                {pointsText}{" "}
               </span>
-                       
             </div>
-                     {/* 지역 화폐 충전 버튼 */}         
+            {/* 지역 화폐 충전 버튼 */}
             <button
               onClick={() => setModalStep(2)}
               style={{
@@ -915,13 +897,12 @@ function Profile() {
                 marginBottom: 20,
               }}
             >
-              지역 화폐 충전          
+              지역 화폐 충전 
             </button>
-                     {/* 쿠폰 섹션 */}         
+            {/* 쿠폰 섹션 */}
             <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 12 }}>
               쿠폰
             </div>
-                     
             <div
               style={{
                 display: "grid",
@@ -929,7 +910,6 @@ function Profile() {
                 gap: 12,
               }}
             >
-                         
               {coupons.map((coupon, idx) => (
                 <div
                   key={idx}
@@ -940,7 +920,6 @@ function Profile() {
                     gap: 4,
                   }}
                 >
-                               
                   <img
                     src={`/assets/${coupon.img}`}
                     alt={`${coupon.amount} 쿠폰`}
@@ -958,7 +937,6 @@ function Profile() {
                       setShowExchangeModal(true);
                     }}
                   />
-                               
                   <div
                     style={{
                       fontWeight: 600,
@@ -969,25 +947,21 @@ function Profile() {
                       fontSize: 15,
                     }}
                   >
-                               {" "}
+                    {" "}
                     <img
                       src="/assets/point.png"
                       alt="P"
                       style={{ width: 24, height: 28 }}
                     />
-                                   {coupon.amount}             
+                    {coupon.amount}
                   </div>
-                               
                 </div>
               ))}
-                       
             </div>
-                     
           </div>
-                 
         </div>
       )}
-            {/* 모달 2: 충전 */}     {" "}
+      {/* 모달 2: 충전 */}{" "}
       {modalStep >= 2 && (
         <div
           style={{
@@ -1004,7 +978,6 @@ function Profile() {
           }}
           onClick={() => setModalStep(0)}
         >
-                   
           <div
             style={{
               background: "#fff",
@@ -1016,7 +989,6 @@ function Profile() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-                     
             <X
               size={28}
               style={{
@@ -1028,7 +1000,6 @@ function Profile() {
               }}
               onClick={() => setModalStep(0)}
             />
-                               
             <div
               style={{
                 fontSize: 18,
@@ -1037,9 +1008,8 @@ function Profile() {
                 marginBottom: 20,
               }}
             >
-                         지역 화폐 충전          
+              지역 화폐 충전 
             </div>
-                               
             <div
               style={{
                 display: "flex",
@@ -1048,7 +1018,6 @@ function Profile() {
                 alignItems: "center",
               }}
             >
-                         
               <input
                 type="number"
                 placeholder="충전 금액을 입력하세요."
@@ -1063,7 +1032,6 @@ function Profile() {
                   width: "100%",
                 }}
               />
-                         
               <button
                 onClick={() => setModalStep(3)} // 확인 모달로
                 style={{
@@ -1078,28 +1046,23 @@ function Profile() {
                   whiteSpace: "nowrap",
                 }}
               >
-                           확인            
+                확인
               </button>
-                       
             </div>
-                     
             <div
               style={{ fontSize: 13, color: "#000000ff", textAlign: "center" }}
             >
-                         충전 가능 금액: {pointsValue}원          
+              충전 가능 금액: {pointsValue}원
             </div>
-                     
             <div
               style={{ fontSize: 13, color: "#000000ff", textAlign: "center" }}
             >
-                         보유 지역 화폐: {localCurrencyText}         
+              보유 지역 화폐: {localCurrencyText}
             </div>
-                     
           </div>
-                 
         </div>
       )}
-            {/* 모달 3: 충전 확인 */}     
+      {/* 모달 3: 충전 확인 */}
       {modalStep === 3 && (
         <div
           style={{
@@ -1116,7 +1079,6 @@ function Profile() {
           }}
           onClick={() => setModalStep(0)}
         >
-                   
           <div
             style={{
               background: "#fff",
@@ -1128,7 +1090,6 @@ function Profile() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-                     
             <X
               size={28}
               style={{
@@ -1140,7 +1101,6 @@ function Profile() {
               }}
               onClick={() => setModalStep(0)}
             />
-                               
             <div
               style={{
                 fontSize: 18,
@@ -1150,12 +1110,10 @@ function Profile() {
                 marginTop: 12,
               }}
             >
-                         {chargeAmount}원을 지역 화폐로 충전하시겠습니까?      
-                 
+              {chargeAmount}원을 지역 화폐로 충전하시겠습니까?
+              
             </div>
-                               
             <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-                         
               <button
                 onClick={handleConfirmCharge}
                 style={{
@@ -1170,9 +1128,9 @@ function Profile() {
                   flex: 1,
                 }}
               >
-                           확인            
+                확인 
               </button>
-                         
+              
               <button
                 onClick={() => setModalStep(2)}
                 style={{
@@ -1187,16 +1145,13 @@ function Profile() {
                   flex: 1,
                 }}
               >
-                           취소            
+                취소 
               </button>
-                       
             </div>
-                     
           </div>
-                 
         </div>
       )}
-            {/* 모달 5: 보유 쿠폰 */}     {" "}
+      {/* 모달 5: 보유 쿠폰 */}{" "}
       {showOwnedCouponModal && (
         <div
           style={{
@@ -1213,7 +1168,6 @@ function Profile() {
           }}
           onClick={() => setShowOwnedCouponModal(false)}
         >
-                   
           <div
             style={{
               background: "#fff",
@@ -1226,7 +1180,6 @@ function Profile() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-                     
             <X
               size={28}
               style={{
@@ -1238,7 +1191,6 @@ function Profile() {
               }}
               onClick={() => setShowOwnedCouponModal(false)}
             />
-                     
             <div
               style={{
                 fontSize: 18,
@@ -1249,29 +1201,25 @@ function Profile() {
             >
               보유쿠폰
             </div>
-                               
             <div style={{ minHeight: 300 }}>
-                         
+              
               {couponLoading && (
                 <div style={{ textAlign: "center", paddingTop: 40 }}>
-                               쿠폰을 불러오는 중...            
+                  쿠폰을 불러오는 중... 
                 </div>
               )}
-                         
               {couponError && (
                 <div
                   style={{ textAlign: "center", paddingTop: 40, color: "red" }}
                 >
-                               {couponError}           
+                  {couponError}
                 </div>
               )}
-                         
               {!couponLoading && !couponError && ownedCoupons.length === 0 && (
                 <div style={{ textAlign: "center", paddingTop: 40 }}>
-                               보유한 쿠폰이 없습니다.            
+                  보유한 쿠폰이 없습니다. 
                 </div>
               )}
-                         
               {!couponLoading && !couponError && ownedCoupons.length > 0 && (
                 <div
                   style={{
@@ -1280,7 +1228,6 @@ function Profile() {
                     gap: 12,
                   }}
                 >
-                               
                   {ownedCoupons.map((coupon, idx) => (
                     <div
                       key={idx}
@@ -1297,7 +1244,6 @@ function Profile() {
                         setShowBarcodeModal(true);
                       }}
                     >
-                                     
                       <img
                         src={coupon.img}
                         alt={coupon.value || "쿠폰"}
@@ -1309,7 +1255,6 @@ function Profile() {
                           objectFit: "cover",
                         }}
                       />
-                                     
                       {coupon.value && (
                         <div
                           style={{
@@ -1319,23 +1264,19 @@ function Profile() {
                             textAlign: "center",
                           }}
                         >
-                                           {coupon.value}                 
+                          {coupon.value}
                         </div>
                       )}
-                                   
                     </div>
                   ))}
-                       {" "}
+                  {" "}
                 </div>
               )}
-                       
             </div>
-                     
           </div>
-                 
         </div>
       )}
-            {/* 모달 6: 쿠폰 교환 확인 */}     {" "}
+       {/* 모달 6: 쿠폰 교환 확인 */}{" "}
       {showExchangeModal && (
         <div
           style={{
@@ -1355,7 +1296,6 @@ function Profile() {
             setSelectedCoupon(null);
           }}
         >
-                   
           <div
             style={{
               background: "#fff",
@@ -1367,7 +1307,6 @@ function Profile() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-                     
             <X
               size={28}
               style={{
@@ -1382,7 +1321,7 @@ function Profile() {
                 setSelectedCoupon(null);
               }}
             />
-                               {/* 선택된 쿠폰 이름 동적 표시 */}         
+            {/* 선택된 쿠폰 이름 동적 표시 */}
             <div
               style={{
                 fontSize: 18,
@@ -1392,12 +1331,11 @@ function Profile() {
                 marginTop: 12,
               }}
             >
-                         {selectedCoupon?.name || "쿠폰"}으로
-              <br /> 교환하시겠습니까?          
+              {selectedCoupon?.name || "쿠폰"}으로
+              <br /> 교환하시겠습니까? 
             </div>
-                               
+            
             <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-                       
               <button
                 onClick={handleExchangeCoupon}
                 style={{
@@ -1412,9 +1350,9 @@ function Profile() {
                   flex: 1,
                 }}
               >
-                           확인          
+                확인 
               </button>
-                       
+              
               <button
                 onClick={() => {
                   setShowExchangeModal(false);
@@ -1432,16 +1370,13 @@ function Profile() {
                   flex: 1,
                 }}
               >
-                           취소          
+                취소 
               </button>
-                       
             </div>
-                     
           </div>
-                   
         </div>
       )}
-            {/* 모달 7: 바코드 확인 */}     {" "}
+       {/* 모달 7: 바코드 확인 */}{" "}
       {showBarcodeModal && selectedCoupon && (
         <div
           style={{
@@ -1458,7 +1393,6 @@ function Profile() {
           }}
           onClick={() => setShowBarcodeModal(false)}
         >
-                   
           <div
             style={{
               background: "#fff",
@@ -1471,7 +1405,6 @@ function Profile() {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-                     
             <ChevronLeft
               size={28}
               style={{
@@ -1483,9 +1416,7 @@ function Profile() {
               }}
               onClick={() => setShowBarcodeModal(false)}
             />
-                     
             <div style={{ display: "flex", justifyContent: "center" }}>
-                         
               <img
                 src={selectedCoupon.img}
                 alt={selectedCoupon.value || "쿠폰 이미지"}
@@ -1495,9 +1426,7 @@ function Profile() {
                   height: "auto",
                 }}
               />
-                       
             </div>
-                               
             <div
               style={{
                 fontSize: 18,
@@ -1506,11 +1435,9 @@ function Profile() {
                 textAlign: "center",
               }}
             >
-                         {selectedCoupon.value}         
+              {selectedCoupon.value}
             </div>
-                               
             <div style={{ display: "flex", justifyContent: "center" }}>
-                       
               <img
                 src={selectedCoupon.barcodeImg}
                 alt="바코드"
@@ -1520,14 +1447,11 @@ function Profile() {
                   height: "auto",
                 }}
               />
-                       
             </div>
-                     
           </div>
-                   
         </div>
       )}
-         {" "}
+      {" "}
     </div>
   );
 }

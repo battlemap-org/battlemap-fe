@@ -4,7 +4,7 @@ import "../../index.css";
 import { useNavigate } from "react-router-dom";
 
 function City() {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState([]); // 상태 변경: 문자열 -> 배열
   const navigate = useNavigate();
 
   const cities = [
@@ -40,20 +40,20 @@ function City() {
 
   const toggleSelect = (city) => {
     setSelected((prev) =>
-      prev.includes(city) ? prev.filter((c) => c !== city) : [...prev, city]
+      prev.includes(city) ? [] : [city]
     );
   };
 
   const handleConfirm = () => {
-    if (selected.length === 0) {
-      console.log("선택된 기본 도시:", "부천시");
-      return "부천";
+    if (selected.length === 1 && selected.includes("부천시")) {
+      navigate("/bucheonmap");
+    } else {
+      alert("현재는 부천시에서만 플레이가 가능합니다.");
     }
-    navigate("/bucheonmap");
   };
 
   const onEsc = useCallback((e) => {
-    if (e.key === "Escape") setSelected([]);
+    if (e.key === "Escape") setSelected([]); // 초기화 복구
   }, []);
 
   useEffect(() => {
@@ -76,9 +76,9 @@ function City() {
             {cities.map((city, index) => (
               <label key={index} className="city-item">
                 <input
-                  type="checkbox"
-                  checked={selected.includes(city)}
-                  onChange={() => toggleSelect(city)}
+                  type="checkbox" 
+                  checked={selected.includes(city)} // checked 조건 복구
+                  onChange={() => toggleSelect(city)} // onChange 핸들러 복구
                 />
                 <span>{city}</span>
               </label>

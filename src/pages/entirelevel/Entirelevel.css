@@ -38,9 +38,8 @@
   align-items: stretch; 
 }
 .my-rank {
-  /* 고정시키기 */
   position: fixed;
-  z-index: 99; /* 스크롤 목록보다 위에 오도록 */
+  z-index: 99;
   bottom: 80px;
   left: 0;
   right: 0;
@@ -93,12 +92,10 @@
   gap: 10px;
 }
 
-/* 숫자 스타일 */
 .rank-number {
   font-weight: 550;
 }
 
-/* 이름 스타일 */
 .rank-name {
   font-weight: 550;
 }

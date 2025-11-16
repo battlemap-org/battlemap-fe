@@ -1,26 +1,24 @@
 html,
 body {
   background-color: #f7f8fa !important;
-  height: 100%; /* 전체 높이 채우기 */
+  height: 100%;
   margin: 0;
   padding: 0;
-  overflow-y: auto; /* ✅ 전체 스크롤 가능 */
+  overflow-y: auto;
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui;
   box-sizing: border-box;
 }
 
-/* 전체 페이지 */
 .city-page {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* ✅ 상단부터 쌓이게 */
-  min-height: 100%; /* ✅ 화면보다 작을 땐 꽉 차고, 크면 스크롤 */
-  padding: 60px 0 100px; /* 위아래 여유 */
+  justify-content: flex-start;
+  min-height: 100%; 
+  padding: 60px 20px 100px; 
   box-sizing: border-box;
 }
 
-/* 제목 */
 .city-title {
   font-size: 38px;
   font-weight: 700;
@@ -36,13 +34,12 @@ body {
   align-items: center;
   gap: 40px;
   width: 100%;
-  max-width: 400px; /* ✅ 가운데 정렬 유지 */
+  max-width: 400px;
 }
 
-/* 도시 카드 */
 .city-card {
   background-color: #e8e8e8;
-  padding: 50px 40px;
+  padding: 30px 5px;
   border-radius: 30px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -53,12 +50,12 @@ body {
   box-sizing: border-box;
 }
 
-/* 도시 리스트 */
 .city-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: auto auto;
+  justify-content: center;
   row-gap: 18px;
-  column-gap: 40px;
+  column-gap: 40px; 
   justify-items: start;
   align-items: start;
   width: 100%;
@@ -66,7 +63,6 @@ body {
   box-sizing: border-box;
 }
 
-/* 도시 항목 */
 .city-item {
   display: flex;
   align-items: center;
@@ -74,7 +70,6 @@ body {
   gap: 8px;
   font-size: 15px;
   color: #2e4632;
-  width: 120px;
   text-align: left;
 }
 
@@ -94,19 +89,9 @@ body {
   border-color: #3e5f44;
 }
 
-.city-item input[type="checkbox"]:checked::after {
-  content: "✓";
-  position: absolute;
-  top: 0.5px;
-  left: 3px;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-/* 완료 버튼 */
 .city-confirm {
-  width: 344px;
+  width: 100%; 
+  max-width: 344px; 
   height: 65px;
   border: none;
   border-radius: 12px;

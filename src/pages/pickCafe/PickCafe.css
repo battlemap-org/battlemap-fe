@@ -3,7 +3,7 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;  /* 전체 스크롤 방지 */
+  overflow: hidden; /* 전체 스크롤 방지 */
 }
 
 .cafe-page {

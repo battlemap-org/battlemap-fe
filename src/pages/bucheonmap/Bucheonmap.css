@@ -8,8 +8,8 @@
 }
 
 .quest-card {
-  min-width: 387px;
-  height: 110px;
+  width: 350px;
+  padding: 20px 25px;
   margin-top: 30px;
   background-color: #a9c2b0;
   border-radius: 10px;
@@ -17,14 +17,13 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  text-align: center;
-  white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .map-wrapper {
   position: relative;
   width: 350px;
-  height: 481px; /* 원본 비율 기반 */
+  height: 481px;
   padding-bottom: 15px;
 }
 
@@ -53,7 +52,6 @@
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
-/* ====== 인증 모달 전체 화면 덮기 ====== */
 .result-modal-overlay {
   position: fixed !important;
   top: 0;
@@ -67,7 +65,6 @@
   z-index: 99999 !important;
 }
 
-/* ====== 모달 박스 ====== */
 .result-modal-box {
   background: white;
   width: 300px;
@@ -89,7 +86,6 @@
   }
 }
 
-/* ====== 텍스트 ====== */
 .result-title {
   font-size: 20px;
   font-weight: bold;
@@ -101,7 +97,6 @@
   margin: 10px 0 20px;
 }
 
-/* ====== 닫기 버튼 ====== */
 .result-close-btn {
   padding: 8px 16px;
   background: #a9c2b0;
