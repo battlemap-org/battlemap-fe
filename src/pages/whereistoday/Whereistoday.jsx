@@ -4,7 +4,7 @@ import "../../index.css";
 import { useNavigate } from "react-router-dom";
 
 function City() {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState([]); // 상태 변경: 문자열 -> 배열
   const navigate = useNavigate();
 
   const cities = [
@@ -38,23 +38,30 @@ function City() {
     "화성시",
   ];
 
+  // --- 로직 수정 시작 ---
   const toggleSelect = (city) => {
     setSelected((prev) =>
-      prev.includes(city) ? prev.filter((c) => c !== city) : [...prev, city]
+      // 1. 이미 선택된 도시를 클릭하면 선택 해제 (빈 배열)
+      // 2. 새 도시를 클릭하면 해당 도시만 담긴 배열로 덮어쓰기
+      prev.includes(city) ? [] : [city]
     );
   };
 
   const handleConfirm = () => {
-    if (selected.length === 0) {
-      console.log("선택된 기본 도시:", "부천시");
-      return "부천";
+    // 1. 오직 '부천시'만 선택했는지 확인 (조건 복구)
+    if (selected.length === 1 && selected.includes("부천시")) {
+      // 2. 부천시 -> 이동
+      navigate("/bucheonmap");
+    } else {
+      // 3. 그 외 모든 경우 (다른 도시, 여러 도시 선택) -> 알림
+      alert("현재는 부천시에서만 플레이가 가능합니다.");
     }
-    navigate("/bucheonmap");
   };
 
   const onEsc = useCallback((e) => {
-    if (e.key === "Escape") setSelected([]);
+    if (e.key === "Escape") setSelected([]); // 초기화 복구
   }, []);
+  // --- 로직 수정 끝 ---
 
   useEffect(() => {
     window.addEventListener("keydown", onEsc);
@@ -76,9 +83,10 @@ function City() {
             {cities.map((city, index) => (
               <label key={index} className="city-item">
                 <input
-                  type="checkbox"
-                  checked={selected.includes(city)}
-                  onChange={() => toggleSelect(city)}
+                  type="checkbox" // 타입 복구: radio -> checkbox
+                  // name 속성 제거
+                  checked={selected.includes(city)} // checked 조건 복구
+                  onChange={() => toggleSelect(city)} // onChange 핸들러 복구
                 />
                 <span>{city}</span>
               </label>
