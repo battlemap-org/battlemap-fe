@@ -151,7 +151,7 @@ function Bucheonmap() {
         <div className="quest-card">
           📌 오늘의 퀘스트: {quest || "로딩 중..."}
           <br />
-          ⭐️ 이번 시즌 Top Player: {topPlayer || "로딩 중..."}
+          ⭐️ 이번 시즌 부천시 Top Player: {topPlayer || "로딩 중..."}
         </div>
 
         <div className="bucheonmap-card">

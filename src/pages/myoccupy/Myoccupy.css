@@ -7,19 +7,21 @@
   gap: 20px;
   font-family: "Pretendard", "Inter", sans-serif;
   box-sizing: border-box;
+  padding-top: 20px;
 }
 
 /* 제목 */
 .occupy-title {
-  width: 228px;
-  height: 66px;
-  background-color: #cbe0cf;
+  background-color: #a3b9a2;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 32px;
-  border-radius: 12px;
+  font-size: 1.125rem;
+  border-radius: 9999px;
+  padding: 12px 32px;
+  margin-bottom: 16px;
+  color: #ffffff;
 }
 
 /* 각 구역 */
@@ -34,18 +36,6 @@
   box-sizing: border-box;
 }
 
-/* 제목 */
-.occupy-title {
-  width: 228px;
-  height: 66px;
-  background-color: #cbe0cf;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 32px;
-  border-radius: 12px;
-}
 
 /* 각 구역 */
 .dong-card {
