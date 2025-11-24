@@ -39,8 +39,8 @@ const failData = [
   },
 ];
 const successData = {
-  title: "성공 ㅋㅋ 똥드셈",
-  message: "ㅊㅋㅊㅋ",
+  title: "와아~! 맞았어요!",
+  message: "정답입니다.",
   imageSrc: "/assets/success_image.png",
 };
 
@@ -171,7 +171,7 @@ function QuestContents() {
         if (!file) return alert("사진을 첨부해주세요.");
 
         const formData = new FormData();
-        formData.append("image", file); // image 맞는지 백엔드한테 확인받아야됨 -> 확인 완
+        formData.append("image", file);
 
         submitUrl = `https://www.battlemap.kr/api/quests/${questId}/answers-images`;
 
@@ -252,13 +252,8 @@ function QuestContents() {
               )}
 
               <div className="photo-upload-icons">
-                {/* 카메라 아이콘 */}
-                <img
-                  src="/assets/camera.png"
-                  alt="카메라로 찍기"
-                  className="camera-icon"
-                  onClick={handleCameraClick}
-                />
+                {/* 카메라 아이콘 삭제 */}
+                
                 {/* 갤러리 아이콘 */}
                 <img
                   src="/assets/gallery.png"
